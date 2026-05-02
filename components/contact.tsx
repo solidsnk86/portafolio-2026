@@ -1,11 +1,12 @@
 import Link from "next/link";
 
 export function Contact() {
-  const whatsappNumber = "5491234567890"; // Reemplaza con tu número
+  const whatsappNumber = "5491234567890";
   const whatsappMessage = "Hola, quiero hablar sobre un proyecto.";
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
     whatsappMessage
   )}`;
+  const email = "calcagni.gabriel86@gmail.com";
 
   return (
     <section id="contact" className="mx-auto max-w-6xl px-4 py-16">
@@ -23,14 +24,22 @@ export function Contact() {
           </p>
         </div>
 
-        <Link
-          href={whatsappLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors md:mt-6"
-        >
-          Contactame en WhatsApp
-        </Link>
+        <div className="flex flex-col gap-3 md:mt-6">
+          <Link
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors hover:bg-secondary hover:text-foreground"
+          >
+            Contactame en WhatsApp
+          </Link>
+          <Link
+            href={`mailto:${email}`}
+             className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors hover:bg-secondary hover:text-foreground"
+          >
+            {email}
+          </Link>
+        </div>
       </div>
     </section>
   );

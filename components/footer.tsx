@@ -23,8 +23,8 @@ export function Footer() {
 
   return (
     <>
-      <footer className="border-t border-x border-border-color">
-        <div className="grid grid-cols-4 px-4">
+      <footer className="border-t md:border-x border-border-color">
+        <div className="grid grid-cols-1 xl:grid-cols-4 px-4">
           <div className="flex px-2 py-4">
             <p className="text-sm leading-relaxed text-muted-foreground text-pretty">
               Hoy potencio mi flujo con agentes de IA para investigar,
@@ -34,7 +34,7 @@ export function Footer() {
               proyecto.
             </p>
           </div>
-          <div className="flex flex-col justify-start gap-2 border-x border-border-color py-4 px-4">
+          <div className="flex flex-col justify-start gap-2 xl:border-x border-border-color py-4 px-4">
             {socialLinks.map((link) => (
               <Link
                 key={link.href}
@@ -47,7 +47,7 @@ export function Footer() {
               </Link>
             ))}
           </div>
-          <div className="flex flex-col justify-start gap-2 border-r border-border-color py-4 px-4">
+          <div className="flex flex-col justify-start gap-2 xl:border-r border-border-color py-4 px-4">
             {projectLinks.map((link) => (
               <Link
                 key={link.label}

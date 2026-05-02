@@ -27,7 +27,7 @@ export function Hero() {
             src={"/texture-color.jpg"}
             fill
             alt="Gabriel - Desarrollador Full Stack"
-            className={`object-cover mask-l-from-10%`}
+            className={`object-cover md:mask-l-from-10% -z-10`}
             sizes="(max-width: 768px) 100vw, 50vw"
             priority
           />
