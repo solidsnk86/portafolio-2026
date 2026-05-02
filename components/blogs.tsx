@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { timeAgo } from "@/utils/formatRelativeTime";
 
 const blogs = [
@@ -57,7 +58,12 @@ export function Blogs() {
             className="border-b border-border-color pb-8 last:border-0"
           >
             <div className="flex justify-between items-center mb-2">
-              <p className="text-xs text-muted-foreground">{blog.author}</p>
+              <div className="flex items-center gap-3">
+                <div className="relative h-8 w-8 rounded-full overflow-hidden">
+                  <Image src="/mgc.jfif" alt="Gabriel avatar" fill className="object-cover" />
+                </div>
+                <p className="text-xs text-muted-foreground">{blog.author}</p>
+              </div>
               <p className="text-xs text-muted-foreground">
                 {timeAgo(new Date(blog.publishedAt))}
               </p>

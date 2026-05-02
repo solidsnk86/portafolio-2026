@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Poppins } from "next/font/google";
-import { ThemeProvider } from "@/context/theme-context";
+import { ThemeProviderClient as ThemeProvider } from "@/components/theme-provider-client";
 import "./globals.css";
 
 const poppins = Poppins({

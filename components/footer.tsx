@@ -23,14 +23,14 @@ export function Footer() {
 
   return (
     <>
-      <footer className="border-t md:border-x border-border-color">
+      <footer className="border-t border-x border-border-color">
         <div className="grid grid-cols-1 xl:grid-cols-4 px-4">
           <div className="flex px-2 py-4">
             <p className="text-sm leading-relaxed text-muted-foreground text-pretty">
               Hoy potencio mi flujo con agentes de IA para investigar,
               prototipar, refactorizar y documentar mas rapido, sin perder
-              criterio tecnico. La IA me ayuda a acelerar, pero las decisiones
-              de arquitectura y calidad siempre las guia el contexto del
+              criterio técnico. La IA me ayuda a acelerar, pero las decisiones
+              de arquitectura y calidad siempre las guío en el contexto del
               proyecto.
             </p>
           </div>
@@ -74,7 +74,7 @@ export function Footer() {
       <div className="flex justify-between border-t border-border-color items-center border-x p-4">
         <div className="">
           <p className="font-sans text-muted-foreground text-sm">
-            &copy; SolidSnk86 · Todos los derechos reservados
+            &copy; {new Date().getFullYear()}· Hecho con 💛 por SolidSnk86
           </p>
         </div>
         <div className="">
