@@ -1,0 +1,33 @@
+import Link from "next/link";
+
+export function About() {
+  return (
+    <section
+      id="about"
+      className="mx-auto max-w-6xl border-b border-border-color px-4 py-16"
+    >
+      <div className="max-w-3xl space-y-5 text-left">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+          Sobre mi
+        </p>
+        <h2 className="text-3xl font-semibold text-foreground md:text-4xl">
+          Desarrollo web moderno con foco en impacto
+        </h2>
+        <p className="text-base text-muted-foreground">
+          Transformo necesidades reales en productos claros, escalables y
+          utiles.
+        </p>
+        <p className="text-base leading-relaxed text-muted-foreground">
+          Soy desarrollador web con 3 anos de experiencia, egresado de la
+          UTN-FRSR. Trabajo con una mirada practica: priorizo simplicidad,
+          rendimiento y una buena experiencia de usuario en cada entrega.
+        </p>
+
+        <p className="text-base leading-relaxed text-muted-foreground">
+          Actualmente colaboro con un cliente en Chile en el proyecto
+          <Link href="http://pascalecloset.com/" className="mx-1 font-semibold hover:underline">@pascale-closet.</Link>
+        </p>
+      </div>
+    </section>
+  );
+}

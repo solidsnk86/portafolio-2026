@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --border-color: #e4e4e7;
+  --secondary: #f4f4f5;
+  --accent: #e2e8f0;
+  --bg-card: #ffffff;
+  --muted-foreground: #71717a;
+  --color-card: var(--bg-card);
+  color-scheme: light;
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #ededed;
+  --border-color: #27272a;
+  --secondary: #18181b;
+  --accent: #1f2937;
+  --bg-card: #111111;
+  --muted-foreground: #a1a1aa;
+  --color-card: var(--bg-card);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border-color: var(--border-color);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-bg-card: var(--bg-card);
+  --color-card: var(--color-card);
+  --font-sans: var(--font-poppins);
+  --font-mono: var(--font-poppins);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background: #000000;
+    
+    --foreground: #ededed;
+    --border-color: #27272a;
+    --secondary: #18181b;
+    --accent: #1f2937;
+    --bg-card: #111111;
+    --muted-foreground: #a1a1aa;
+    --color-card: var(--bg-card);
+    color-scheme: dark;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-playfair), Georgia, "Times New Roman", serif;
+}
+
+.bg-diagonal {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--border-color) 0,
+    var(--border-color) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+@supports (color: color-mix(in lab, red, red)) {
+  .bg-stripes {
+    background-image: linear-gradient(
+      135deg,
+      color-mix(in oklch, var(--foreground) 10%, transparent) 14.29%,
+      color-mix(in oklch, var(--background) 10%, transparent) 14.29%,
+      color-mix(in oklch, var(--background) 10%, transparent) 50%,
+      color-mix(in oklch, var(--foreground) 10%, transparent) 50%,
+      color-mix(in oklch, var(--foreground) 10%, transparent) 64.29%,
+      color-mix(in oklch, var(--background) 10%, transparent) 64.29%,
+      color-mix(in oklch, var(--background) 10%, transparent) 100%
+    );
+    background-size: 6px 6px;
+    
+  }
+}
