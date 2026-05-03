@@ -31,7 +31,7 @@ let cachedProjects: ProjectEntry[] | null = null;
 let blogsPromise: Promise<BlogEntry[]> | null = null;
 let projectsPromise: Promise<ProjectEntry[]> | null = null;
 
-async function loadBlogs() {
+async function loadBlogs(): Promise<BlogEntry[]> {
   if (cachedBlogs) {
     return cachedBlogs;
   }
@@ -40,18 +40,24 @@ async function loadBlogs() {
     blogsPromise = fetch("/api/blog")
       .then((response) => response.json())
       .then((data) => {
-        cachedBlogs = data.blog ?? [];
-        return cachedBlogs;
+        const result: BlogEntry[] = data?.blog ?? [];
+        cachedBlogs = result;
+        return result;
+      })
+      .catch(() => {
+        const result: BlogEntry[] = [];
+        cachedBlogs = result;
+        return result;
       })
       .finally(() => {
         blogsPromise = null;
       });
   }
 
-  return blogsPromise;
+  return blogsPromise as Promise<BlogEntry[]>;
 }
 
-async function loadProjects() {
+async function loadProjects(): Promise<ProjectEntry[]> {
   if (cachedProjects) {
     return cachedProjects;
   }
@@ -60,15 +66,21 @@ async function loadProjects() {
     projectsPromise = fetch("/api/projects")
       .then((response) => response.json())
       .then((data) => {
-        cachedProjects = data.allProjects ?? [];
-        return cachedProjects;
+        const result: ProjectEntry[] = data?.allProjects ?? [];
+        cachedProjects = result;
+        return result;
+      })
+      .catch(() => {
+        const result: ProjectEntry[] = [];
+        cachedProjects = result;
+        return result;
       })
       .finally(() => {
         projectsPromise = null;
       });
   }
 
-  return projectsPromise;
+  return projectsPromise as Promise<ProjectEntry[]>;
 }
 
 export function ContentProvider({ children }: { children: ReactNode }) {
