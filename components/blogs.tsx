@@ -31,7 +31,9 @@ export function Blogs() {
         ) : (
           blogs
             .slice()
-            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+            .sort(
+              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+            )
             .map((blog) => (
               <article
                 key={blog.name}
@@ -41,14 +43,19 @@ export function Blogs() {
                   <div className="mb-2 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="relative h-8 w-8 overflow-hidden rounded-full">
-                        <Image
-                          src="/mgc.jfif"
-                          alt="Gabriel avatar"
-                          fill
-                          className="object-cover"
-                        />
+                        <picture>
+                          <img
+                            src="/mgc.jfif"
+                            alt="Gabriel avatar"
+                            width="100%"
+                            height="100%"
+                            className="object-cover"
+                          />
+                        </picture>
                       </div>
-                      <p className="text-xs text-muted-foreground">{blog.author}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {blog.author}
+                      </p>
                     </div>
                     <p className="text-xs text-muted-foreground">
                       {timeAgo(new Date(blog.date))}
