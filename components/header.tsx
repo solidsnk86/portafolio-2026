@@ -35,7 +35,7 @@ export function Header() {
           </div>
           <button
             type="button"
-            aria-label={isMenuOpen ? "Cerrar menu" : "Abrir menu"}
+            aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
             onClick={() => setIsMenuOpen((prev) => !prev)}
             className="flex h-full items-center border-l border-border-color px-5 py-7 text-foreground"
           >
@@ -60,7 +60,7 @@ export function Header() {
       </div>
 
       {isMenuOpen && (
-        <div className="fixed inset-0 top-[73px] h-[calc(100dvh-73px)] bg-background md:hidden">
+        <div className="fixed inset-0 top-18.25 h-[calc(100dvh-73px)] bg-background md:hidden">
           <nav className="flex h-full flex-col border-t border-border-color">
             {navLinks.map(({ name, section }) => (
               <Link

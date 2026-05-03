@@ -24,8 +24,20 @@ export function About() {
         </p>
 
         <p className="text-base leading-relaxed text-muted-foreground">
+          Hoy potencio mi flujo con agentes de IA para investigar, prototipar,
+          refactorizar y documentar más rápido, sin perder criterio técnico. La
+          IA me ayuda a acelerar, pero las decisiones de arquitectura y calidad
+          siempre las guío en el contexto del proyecto.
+        </p>
+
+        <p className="text-base leading-relaxed text-muted-foreground">
           Actualmente colaboro con un cliente en Chile en el proyecto
-          <Link href="http://pascalecloset.com/" className="mx-1 font-semibold hover:underline">@pascale-closet.</Link>
+          <Link
+            href="http://pascalecloset.com/"
+            className="mx-1 font-semibold hover:underline"
+          >
+            @pascale-closet.
+          </Link>
         </p>
       </div>
     </section>

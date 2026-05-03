@@ -1,42 +1,51 @@
+"use client";
+
+import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+interface GitHubProject {
+  id: number;
+  name: string;
+  description: string | null;
+  created_at: string;
+}
+
+const formatDate = (dateTime: string) =>
+  new Intl.DateTimeFormat("es-ES", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(new Date(dateTime));
+
 export function Projects() {
-  const projects = [
-    {
-      id: 1,
-      title: "E-commerce Full Stack",
-      summary: "Tienda online con autenticacion, pagos y panel de gestion.",
-      stack: "Next.js, Node.js, PostgreSQL",
-    },
-    {
-      id: 2,
-      title: "Dashboard de Ventas",
-      summary: "Panel de metricas en tiempo real con filtros y reportes.",
-      stack: "React, Supabase, Chart.js",
-    },
-    {
-      id: 3,
-      title: "App de Turnos",
-      summary: "Sistema de reservas con calendario, recordatorios y roles.",
-      stack: "Next.js, Prisma, PostgreSQL",
-    },
-    {
-      id: 4,
-      title: "Landing para SaaS",
-      summary: "Sitio de conversion orientado a performance y SEO tecnico.",
-      stack: "Next.js, Tailwind CSS",
-    },
-    {
-      id: 5,
-      title: "Blog Tecnico",
-      summary: "Plataforma de contenido con categorias y buscador.",
-      stack: "Next.js, MDX, TypeScript",
-    },
-    {
-      id: 6,
-      title: "Sistema de Tickets",
-      summary: "Gestion de incidencias con estados, prioridad y seguimiento.",
-      stack: "React, Node.js, MongoDB",
-    },
-  ];
+  const [projects, setProjects] = useState<GitHubProject[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+
+    const loadProjects = async () => {
+      try {
+        const response = await fetch("/api/projects");
+        const data = await response.json();
+
+        if (active) {
+          setProjects(data.allProjects ?? []);
+        }
+      } finally {
+        if (active) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    loadProjects();
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <section id="projects" className="mx-auto max-w-6xl py-16">
@@ -48,25 +57,32 @@ export function Projects() {
           Proyectos destacados
         </h2>
         <p className="max-w-2xl text-base text-muted-foreground">
-          Una seleccion de trabajos donde priorice claridad tecnica,
+          Una selección de trabajos donde prioricé claridad técnica,
           rendimiento y experiencia de usuario.
         </p>
       </div>
-      <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project) => (
-          <article
-            key={project.id}
-            className="border-t border-r border-border-color bg-bg-card p-4 nth-last-[-n+3]:border-b"
-          >
-            <h3 className="text-lg font-semibold text-foreground">{project.title}</h3>
-            <p className="mt-2 text-sm text-muted-foreground">{project.summary}</p>
-            <div className="flex gap-2">
-              {project.stack.split(",").map((st, i) => (
-              <p key={`${st}-${i}`} className="mt-3 text-xs text-secondary px-2 bg-foreground rounded-2xl">{st}</p>
-            ))}
-            </div>
-          </article>
-        ))}
+      <div className="mt-8 grid gap-0 sm:grid-cols-2 lg:grid-cols-3">
+        {isLoading ? (
+          <div className="col-span-full flex items-center gap-2 px-4 text-sm font-medium text-muted-foreground">
+            <Loader2 className="h-4 w-4 animate-spin text-foreground" />
+            <span>Cargando proyectos..</span>
+          </div>
+        ) : (
+          projects.slice(0, 6).map((project) => (
+            <Link href={`/project/${project.name}`}
+              key={project.id}
+              className="border-t border-r border-border-color bg-bg-card p-4 nth-last-[-n+3]:border-b hover:bg-secondary"
+            >
+              <h3 className="text-lg font-semibold text-foreground">{project.name}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {project.description ?? "Sin descripción disponible."}
+              </p>
+              <p className="mt-3 text-sm font-medium text-foreground">
+                {formatDate(project.created_at)}
+              </p>
+            </Link>
+          ))
+        )}
       </div>
     </section>
   );

@@ -16,7 +16,7 @@ type UseThemeResult = {
   toggleTheme: () => void;
 };
 
-const THEME_STORAGE_KEY = "theme";
+const THEME_STORAGE_KEY = "theme-solidsnk86";
 const ThemeContext = createContext<UseThemeResult | null>(null);
 const THEME_MEDIA_QUERY = "(prefers-color-scheme: dark)";
 
@@ -83,6 +83,7 @@ function subscribe(listener: () => void) {
 function applyTheme(theme: Theme) {
   const root = document.documentElement;
   root.classList.toggle("dark", theme === "dark");
+  root.classList.toggle("light", theme === "light");
   root.style.colorScheme = theme;
 }
 
