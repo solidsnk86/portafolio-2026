@@ -18,7 +18,7 @@ export function About() {
           utiles.
         </p>
         <p className="text-base leading-relaxed text-muted-foreground">
-          Soy desarrollador web con 3 anos de experiencia, egresado de la
+          Soy desarrollador web con 3 años de experiencia, egresado de la
           UTN-FRSR. Trabajo con una mirada practica: priorizo simplicidad,
           rendimiento y una buena experiencia de usuario en cada entrega.
         </p>

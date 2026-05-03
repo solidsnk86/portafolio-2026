@@ -72,14 +72,16 @@ export function ProjectClient({ name }: { name: string }) {
           <span>Volver a proyectos</span>
         </Link>
         {isLoading ? (
-          <div className="flex min-h-[40vh] items-center justify-center gap-3 text-sm font-medium text-muted-foreground">
+          <div className="flex h-dvh items-center justify-center gap-3 text-sm font-medium text-muted-foreground">
             <Loader2 className="h-6 w-6 animate-spin text-foreground" />
-            <span>Cargando proyectos..</span>
+            <span>Cargando proyecto..</span>
           </div>
         ) : error ? (
-          <small className="rounded border border-red-300/50 bg-red-500/80 px-2 py-0.5 text-white">
+          <div className="h-dvh">
+            <small className="rounded border border-red-300/50 bg-red-500/80 px-2 py-0.5 text-white">
             {error}
           </small>
+          </div>
         ) : (
           <article className="space-y-6 text-foreground">
             <header className="space-y-3 border-b border-border-color pb-4">

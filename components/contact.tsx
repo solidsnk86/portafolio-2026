@@ -19,7 +19,7 @@ export function Contact() {
             Hablemos de tu proximo proyecto
           </h2>
           <p className="max-w-2xl text-base text-muted-foreground">
-            Si tienes una idea o necesitas mejorar un producto existente, podemos
+            Si tienes una idea o necesitás mejorar un producto existente, podemos
             construir una solucion clara y escalable.
           </p>
         </div>
@@ -29,13 +29,13 @@ export function Contact() {
             href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors duration-300 hover:bg-secondary hover:text-foreground"
+            className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors duration-300 hover:outline-4 hover:outline-[#FCE300]"
           >
-            Contactame en WhatsApp
+            Contáctame en WhatsApp
           </Link>
           <Link
             href={`mailto:${email}`}
-             className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors duration-300 hover:bg-secondary hover:text-foreground"
+             className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors duration-300 hover:outline-4 hover:outline-[#FCE300]"
           >
             {email}
           </Link>

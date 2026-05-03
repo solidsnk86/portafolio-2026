@@ -25,8 +25,8 @@ export function Header() {
   return (
     <header className="sticky top-0 left-0 right-0 z-50 w-full border-b border-x border-border-color bg-background">
       <div className="mx-auto flex max-w-6xl items-center justify-between">
-        <Link href="/" className="p-6 font-mono text-xl font-semibold uppercase text-foreground border-r border-border-color">
-          SolidSnk86
+        <Link href="/" className="p-6 border-r border-border-color">
+          <h2 className="text-xl font-semibold capitalize text-foreground tracking-widest">SolidSnk86</h2>
         </Link>
 
         <div className="flex items-center md:hidden">
