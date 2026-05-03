@@ -1,48 +1,14 @@
 "use client";
 
+import { useContentData } from "@/context/content-context";
 import { timeAgo } from "@/utils/formatRelativeTime";
 import { Loader2, MoveLeft } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-
-interface GitHubApiProps {
-  id: number;
-  name: string;
-  description: string | null;
-  created_at: string;
-}
+import { useState } from "react";
 
 export const ALlProjectsClient = () => {
-  const [repos, setRepos] = useState<GitHubApiProps[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { projects: repos, isLoadingProjects } = useContentData();
   const [projects, SetProjects] = useState<number>(10);
-
-  useEffect(() => {
-    let active = true;
-
-    const fetchRepos = async () => {
-      try {
-        const res = await fetch("/api/projects", { method: "GET" });
-        const repo = await res.json();
-
-        if (active) {
-          setRepos(repo.allProjects ?? []);
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        if (active) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    fetchRepos();
-
-    return () => {
-      active = false;
-    };
-  }, []);
 
   return (
     <section className="relative z-10 mx-auto my-10 flex w-full flex-col justify-center rounded-xl bg-(--header-bg-color)">
@@ -53,7 +19,7 @@ export const ALlProjectsClient = () => {
         <MoveLeft className="group-hover:-translate-x-1 transition-transform duration-300" />
         <span>Volver</span>
       </Link>
-      {isLoading ? (
+      {isLoadingProjects ? (
         <div className="flex items-center justify-center gap-3 py-20 text-sm font-medium text-muted-foreground">
           <Loader2 className="h-6 w-6 animate-spin text-foreground" />
           <span>Cargando proyectos..</span>

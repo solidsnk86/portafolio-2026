@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Poppins } from "next/font/google";
+import { ContentProvider } from "@/context/content-context";
 import "./globals.css";
 import ThemeProviderClient from "@/components/theme-provider-client";
 
@@ -77,7 +78,9 @@ export default function RootLayout({
       className={`${poppins.variable} ${playfairDisplay.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <ThemeProviderClient>{children}</ThemeProviderClient>
+        <ContentProvider>
+          <ThemeProviderClient>{children}</ThemeProviderClient>
+        </ContentProvider>
       </body>
     </html>
   );

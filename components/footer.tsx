@@ -1,5 +1,6 @@
 "use client";
 
+import { useContentData } from "@/context/content-context";
 import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 import { useCallback, useEffect, useState } from "react";
@@ -11,6 +12,7 @@ interface Phrases {
 }
 
 export function Footer() {
+  const { blogs, projects } = useContentData();
   const [phrases, setPrhases] = useState<Phrases[]>([]);
   const [randomIndex] = useState<number>(() => Math.random());
 
@@ -40,57 +42,8 @@ export function Footer() {
     { label: "Instagram", href: "https://instagram.com/solidsnk86" },
   ];
 
-  const projectLinks = [
-    { label: "E-commerce", href: "#projects" },
-    { label: "Dashboard", href: "#projects" },
-    { label: "Turnos App", href: "#projects" },
-  ];
-
-  const blogLinks = [
-    { label: "TypeScript Tips", href: "#blogs" },
-    { label: "React Patterns", href: "#blogs" },
-    { label: "Next.js Best Practices", href: "#blogs" },
-  ];
-  
-  const [repoLinks, setRepoLinks] = useState<{ name: string; id?: number }[]>(
-    [],
-  );
-  const [articleLinks, setArticleLinks] = useState<
-    { name: string; title?: string }[]
-  >([]);
-
-  useEffect(() => {
-    let active = true;
-
-    const fetchProjects = async () => {
-      try {
-        const res = await fetch("/api/projects");
-        const data = await res.json();
-        if (!active) return;
-        setRepoLinks((data.allProjects || []).slice(0, 4));
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    const fetchBlogs = async () => {
-      try {
-        const res = await fetch("/api/blog");
-        const data = await res.json();
-        if (!active) return;
-        setArticleLinks((data.blog || []).slice(0, 4));
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchProjects();
-    fetchBlogs();
-
-    return () => {
-      active = false;
-    };
-  }, []);
+  const projectLinks = projects.slice(0, 4);
+  const blogLinks = blogs.slice(0, 4);
 
   return (
     <>
@@ -102,7 +55,7 @@ export function Footer() {
             </span>
             {getRandomPhrase(phrases)?.map((quote) => (
               <blockquote
-                key={quote?.texto}
+                key={crypto.randomUUID()}
                 className="text-sm leading-relaxed text-muted-foreground text-pretty"
               >
                 <span className="block">“{quote?.texto}”</span>
@@ -132,49 +85,29 @@ export function Footer() {
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               Proyectos
             </span>
-            {repoLinks.length > 0
-              ? repoLinks.map((repo) => (
-                  <Link
-                    key={repo.name}
-                    href={`/project/${repo.name}`}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {repo.name}
-                  </Link>
-                ))
-              : projectLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+            {projectLinks.map((repo) => (
+              <Link
+                key={repo.id}
+                href={`/project/${repo.name}`}
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {repo.name}
+              </Link>
+            ))}
           </div>
           <div className="flex flex-col justify-start gap-2 py-4 px-4">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               Artículos
             </span>
-            {articleLinks.length > 0
-              ? articleLinks.map((b) => (
-                  <Link
-                    key={b.name}
-                    href={`/blog/${b.name}`}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {b.title ?? b.name}
-                  </Link>
-                ))
-              : blogLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+            {blogLinks.map((blog) => (
+              <Link
+                key={blog.name}
+                href={`/blog/${blog.name}`}
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {blog.title}
+              </Link>
+            ))}
           </div>
         </div>
       </footer>

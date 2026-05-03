@@ -1,15 +1,8 @@
 "use client";
 
+import { useContentData } from "@/context/content-context";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-
-interface GitHubProject {
-  id: number;
-  name: string;
-  description: string | null;
-  created_at: string;
-}
 
 const formatDate = (dateTime: string) =>
   new Intl.DateTimeFormat("es-ES", {
@@ -19,33 +12,7 @@ const formatDate = (dateTime: string) =>
   }).format(new Date(dateTime));
 
 export function Projects() {
-  const [projects, setProjects] = useState<GitHubProject[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    let active = true;
-
-    const loadProjects = async () => {
-      try {
-        const response = await fetch("/api/projects");
-        const data = await response.json();
-
-        if (active) {
-          setProjects(data.allProjects ?? []);
-        }
-      } finally {
-        if (active) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    loadProjects();
-
-    return () => {
-      active = false;
-    };
-  }, []);
+  const { projects, isLoadingProjects } = useContentData();
 
   return (
     <section id="projects" className="mx-auto max-w-6xl py-16">
@@ -62,7 +29,7 @@ export function Projects() {
         </p>
       </div>
       <div className="mt-8 grid gap-0 sm:grid-cols-2 lg:grid-cols-3">
-        {isLoading ? (
+        {isLoadingProjects ? (
           <div className="col-span-full flex items-center gap-2 px-4 text-sm font-medium text-muted-foreground">
             <Loader2 className="h-4 w-4 animate-spin text-foreground" />
             <span>Cargando proyectos..</span>
