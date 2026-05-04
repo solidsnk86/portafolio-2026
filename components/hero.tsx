@@ -21,7 +21,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative h-full min-h-80 w-full md:min-h-[80dvh]">
+        <div className="relative h-full min-h-80 w-full md:min-h-[90dvh]">
           <Image
             src={"/texture-color.jpg"}
             fill
