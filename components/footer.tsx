@@ -49,7 +49,7 @@ export function Footer() {
     <>
       <footer className="border-t border-x border-border-color">
         <div className="grid grid-cols-1 xl:grid-cols-4 px-4">
-          <div className="flex flex-col gap-3 px-4 py-4">
+          <div className="flex flex-col gap-3 xl:px-0 px-4 py-3">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               Citas
             </span>
