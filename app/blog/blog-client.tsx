@@ -45,7 +45,7 @@ export const BlogClient = ({ blog }: { blog: string }) => {
           <span>Volver al inicio</span>
         </Link>
         {isLoading ? (
-          <div className="flex min-h-[40vh] items-center justify-center">
+          <div className="flex h-dvh items-center justify-center">
             <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
           </div>
         ) : (
