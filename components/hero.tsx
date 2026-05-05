@@ -7,7 +7,7 @@ export function Hero() {
     <section className="mx-auto max-w-6xl md:min-h-[90dvh] border-b border-border-color">
       <div className="grid h-full items-stretch md:grid-cols-2">
         <div className="p-6 md:flex md:items-center md:h-full md:p-10 lg:p-12">
-          <div>
+          <div className="my-24">
             <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
               Hola,
             </p>

@@ -1,7 +1,8 @@
 "use client";
 
 import MarkdownRenderer from "@/components/markdown-renderer";
-import { Loader2, MoveLeft } from "lucide-react";
+import { formatText } from "@/components/projects";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -68,7 +69,7 @@ export function ProjectClient({ name }: { name: string }) {
           href="/all-projects"
           className="group flex items-center gap-2 self-start text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
-          <MoveLeft className="transition-transform duration-300 group-hover:-translate-x-1" />
+          <ArrowLeft size={16} className="transition-transform duration-300 group-hover:-translate-x-1" />
           <span>Volver a proyectos</span>
         </Link>
         {isLoading ? (
@@ -85,11 +86,11 @@ export function ProjectClient({ name }: { name: string }) {
         ) : (
           <article className="space-y-6 text-foreground">
             <header className="space-y-3 border-b border-border-color pb-4">
-              <p className="text-sm font-medium text-muted-foreground">
+              <p className="text-base font-medium text-muted-foreground">
                 {formatDate(project?.data.created_at ?? new Date().toISOString())}
               </p>
-              <h1 className="text-3xl font-semibold md:text-4xl">
-                {project?.data.name}
+              <h1 className="text-3xl font-semibold md:text-4xl capitalize">
+                {formatText(project?.data.name as string)}
               </h1>
               <p className="text-base text-muted-foreground">
                 {project?.data.description ?? "Sin descripción disponible."}

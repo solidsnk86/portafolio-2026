@@ -2,7 +2,7 @@
 
 import { useContentData } from "@/context/content-context";
 import { timeAgo } from "@/utils/formatRelativeTime";
-import { Loader2, MoveLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -14,9 +14,9 @@ export const ALlProjectsClient = () => {
     <section className="relative z-10 mx-auto my-10 flex w-full flex-col justify-center rounded-xl bg-(--header-bg-color)">
       <Link
         href="/"
-        className="group flex items-center gap-2 text-(--mutted-color) hover:brightness-125 ml-4"
+        className="group flex items-center gap-2 text-sm text-(--mutted-color) hover:brightness-125 ml-4"
       >
-        <MoveLeft className="group-hover:-translate-x-1 transition-transform duration-300" />
+        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform duration-300" />
         <span>Volver</span>
       </Link>
       {isLoadingProjects ? (
