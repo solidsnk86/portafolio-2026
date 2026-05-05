@@ -10,7 +10,7 @@ import { useTheme } from "@/context/theme-context";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { theme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   const navLinks = [
     { name: "Proyectos", section: "/#projects" },
@@ -104,7 +104,7 @@ export function Header() {
               {name}
             </Link>
           ))}
-          <div className="flex items-center border-l border-border-color px-6 py-7 hover:bg-secondary">
+          <div onClick={toggleTheme} className="flex items-center border-l border-border-color px-6 py-7 hover:bg-secondary">
             <ThemeToggle className="translate-y-[1.5px]" />
           </div>
         </nav>
