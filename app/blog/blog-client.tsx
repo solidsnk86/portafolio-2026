@@ -1,7 +1,7 @@
 "use client";
 
 import MarkdownRenderer from "@/components/markdown-renderer";
-import { Loader2, MoveLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -39,9 +39,9 @@ export const BlogClient = ({ blog }: { blog: string }) => {
       <div className="mx-auto flex max-w-3xl flex-col gap-6">
         <Link
           href="/"
-          className="group flex items-center gap-2 self-start text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="group flex items-center gap-2 self-start text-xs text-muted-foreground transition-colors hover:text-foreground"
         >
-          <MoveLeft className="transition-transform duration-300 group-hover:-translate-x-1" />
+          <ArrowLeft size={16} className="transition-transform duration-300 group-hover:-translate-x-1" />
           <span>Volver al inicio</span>
         </Link>
         {isLoading ? (

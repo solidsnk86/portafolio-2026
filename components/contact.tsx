@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 export function Contact() {
-  const whatsappNumber = "5491234567890";
-  const whatsappMessage = "Hola, quiero hablar sobre un proyecto.";
+  const whatsappNumber = "+5492665290020";
+  const whatsappMessage = "Hola Gabriel, quiero hablar sobre un proyecto que tengo en mente.";
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
     whatsappMessage
   )}`;

@@ -16,7 +16,7 @@ export function Projects() {
     {
       name: "E-Commerce",
       url: "frontend-e-retro-leyends",
-      description: "Tienda E-Commerce full-stack (PERN) con pagos y admin.",
+      description: "Tienda E-Commerce full-stack (PERN) con pagos integrados y admin.",
       created_at: "2025-12-19T15:38:54Z",
     },
     {
