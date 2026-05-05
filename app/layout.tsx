@@ -18,7 +18,7 @@ const playfairDisplay = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "Portafolio — Desarrollador Full-Stack",
+    default: "SolidSnk86 — Desarrollador Full-Stack",
     template: "%s | Portafolio",
   },
   description:
