@@ -9,9 +9,9 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: "Proyectos", section: "#projects" },
-    { name: "Blog", section: "#blogs" },
-    { name: "Contacto", section: "#contact" },
+    { name: "Proyectos", section: "/#projects" },
+    { name: "Blog", section: "/#blogs" },
+    { name: "Contacto", section: "/#contact" },
   ];
 
   useEffect(() => {
