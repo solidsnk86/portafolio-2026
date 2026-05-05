@@ -60,9 +60,9 @@ export function Blogs() {
                       {timeAgo(new Date(blog.date))}
                     </p>
                   </div>
-                  <h3 className="mb-3 text-2xl font-semibold text-foreground md:text-3xl">
+                  <h4 className="mb-3 font-semibold text-foreground text-xl md:text-2xl">
                     {blog.title}
-                  </h3>
+                  </h4>
                 </Link>
               </article>
             ))

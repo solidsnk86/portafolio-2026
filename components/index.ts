@@ -8,3 +8,10 @@ export { Projects } from "./projects";
 export { ThemeToggle } from "./theme-toggle";
 export { Button } from "./common";
 export { Input } from "./common";
+export {
+	FacebookIcon,
+	GithubIcon,
+	InstagramIcon,
+	LinkedinIcon,
+	TwitterIcon,
+} from "./common";
