@@ -23,7 +23,7 @@ export function Hero() {
 
         <div className="relative h-full min-h-80 w-full md:min-h-[90dvh]">
           <Image
-            src={"/texture-color.jpg"}
+            src={"/texture-colors.png"}
             fill
             alt="Gabriel - Desarrollador Full Stack"
             className={`object-cover md:mask-l-from-10% -z-10`}
