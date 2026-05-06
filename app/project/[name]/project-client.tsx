@@ -1,5 +1,6 @@
 "use client";
 
+import { showDialog } from "@/components/common/dialog";
 import MarkdownRenderer from "@/components/markdown-renderer";
 import { formatText } from "@/components/projects";
 import { ArrowLeft, Loader2 } from "lucide-react";
@@ -34,8 +35,12 @@ export function ProjectClient({ name }: { name: string }) {
 
     const loadProject = async () => {
       try {
-        const response = await fetch(`/api/repo?name=${encodeURIComponent(name)}`);
-        const data = (await response.json()) as ProjectResponse & { message?: string };
+        const response = await fetch(
+          `/api/repo?name=${encodeURIComponent(name)}`,
+        );
+        const data = (await response.json()) as ProjectResponse & {
+          message?: string;
+        };
 
         if (!response.ok) {
           throw new Error(data.message ?? "No se pudo cargar el proyecto");
@@ -55,7 +60,36 @@ export function ProjectClient({ name }: { name: string }) {
       }
     };
 
-    loadProject();
+    const getProjectRelease = async () => {
+      setIsLoading(true);
+      try {
+        await fetch("https://neo-wifi.vercel.app/api/releases")
+          .then((res) => res.json())
+          .then((releases) => {
+            setProject({
+              data: {
+                name: releases.release.appName,
+                created_at: releases.release.createdAt,
+                description: "Automatización dispositivos TP-LINK",
+              },
+              decoded: releases.release.appInfo,
+            });
+            setIsLoading(false);
+          })
+          .catch((err) => {
+            throw new Error(err);
+          });
+      } catch (error) {
+        setIsLoading(false);
+        showDialog({ content: <div>{(error as TypeError).message}</div> });
+      }
+    };
+
+    if (name === "neo-wifi-desktop") {
+      getProjectRelease();
+    } else {
+      loadProject();
+    }
 
     return () => {
       active = false;
@@ -69,7 +103,10 @@ export function ProjectClient({ name }: { name: string }) {
           href="/all-projects"
           className="group flex items-center gap-2 self-start text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
-          <ArrowLeft size={16} className="transition-transform duration-300 group-hover:-translate-x-1" />
+          <ArrowLeft
+            size={16}
+            className="transition-transform duration-300 group-hover:-translate-x-1"
+          />
           <span>Volver a proyectos</span>
         </Link>
         {isLoading ? (
@@ -80,14 +117,16 @@ export function ProjectClient({ name }: { name: string }) {
         ) : error ? (
           <div className="h-dvh">
             <small className="rounded border border-red-300/50 bg-red-500/80 px-2 py-0.5 text-white">
-            {error}
-          </small>
+              {error}
+            </small>
           </div>
         ) : (
           <article className="space-y-6 text-foreground">
             <header className="space-y-3 border-b border-border-color pb-4">
               <p className="text-base font-medium text-muted-foreground">
-                {formatDate(project?.data.created_at ?? new Date().toISOString())}
+                {formatDate(
+                  project?.data.created_at ?? new Date().toISOString(),
+                )}
               </p>
               <h1 className="text-3xl font-semibold md:text-4xl capitalize">
                 {formatText(project?.data.name as string)}

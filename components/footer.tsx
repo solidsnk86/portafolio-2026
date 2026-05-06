@@ -4,6 +4,7 @@ import { useContentData } from "@/context/content-context";
 import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 import { useCallback, useEffect, useState } from "react";
+import { formatText } from "./projects";
 
 interface Phrases {
   id: number;
@@ -17,12 +18,18 @@ export function Footer() {
   const [randomIndex] = useState<number>(() => Math.random());
 
   const getPhrases = useCallback(async () => {
-    await fetch(
-      "https://cdn.jsdelivr.net/gh/liquidsnk86/cdn-js@main/ramdom-json-phrases.json",
-    )
-      .then((res) => res.json())
-      .then((cdn) => setPrhases(cdn.data.frases || []))
-      .catch((err) => console.error(err));
+    try {
+      await fetch(
+        "https://cdn.jsdelivr.net/gh/liquidsnk86/cdn-js@main/ramdom-json-phrases.json",
+      )
+        .then((res) => res.json())
+        .then((cdn) => setPrhases(cdn.data.frases || []))
+        .catch((err) => {
+          throw new Error(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   useEffect(() => {
@@ -48,8 +55,8 @@ export function Footer() {
   return (
     <>
       <footer className="border-t border-x border-border-color">
-        <div className="grid grid-cols-1 xl:grid-cols-4 px-4">
-          <div className="flex flex-col gap-3 xl:px-0 px-4 py-3">
+        <div className="grid grid-cols-1 xl:grid-cols-4">
+          <div className="flex flex-col justify-start gap-2 py-4 px-4">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               Citas
             </span>
@@ -89,9 +96,9 @@ export function Footer() {
               <Link
                 key={repo.id}
                 href={`/project/${repo.name}`}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground capitalize"
               >
-                {repo.name}
+                {formatText(repo.name)}
               </Link>
             ))}
           </div>
