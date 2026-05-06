@@ -1,5 +1,6 @@
 "use client";
 
+import "highlight.js/styles/an-old-hope.css";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";

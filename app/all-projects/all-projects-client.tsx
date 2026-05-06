@@ -1,5 +1,6 @@
 "use client";
 
+import { formatText } from "@/components/projects";
 import { useContentData } from "@/context/content-context";
 import { timeAgo } from "@/utils/formatRelativeTime";
 import { ArrowLeft, Loader2 } from "lucide-react";
@@ -36,7 +37,7 @@ export const ALlProjectsClient = () => {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h3 className="text-xl font-semibold text-foreground">{repo.name}</h3>
+                    <h3 className="text-xl font-semibold text-foreground capitalize">{formatText(repo.name)}</h3>
                     <p className="mt-2 text-sm text-muted-foreground">
                       {repo.description ?? "Sin descripción disponible."}
                     </p>

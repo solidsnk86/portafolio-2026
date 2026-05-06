@@ -9,7 +9,7 @@ const formatDate = (dateTime: string) =>
     year: "numeric",
   }).format(new Date(dateTime));
 
-export const formatText = (text: string) => (text ? text.replace(/-/g, " ") : "");
+export const formatText = (text: string) => (text ? text.replace(/[-_]/g, " ") : "");
 
 export function Projects() {
   const featuredProjects = [
@@ -45,10 +45,10 @@ export function Projects() {
       created_at: "2025-10-19T08:13:49Z",
     },
     {
-      name: "Portfolio Editable",
+      name: "Neo Wifi - v1.3.6 (Windows)",
       url: "CV_GEC",
-      description: "CV editable desde Google Sheets con vista web responsive.",
-      created_at: "2024-02-07T15:38:54Z",
+      description: "Aplicación que configura automáticamente dispositivos TP-LINK.",
+      created_at: "2025-07-08T15:38:54Z",
     },
   ];
 
@@ -67,7 +67,8 @@ export function Projects() {
         </p>
       </div>
       <div className="mt-8 grid gap-0 sm:grid-cols-2 lg:grid-cols-3">
-        {featuredProjects.map((project) => (
+        {featuredProjects.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+        .map((project) => (
           <Link
             href={`/project/${project.url}`}
             key={project.url}
