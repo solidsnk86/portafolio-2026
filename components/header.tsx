@@ -63,7 +63,7 @@ export function Header() {
                 height={55}
                 alt="SolidSnk86"
                 loading="eager"
-                className="rotate-3 translate-y-0.5 w-auto"
+                className="rotate-3 translate-y-0.5"
               />
             </Link>
           ) : (
@@ -74,7 +74,7 @@ export function Header() {
                 height={55}
                 alt="SolidSnk86"
                 loading="eager"
-                className="rotate-3 translate-y-0.5 w-auto"
+                className="rotate-3 translate-y-0.5"
               />
             </Link>
           )}
