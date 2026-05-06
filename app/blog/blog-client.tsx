@@ -39,7 +39,7 @@ export const BlogClient = ({ blog }: { blog: string }) => {
       <div className="mx-auto flex max-w-3xl flex-col gap-6">
         <Link
           href="/"
-          className="group flex items-center gap-2 self-start text-xs text-muted-foreground transition-colors hover:text-foreground"
+          className="group flex items-center gap-2 self-start text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft size={16} className="transition-transform duration-300 group-hover:-translate-x-1" />
           <span>Volver al inicio</span>

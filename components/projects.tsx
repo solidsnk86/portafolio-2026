@@ -14,16 +14,16 @@ export const formatText = (text: string) => (text ? text.replace(/-/g, " ") : ""
 export function Projects() {
   const featuredProjects = [
     {
+      name: "Neo-WiFi Apk",
+      url: "neo-wifi-apk",
+      description: "Localización Inteligente de Antenas WiFi (gratuitas) para Android.",
+      created_at: "2026-02-19T03:53:10Z",
+    },
+    {
       name: "E-Commerce",
       url: "frontend-e-retro-leyends",
       description: "Tienda E-Commerce full-stack (PERN) con pagos integrados y admin.",
-      created_at: "2025-12-19T15:38:54Z",
-    },
-    {
-      name: "Neo-WiFi App",
-      url: "neo-wifi-desktop",
-      description: "Automatiza configuración de CPEs y routers TP-Link.",
-      created_at: "2025-02-26T15:38:54Z",
+      created_at: "2025-11-12T15:38:54Z",
     },
     {
       name: "Neo-WiFi Web",

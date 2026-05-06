@@ -54,7 +54,7 @@ export function Header() {
   return (
     <header className="sticky top-0 left-0 right-0 z-50 w-full border-b border-x border-border-color bg-background">
       <div className="mx-auto flex max-w-6xl items-center justify-between">
-        <Link href="/" className="p-4 border-r border-border-color">
+        <div className="p-4 border-r border-border-color">
           {isDarkMode ? (
             <Link href="/">
               <Image
@@ -63,7 +63,7 @@ export function Header() {
                 height={55}
                 alt="SolidSnk86"
                 loading="eager"
-                className="rotate-3 translate-y-0.5"
+                className="rotate-3 translate-y-0.5 w-auto"
               />
             </Link>
           ) : (
@@ -74,11 +74,11 @@ export function Header() {
                 height={55}
                 alt="SolidSnk86"
                 loading="eager"
-                className="rotate-3 translate-y-0.5"
+                className="rotate-3 translate-y-0.5 w-auto"
               />
             </Link>
           )}
-        </Link>
+        </div>
 
         <div className="flex items-center md:hidden">
           <div className="flex h-full items-center border-l border-border-color px-5 py-7">
