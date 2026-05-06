@@ -106,7 +106,7 @@ dialog {
   margin: auto;
   padding: 0;
   border: 1px solid var(--border);
-  color: #1a1a1a;
+  color: var(--background);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
   border-radius: 2px;
   overflow: hidden;

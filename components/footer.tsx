@@ -121,11 +121,11 @@ export function Footer() {
       <div className="flex justify-between border-t border-border-color items-center border-x p-4">
         <div className="">
           <p className="font-sans text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()}· Hecho con 💛 por SolidSnk86
+            &copy; {new Date().getFullYear()} · Hecho con 💛 por SolidSnk86
           </p>
         </div>
         <div className="translate-y-0.5">
-          <ThemeToggle />
+          <ThemeToggle sizeIcons={17} />
         </div>
       </div>
     </>

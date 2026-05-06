@@ -6,9 +6,10 @@ import { useTheme } from "@/context/theme-context";
 
 type ThemeToggleProps = {
   className?: string;
+  sizeIcons?: number;
 };
 
-export function ThemeToggle({ className = "" }: ThemeToggleProps) {
+export function ThemeToggle({ className = "", sizeIcons = 18 }: ThemeToggleProps) {
   const { theme, toggleTheme } = useTheme();
   const [isPending, startTransition] = useTransition();
 
@@ -36,7 +37,7 @@ export function ThemeToggle({ className = "" }: ThemeToggleProps) {
         .filter(Boolean)
         .join(" ")}
     >
-      {isDark ? <Sun size={18} className="block" /> : <Moon size={18} className="block" />}
+      {isDark ? <Sun size={sizeIcons} className="block" /> : <Moon size={sizeIcons} className="block" />}
     </button>
   );
 }
