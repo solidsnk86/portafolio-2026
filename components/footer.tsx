@@ -4,7 +4,7 @@ import { useContentData } from "@/context/content-context";
 import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 import { useCallback, useEffect, useState } from "react";
-import { formatText } from "./projects";
+import { featuredProjects, formatText } from "./projects";
 
 interface Phrases {
   id: number;
@@ -48,8 +48,8 @@ export function Footer() {
     { label: "Twitter", href: "https://x.com/CalcagniGabriel" },
     { label: "Instagram", href: "https://www.instagram.com/calcagnigabriel" },
   ];
-
-  const projectLinks = projects.slice(0, 4);
+  
+  const projectLinks = projects.filter((p) => !featuredProjects.find(fp => fp.url.includes(p.name))).slice(0, 4);
   const blogLinks = blogs.slice(0, 4);
 
   return (
@@ -90,7 +90,7 @@ export function Footer() {
           </div>
           <div className="flex flex-col justify-start gap-2 xl:border-r border-border-color py-4 px-4">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-              Proyectos
+              Otros Proyectos
             </span>
             {projectLinks.map((repo) => (
               <Link

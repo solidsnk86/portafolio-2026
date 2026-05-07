@@ -12,56 +12,55 @@ const formatDate = (dateTime: string) =>
 export const formatText = (text: string) =>
   text ? text.replace(/[-_]/g, " ") : "";
 
-export function Projects() {
-  const featuredProjects = [
-    {
-      name: "Neo-WiFi Apk",
-      url: "neo-wifi-apk",
-      description:
-        "Localización Inteligente de Antenas WiFi (gratuitas) para Android.",
-      created_at: "2026-02-19T03:53:10Z",
-      platform: "android"
-    },
-    {
-      name: "E-Commerce",
-      url: "frontend-e-retro-leyends",
-      description:
-        "Tienda E-Commerce full-stack (PERN) con pagos integrados y admin.",
-      created_at: "2025-11-12T15:38:54Z",
-      platform: "web"
-    },
-    {
-      name: "Neo-WiFi Web",
-      url: "neo-wifi",
-      description: "Localización inteligente de antenas WiFi para cobertura.",
-      created_at: "2025-01-28T03:18:53Z",
-      platform: "web"
-    },
-    {
-      name: "Geolocation API",
-      url: "geo_api",
-      description:
-        "API de geolocalización por IP o coordenadas en tiempo real.",
-      created_at: "2024-02-07T15:38:54Z",
-      platform: "web/api"
-    },
-    {
-      name: "App de tareas (PERN)",
-      url: "taskApp-doubleCommit",
-      description: "Gestor de tareas con usuarios, perfiles y asistencia IA.",
-      created_at: "2025-10-19T08:13:49Z",
-      platform: "web"
-    },
-    {
-      name: "Neo Wifi - v1.3.6",
-      url: "neo-wifi-desktop",
-      description:
-        "Aplicación para configurar automáticamente dispositivos TP-LINK.",
-      created_at: "2025-07-08T15:38:54Z",
-      platform: "windows"
-    },
-  ];
+export const featuredProjects = [
+  {
+    name: "Neo-WiFi Apk",
+    url: "neo-wifi-apk",
+    description:
+      "Localización Inteligente de Antenas WiFi (gratuitas) para Android.",
+    created_at: "2026-02-19T03:53:10Z",
+    platform: "android",
+  },
+  {
+    name: "E-Commerce",
+    url: "frontend-e-retro-leyends",
+    description:
+      "Tienda E-Commerce full-stack (PERN) con pagos integrados y admin.",
+    created_at: "2025-11-12T15:38:54Z",
+    platform: "web",
+  },
+  {
+    name: "Neo-WiFi Web",
+    url: "neo-wifi",
+    description: "Localización inteligente de antenas WiFi para cobertura.",
+    created_at: "2025-01-28T03:18:53Z",
+    platform: "web",
+  },
+  {
+    name: "Geolocation API",
+    url: "geo_api",
+    description: "API de geolocalización por IP o coordenadas en tiempo real.",
+    created_at: "2024-02-07T15:38:54Z",
+    platform: "web/api",
+  },
+  {
+    name: "App de tareas (PERN)",
+    url: "taskApp-doubleCommit",
+    description: "Gestor de tareas con usuarios, perfiles y asistencia IA.",
+    created_at: "2025-10-19T08:13:49Z",
+    platform: "web",
+  },
+  {
+    name: "Neo Wifi - v1.3.6",
+    url: "neo-wifi-desktop",
+    description:
+      "Aplicación para configurar automáticamente dispositivos TP-LINK.",
+    created_at: "2025-07-08T15:38:54Z",
+    platform: "windows",
+  },
+];
 
+export function Projects() {
   return (
     <section id="projects" className="mx-auto max-w-6xl py-16">
       <div className="space-y-3 px-4">
@@ -93,7 +92,9 @@ export function Projects() {
                 {formatText(project.name)}
               </h3>
               <div className="absolute top-4 right-4">
-                <small className="px-2 bg-foreground text-background rounded-2xl text-xs">{project.platform}</small>
+                <small className="px-2 bg-foreground text-background rounded-2xl text-xs">
+                  {project.platform}
+                </small>
               </div>
               <p className="mt-2 text-sm text-muted-foreground">
                 {project.description ?? "Sin descripción disponible."}
