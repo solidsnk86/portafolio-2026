@@ -2,7 +2,6 @@
 
 * {
   scroll-behavior: smooth;
-  
 }
 
 :root {
@@ -10,7 +9,7 @@
   --foreground: #171717;
   --border-color: #e4e4e7;
   --secondary: #f4f4f5;
-  --accent: #FCE300;
+  --accent: #fce300;
   --bg-card: #ffffff;
   --muted-foreground: #71717a;
   --color-card: var(--bg-card);
@@ -22,7 +21,7 @@
   --foreground: #ededed;
   --border-color: #27272a;
   --secondary: #18181b;
-  --accent: #FCE300;
+  --accent: #fce300;
   --bg-card: #111111;
   --muted-foreground: #a1a1aa;
   --color-card: var(--bg-card);
@@ -45,11 +44,11 @@
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
     --background: #000000;
-    
+
     --foreground: #ededed;
     --border-color: #27272a;
     --secondary: #18181b;
-    --accent: #FCE300;
+    --accent: #fce300;
     --bg-card: #111111;
     --muted-foreground: #a1a1aa;
     --color-card: var(--bg-card);
@@ -95,7 +94,6 @@ h6 {
       color-mix(in oklch, var(--background) 10%, transparent) 100%
     );
     background-size: 6px 6px;
-    
   }
 }
 
@@ -128,3 +126,14 @@ dialog::backdrop {
     width: 90%;
   }
 }
+
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+

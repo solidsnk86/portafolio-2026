@@ -18,7 +18,7 @@ export const ALlProjectsClient = () => {
         className="group flex items-center gap-2 text-sm text-(--mutted-color) hover:brightness-125 ml-4"
       >
         <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform duration-300" />
-        <span>Volver</span>
+        <span>Volver al inicio</span>
       </Link>
       {isLoadingProjects ? (
         <div className="flex items-center justify-center gap-3 py-20 text-sm font-medium text-muted-foreground">

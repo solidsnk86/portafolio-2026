@@ -3,6 +3,7 @@ import { Playfair_Display, Poppins } from "next/font/google";
 import { ContentProvider } from "@/context/content-context";
 import "./globals.css";
 import ThemeProviderClient from "@/components/theme-provider-client";
+import { LocationProvider } from "@/context/location-context";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    "googleBot": {
+    googleBot: {
       index: true,
       follow: true,
     },
@@ -77,9 +78,11 @@ export default function RootLayout({
       className={`${poppins.variable} ${playfairDisplay.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <ContentProvider>
-          <ThemeProviderClient>{children}</ThemeProviderClient>
-        </ContentProvider>
+        <LocationProvider>
+          <ContentProvider>
+            <ThemeProviderClient>{children}</ThemeProviderClient>
+          </ContentProvider>
+        </LocationProvider>
       </body>
     </html>
   );

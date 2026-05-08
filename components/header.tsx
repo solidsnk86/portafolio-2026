@@ -80,7 +80,7 @@ export function Header() {
             </Link>
           )}
         </div>
-
+        
         <div className="flex items-center md:hidden">
           <div className="flex h-full items-center border-l border-border-color px-5 py-7">
             <ThemeToggle />

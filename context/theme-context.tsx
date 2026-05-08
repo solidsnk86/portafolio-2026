@@ -94,12 +94,17 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     getServerThemeSnapshot
   );
 
-  useEffect(() => {
+  useEffect(() => {    
     applyTheme(theme);
   }, [theme]);
 
   const setTheme = (nextTheme: Theme) => {
-    window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    }
+    if (typeof document !== "undefined") {
+      applyTheme(nextTheme);
+    }
     notifySubscribers();
   };
 
