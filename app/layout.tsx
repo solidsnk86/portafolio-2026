@@ -38,8 +38,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es-ES",
     siteName: "Portafolio",
-    // Use NEXT_PUBLIC_SITE_URL env var if available, otherwise placeholder
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://example.com",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://solidsnk86.vercel.app/",
     images: [
       {
         url: "/og-image.png",
@@ -54,7 +53,7 @@ export const metadata: Metadata = {
     title: "Portafolio — Desarrollador Full-Stack",
     description:
       "Desarrollador full‑stack con más de 3 años de experiencia. Me enfoco en resolver problemas reales aplicando buenas prácticas y entregando soluciones de impacto.",
-    images: ["/og-image.png"],
+    images: ["/texture-colors.png"],
   },
   robots: {
     index: true,

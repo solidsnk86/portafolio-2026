@@ -86,7 +86,7 @@ export function Projects() {
             <Link
               href={`/project/${project.url}`}
               key={project.url}
-              className="border-t border-r border-border-color bg-bg-card p-4 nth-last-[-n+3]:border-b hover:bg-secondary relative"
+              className="border-t border-r border-border-color bg-bg-card p-4 nth-last-[-n+3]:border-b hover:bg-secondary relative transition-colors"
             >
               <h3 className="text-lg font-semibold text-foreground capitalize">
                 {formatText(project.name)}

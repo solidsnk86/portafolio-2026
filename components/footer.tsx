@@ -49,7 +49,7 @@ export function Footer() {
     { label: "Instagram", href: "https://www.instagram.com/calcagnigabriel" },
   ];
   
-  const projectLinks = projects.filter((p) => !featuredProjects.find(fp => fp.url.includes(p.name))).slice(0, 4);
+  const projectLinks = projects.filter((p) => !featuredProjects.some(fp => fp.url.includes(p.name))).slice(0, 4);
   const blogLinks = blogs.slice(0, 4);
 
   return (
@@ -63,7 +63,7 @@ export function Footer() {
             {getRandomPhrase(phrases)?.map((quote) => (
               <blockquote
                 key={crypto.randomUUID()}
-                className="text-sm leading-relaxed text-muted-foreground text-pretty"
+                className="text-sm leading-relaxed text-foreground text-pretty"
               >
                 <span className="block">“{quote?.texto}”</span>
                 <footer className="mt-1 text-xs uppercase tracking-[0.18em] text-foreground/70">
@@ -82,7 +82,7 @@ export function Footer() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm  text-foreground transition-colors hover:underline"
               >
                 {link.label}
               </Link>
@@ -96,21 +96,21 @@ export function Footer() {
               <Link
                 key={repo.id}
                 href={`/project/${repo.name}`}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground capitalize"
+                className="text-sm transition-colors text-foreground capitalize hover:underline"
               >
                 {formatText(repo.name)}
               </Link>
             ))}
           </div>
           <div className="flex flex-col justify-start gap-2 py-4 px-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground" aria-description="Artículos del blog">
               Artículos
             </span>
             {blogLinks.map((blog) => (
               <Link
                 key={blog.name}
                 href={`/blog/${blog.name}`}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="text-sm transition-colors text-foreground hover:underline"
               >
                 {blog.title}
               </Link>

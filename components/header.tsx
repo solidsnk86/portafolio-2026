@@ -11,6 +11,7 @@ import { useTheme } from "@/context/theme-context";
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const isDarkMode = theme === "dark";
 
   const navLinks = [
     { name: "Proyectos", section: "/#projects" },
@@ -49,32 +50,32 @@ export function Header() {
     };
   }, [isMenuOpen]);
 
-  const isDarkMode = theme === "dark";
-
   return (
     <header className="sticky top-0 left-0 right-0 z-50 w-full border-b border-x border-border-color bg-background">
       <div className="mx-auto flex max-w-6xl items-center justify-between">
-        <div className="p-4 border-r border-border-color">
+        <div className="p-4.5 border-r border-border-color">
           {isDarkMode ? (
             <Link href="/">
               <Image
                 src="/assets/solid-dark-mode.png"
-                width={95}
+                width={100}
                 height={55}
                 alt="SolidSnk86"
                 loading="eager"
                 className="rotate-3 translate-y-0.5"
+                preload
               />
             </Link>
           ) : (
             <Link href="/">
               <Image
                 src="/assets/solid-light-mode.png"
-                width={95}
+                width={100}
                 height={55}
                 alt="SolidSnk86"
                 loading="eager"
                 className="rotate-3 translate-y-0.5"
+                preload
               />
             </Link>
           )}
@@ -104,7 +105,10 @@ export function Header() {
               {name}
             </Link>
           ))}
-          <div onClick={toggleTheme} className="flex items-center border-l border-border-color px-6 py-7 hover:bg-secondary">
+          <div
+            onClick={toggleTheme}
+            className="flex items-center border-l border-border-color px-6 py-7 hover:bg-secondary"
+          >
             <ThemeToggle className="translate-y-[1.5px]" />
           </div>
         </nav>
