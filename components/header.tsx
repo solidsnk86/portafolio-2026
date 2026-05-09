@@ -58,7 +58,7 @@ export function Header() {
             <Link href="/">
               <Image
                 src="/assets/solid-dark-mode.png"
-                width={100}
+                width={95}
                 height={55}
                 alt="SolidSnk86"
                 loading="eager"
@@ -70,7 +70,7 @@ export function Header() {
             <Link href="/">
               <Image
                 src="/assets/solid-light-mode.png"
-                width={100}
+                width={95}
                 height={55}
                 alt="SolidSnk86"
                 loading="eager"
