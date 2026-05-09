@@ -55,7 +55,7 @@ export function Footer() {
   return (
     <>
       <footer className="border-t border-x border-border-color">
-        <div className="grid grid-cols-1 xl:grid-cols-4">
+        <div className="grid grid-cols-1 md:grid-cols-4">
           <div className="flex flex-col justify-start gap-2 py-4 px-4">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               Citas
