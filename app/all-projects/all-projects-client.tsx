@@ -21,9 +21,9 @@ export const ALlProjectsClient = () => {
         <span>Volver al inicio</span>
       </Link>
       {isLoadingProjects ? (
-        <div className="flex items-center justify-center gap-3 py-20 text-sm font-medium text-muted-foreground">
+        <div className="flex items-center justify-center gap-2 py-20 text-sm h-svh font-medium text-muted-foreground">
           <Loader2 className="h-6 w-6 animate-spin text-foreground" />
-          <span>Cargando proyectos..</span>
+          <span className="animate-pulse">Cargando proyectos..</span>
         </div>
       ) : (
         <>
@@ -36,13 +36,13 @@ export const ALlProjectsClient = () => {
                 className="border-t border-border-color bg-bg-card p-4 last:border-b hover:bg-secondary"
               >
                 <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 className="text-xl font-semibold text-foreground capitalize">{formatText(repo.name)}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground">
+                  <div className="max-w-50 md:max-w-3xl">
+                    <h3 className="text-xl font-semibold text-foreground capitalize line-clamp-1">{formatText(repo.name)}</h3>
+                    <p className="mt-2 text-sm text-muted-foreground text-ellipsis line-clamp-2">
                       {repo.description ?? "Sin descripción disponible."}
                     </p>
                   </div>
-                  <time className="text-sm font-medium text-foreground">
+                  <time className="text-xs font-medium text-foreground mt-1">
                     {timeAgo(new Date(repo.created_at))}
                   </time>
                 </div>
