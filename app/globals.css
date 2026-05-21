@@ -13,6 +13,7 @@
   --bg-card: #ffffff;
   --muted-foreground: #71717a;
   --color-card: var(--bg-card);
+  --swiper-navigation-color: var(--foreground);
   color-scheme: light;
 }
 
@@ -25,6 +26,7 @@
   --bg-card: #111111;
   --muted-foreground: #a1a1aa;
   --color-card: var(--bg-card);
+  --swiper-navigation-color: var(--foreground);
   color-scheme: dark;
 }
 
@@ -101,7 +103,6 @@ dialog {
   border: none;
   outline: none;
   background: var(--background);
-  width: 420px;
   max-width: 90%;
   display: flex;
   flex-direction: column;
@@ -137,3 +138,13 @@ dialog::backdrop {
   mix-blend-mode: normal;
 }
 
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--accent) !important;
+  
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  color: var(--accent) !important;
+}

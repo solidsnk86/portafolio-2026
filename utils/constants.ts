@@ -1,0 +1,38 @@
+export const eCommerceGallery = [
+  {
+    id: 2,
+    url: "/assets/e-commerce-gallery/screencapture-pascalecloset-seller-dashboard-2026-05-21-16_17_45.png",
+  },
+  {
+    id: 3,
+    url: "/assets/e-commerce-gallery/screencapture-pascalecloset-seller-orders-2026-05-21-16_23_20.png",
+  },
+  {
+    id: 4,
+    url: "/assets/e-commerce-gallery/screencapture-pascalecloset-seller-orders-cffe38ab-85a0-4e82-91ac-0679f1ef7a8b-2026-05-21-16_24_20.png",
+  },
+  {
+    id: 5,
+    url: "/assets/e-commerce-gallery/screencapture-pascalecloset-seller-products-2026-05-21-16_25_15.png",
+  },
+  {
+    id: 6,
+    url: "/assets/e-commerce-gallery/screencapture-pascalecloset-seller-products-edit-f9ebaa79-7f74-4fd2-9558-a49a25e19974-2026-05-21-16_26_41.png",
+  },
+  {
+    id: 7,
+    url: "/assets/e-commerce-gallery/screencapture-pascalecloset-user-profile-2026-05-21-16_18_18.webp",
+  },
+  {
+    id: 8,
+    url: "/assets/e-commerce-gallery/screencapture-pascalecloset-user-profile-2026-05-21-16_19_44.png",
+  },
+  {
+    id: 9,
+    url: "/assets/e-commerce-gallery/screencapture-pascalecloset-user-profile-2026-05-21-16_20_50.png",
+  },
+  {
+    id: 10,
+    url: "/assets/e-commerce-gallery/screencapture-pascalecloset-user-profile-2026-05-21-16_22_22.png",
+  },
+];

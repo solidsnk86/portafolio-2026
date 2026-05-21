@@ -4,6 +4,7 @@ import { useContentData } from "@/context/content-context";
 import Image from "next/image";
 import Link from "next/link";
 import { timeAgo } from "@/utils/formatRelativeTime";
+import { Loader2 } from "lucide-react";
 
 export function Blogs() {
   const { blogs, isLoadingBlogs } = useContentData();
@@ -25,9 +26,25 @@ export function Blogs() {
         </p>
       </div>
 
-      <div className="">
+      <div className="grid">
         {isLoadingBlogs ? (
-          <p className="text-sm text-muted-foreground">Cargando artículos..</p>
+          <>
+            {Array.from({ length: blogs.length }).map((_, i) => (
+              <article
+                key={`blog-${i + 1}`}
+                className="border-b border-border-color p-4 first:border-t last:border-0 animate-pulse"
+              >
+                <div className="mb-2 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="relative h-8 w-8 overflow-hidden rounded-full bg-secondary"></div>
+                    <p className="text-xs text-muted-foreground w-28 h-4 bg-secondary"></p>
+                  </div>
+                  <p className="text-xs text-muted-foreground bg-secondary w-22 h-4"></p>
+                </div>
+                <h4 className="mb-3 font-semibold text-foreground text-xl md:text-2xl w-160 bg-secondary h-9"></h4>
+              </article>
+            ))}
+          </>
         ) : (
           blogs
             .sort(

@@ -1,11 +1,18 @@
 "use client";
 
-import { showDialog } from "@/components/common/dialog";
+import { closeDialog, showDialog } from "@/components/common/dialog";
 import MarkdownRenderer from "@/components/markdown-renderer";
 import { formatText } from "@/components/projects";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, Maximize2, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Navigation, Zoom } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/zoom";
+import { eCommerceGallery } from "@/utils/constants";
 
 interface ProjectResponse {
   data: {
@@ -25,10 +32,52 @@ const formatDate = (dateTime: string) =>
     year: "numeric",
   }).format(new Date(dateTime));
 
+const DialogGallery = ({ initialIndex }: { initialIndex: number }) => (
+  <div className="fixed inset-0 z-50 bg-black">
+    <div className="fixed top-0 right-0 z-999 bg-secondary p-2">
+      <X className="text-muted-foreground" onClick={closeDialog} />
+    </div>
+    <Swiper
+      initialSlide={initialIndex}
+      slidesPerView={1}
+      spaceBetween={0}
+      navigation
+      zoom={{ maxRatio: 3 }}
+      modules={[Navigation, Zoom]}
+      className="h-full w-full"
+    >
+      {eCommerceGallery.map((pic) => (
+        <SwiperSlide
+          key={pic.id}
+          className="flex items-center justify-center bg-black"
+        >
+          <div className="swiper-zoom-container relative h-full w-full">
+            <Image
+              src={pic.url}
+              alt={`Foto-${pic.id}`}
+              fill
+              sizes="100vw"
+              className="object-contain"
+            />
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  </div>
+);
+
 export function ProjectClient({ name }: { name: string }) {
   const [project, setProject] = useState<ProjectResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const openGalleryDialog = (initialIndex: number) => {
+    showDialog({
+      width: "100%",
+      className: "bg-transparent p-0 m-0 max-w-none rounded-none shadow-none",
+      content: <DialogGallery initialIndex={initialIndex} />,
+    });
+  };
 
   useEffect(() => {
     let active = true;
@@ -66,6 +115,7 @@ export function ProjectClient({ name }: { name: string }) {
         await fetch("https://neo-wifi.vercel.app/api/releases")
           .then((res) => res.json())
           .then((releases) => {
+            if (!active) return;
             setProject({
               data: {
                 name: releases.release.appName,
@@ -80,7 +130,9 @@ export function ProjectClient({ name }: { name: string }) {
             throw new Error(err);
           });
       } catch (error) {
-        setIsLoading(false);
+        if (active) {
+          setIsLoading(false);
+        }
         showDialog({ content: <div>{(error as TypeError).message}</div> });
       }
     };
@@ -97,7 +149,7 @@ export function ProjectClient({ name }: { name: string }) {
   }, [name]);
 
   return (
-    <section className="px-4 py-8 md:px-6 lg:px-8">
+    <section className="px-4 py-8 md:px-6 lg:px-8 overflow-x-hidden md:mask-l-from-90% md:mask-r-from-90%">
       <div className="mx-auto flex max-w-3xl flex-col gap-6">
         <Link
           href="/all-projects"
@@ -137,6 +189,41 @@ export function ProjectClient({ name }: { name: string }) {
             </header>
 
             <MarkdownRenderer content={project?.decoded ?? ""} />
+
+            {name === "frontend-e-retro-leyends" && (
+              <div className="relative">
+                <h2 className="text-2xl mb-4 border-b py-3 border-border-color font-semibold">
+                  Algunas capturas de la aplicación:
+                </h2>
+                <Swiper
+                  slidesPerView={1}
+                  spaceBetween={8}
+                  breakpoints={{
+                    640: { slidesPerView: 1 },
+                    768: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                  }}
+                  className="w-full overflow-visible!"
+                >
+                  {eCommerceGallery.map((pic, index) => (
+                    <SwiperSlide key={pic.id} className="relative">
+                      <div
+                        onClick={() => openGalleryDialog(index)}
+                        className="relative aspect-square w-full"
+                      >
+                        <Image
+                          src={pic.url}
+                          alt={`Foto-${pic.id}`}
+                          fill
+                          sizes="(max-width: 768px) 90vw, 33vw"
+                          className="object-cover"
+                        />
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            )}
           </article>
         )}
       </div>
