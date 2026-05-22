@@ -18,11 +18,11 @@ export function About() {
         <article className="space-y-4 md:p-8">
           <p className="text-base text-muted-foreground">
             Transformo necesidades reales en productos claros, escalables y
-            utiles.
+            útiles.
           </p>
           <p className="text-base leading-relaxed text-muted-foreground">
             Soy desarrollador web con 3 años de experiencia, egresado de la
-            UTN-FRSR. Trabajo con una mirada practica: priorizo simplicidad,
+            UTN-FRSR. Trabajo con una mirada práctica, priorizo simplicidad,
             rendimiento y una buena experiencia de usuario en cada entrega.
           </p>
 

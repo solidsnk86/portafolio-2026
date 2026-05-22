@@ -34,8 +34,8 @@ const formatDate = (dateTime: string) =>
 
 const DialogGallery = ({ initialIndex }: { initialIndex: number }) => (
   <div className="fixed inset-0 z-50 bg-black">
-    <div className="fixed top-0 right-0 z-999 bg-secondary p-2">
-      <X className="text-muted-foreground" onClick={closeDialog} />
+    <div className="fixed top-0 right-0 z-999 p-2">
+      <X className="text-accent" onClick={closeDialog} />
     </div>
     <Swiper
       initialSlide={initialIndex}
@@ -46,18 +46,18 @@ const DialogGallery = ({ initialIndex }: { initialIndex: number }) => (
       modules={[Navigation, Zoom]}
       className="h-full w-full"
     >
-      {eCommerceGallery.map((pic) => (
+      {eCommerceGallery.map(({ id, url }) => (
         <SwiperSlide
-          key={pic.id}
+          key={id}
           className="flex items-center justify-center bg-black"
         >
           <div className="swiper-zoom-container relative h-full w-full">
             <Image
-              src={pic.url}
-              alt={`Foto-${pic.id}`}
+              src={url}
+              alt={`Foto-${id}`}
               fill
               sizes="100vw"
-              className="object-contain"
+              className="object-contain cursor-zoom-in"
             />
           </div>
         </SwiperSlide>
@@ -197,7 +197,7 @@ export function ProjectClient({ name }: { name: string }) {
                 </h2>
                 <Swiper
                   slidesPerView={1}
-                  spaceBetween={8}
+                  spaceBetween={1}
                   breakpoints={{
                     640: { slidesPerView: 1 },
                     768: { slidesPerView: 2 },
@@ -209,14 +209,14 @@ export function ProjectClient({ name }: { name: string }) {
                     <SwiperSlide key={pic.id} className="relative">
                       <div
                         onClick={() => openGalleryDialog(index)}
-                        className="relative aspect-square w-full"
+                        className="relative aspect-square w-full group overflow-hidden hover:cursor-zoom-in"
                       >
                         <Image
                           src={pic.url}
                           alt={`Foto-${pic.id}`}
                           fill
                           sizes="(max-width: 768px) 90vw, 33vw"
-                          className="object-cover"
+                          className="object-cover group-hover:scale-110 hover:opacity-90 transition-transform duration-300"
                         />
                       </div>
                     </SwiperSlide>

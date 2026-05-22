@@ -122,12 +122,6 @@ dialog::backdrop {
   cursor: alias;
 }
 
-@media (width <=762px) {
-  dialog {
-    width: 90%;
-  }
-}
-
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
@@ -147,4 +141,17 @@ dialog::backdrop {
 .swiper-button-next::after,
 .swiper-button-prev::after {
   color: var(--accent) !important;
+}
+
+@media (width <=762px) {
+  dialog {
+    width: 90%;
+  }
+  .swiper-button-next {
+    right: -5px !important;
+    
+  }
+  .swiper-button-prev {
+    left: -5px !important;
+  }
 }
