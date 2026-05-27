@@ -3,12 +3,13 @@
 import {
   createContext,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useState,
 } from "react";
 
-interface LocationProps {
+export interface LocationProps {
   isLoading: boolean;
   error: TypeError | Error | undefined;
   data: {
@@ -32,6 +33,19 @@ interface LocationProps {
         version: string;
       };
     };
+  };
+}
+interface LastAccessProps {
+  data: {
+    ip: string;
+    city_name: string;
+    country_name: string;
+    so: string;
+    browser: string;
+    version: string;
+    emoji_flag: string;
+    lat: number;
+    lon: number;
   };
 }
 
@@ -65,6 +79,7 @@ export const LocationProvider = ({ children }: { children: ReactNode }) => {
       },
     },
   });
+  const [lastAccess, setLastAccess] = useState<LastAccessProps>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | TypeError | undefined>(undefined);
 
@@ -85,6 +100,22 @@ export const LocationProvider = ({ children }: { children: ReactNode }) => {
 
     getLocation();
   }, []);
+
+  useEffect(() => {
+    const collectData = async () => {
+      await fetch("/api/collection", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: location.data }),
+      })
+        .then((res) => res.json())
+        .catch((err) => setError(err));
+    };
+
+    setTimeout(() => {
+      collectData();
+    }, 600);
+  }, [location]);
 
   const value = {
     isLoading,
