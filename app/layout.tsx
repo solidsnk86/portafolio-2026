@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     url: process.env.NEXT_PUBLIC_SITE_URL || "https://solidsnk86.vercel.app/",
     images: [
       {
-        url: "/og-image.png",
+        url: "/assets/solid-light-mode.png",
         width: 1200,
         height: 630,
         alt: "Portafolio",

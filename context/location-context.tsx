@@ -6,6 +6,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 
@@ -48,40 +49,43 @@ interface LastAccessProps {
     lon: number;
   };
 }
+const initialData = {
+  ip: "n/a",
+  city: {
+    name: "n/a",
+    postalCode: "n/a",
+  },
+  country: {
+    name: "n/a",
+    alpha: "n/a",
+    emojiFlag: "n/a",
+    timezone: "n/a",
+  },
+  coords: {
+    latitude: "n/a",
+    longitude: "n/a",
+  },
+  sysInfo: {
+    language: "n/a",
+    system: "n/a",
+    webBrowser: {
+      browser: "n/a",
+      version: "n/a",
+    },
+  },
+};
 
 const LocationContext = createContext<LocationProps | null>(null);
 
 export const LocationProvider = ({ children }: { children: ReactNode }) => {
   const [location, setLocation] = useState<Pick<LocationProps, "data">>({
-    data: {
-      ip: "n/a",
-      city: {
-        name: "n/a",
-        postalCode: "n/a",
-      },
-      country: {
-        name: "n/a",
-        alpha: "n/a",
-        emojiFlag: "n/a",
-        timezone: "n/a",
-      },
-      coords: {
-        latitude: "n/a",
-        longitude: "n/a",
-      },
-      sysInfo: {
-        language: "n/a",
-        system: "n/a",
-        webBrowser: {
-          browser: "n/a",
-          version: "n/a",
-        },
-      },
-    },
+    data: initialData,
   });
   const [lastAccess, setLastAccess] = useState<LastAccessProps>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | TypeError | undefined>(undefined);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const postedIpRef = useRef<string | null>(null);
 
   useEffect(() => {
     const getLocation = async () => {
@@ -101,21 +105,50 @@ export const LocationProvider = ({ children }: { children: ReactNode }) => {
     getLocation();
   }, []);
 
-  useEffect(() => {
-    const collectData = async () => {
-      await fetch("/api/collection", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: location.data }),
-      })
-        .then((res) => res.json())
-        .catch((err) => setError(err));
-    };
+  const getCollection = useCallback(async () => {
+    await fetch("/api/collection")
+      .then((res) => res.json())
+      .then((data) => setLastAccess({ data }))
+      .catch((err) => setError(err));
+  }, []);
 
-    setTimeout(() => {
-      collectData();
+  const collectData = useCallback(async (data: LocationProps["data"]) => {
+    await fetch("/api/collection", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data }),
+    })
+      .then((res) => res.json())
+      .catch((err) => setError(err));
+  }, []);
+
+  useEffect(() => {
+    getCollection();
+  }, [getCollection]);
+
+  useEffect(() => {
+    const currentIP = location.data.ip;
+    const lastIP = lastAccess?.data.ip;
+
+    if (!currentIP || currentIP === lastIP || postedIpRef.current === currentIP) {
+      return;
+    }
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      postedIpRef.current = currentIP;
+      collectData(location.data);
     }, 600);
-  }, [location]);
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [collectData, lastAccess?.data.ip, location.data]);
 
   const value = {
     isLoading,
