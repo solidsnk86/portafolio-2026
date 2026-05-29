@@ -12,7 +12,7 @@ export function About() {
             Sobre mi
           </p>
           <h2 className="text-3xl font-semibold text-foreground md:text-4xl">
-            Desarrollo web moderno con foco en impacto
+            Desarrollo web práctico, moderno y eficiente
           </h2>
         </div>
         <article className="space-y-4 md:p-8">
