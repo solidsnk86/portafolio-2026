@@ -54,32 +54,31 @@ const LocationContext = createContext<LocationProps | null>(null);
 export const LocationProvider = ({ children }: { children: ReactNode }) => {
   const [location, setLocation] = useState<Pick<LocationProps, "data">>({
     data: {
-      ip: "n/a",
+      ip: "",
       city: {
-        name: "n/a",
-        postalCode: "n/a",
+        name: "",
+        postalCode: "",
       },
       country: {
-        name: "n/a",
-        alpha: "n/a",
-        emojiFlag: "n/a",
-        timezone: "n/a",
+        name: "",
+        alpha: "",
+        emojiFlag: "",
+        timezone: "",
       },
       coords: {
-        latitude: "n/a",
-        longitude: "n/a",
+        latitude: "",
+        longitude: "",
       },
       sysInfo: {
-        language: "n/a",
-        system: "n/a",
+        language: "",
+        system: "",
         webBrowser: {
-          browser: "n/a",
-          version: "n/a",
+          browser: "",
+          version: "",
         },
       },
     },
   });
-  const [lastAccess, setLastAccess] = useState<LastAccessProps>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | TypeError | undefined>(undefined);
 
@@ -100,24 +99,6 @@ export const LocationProvider = ({ children }: { children: ReactNode }) => {
 
     getLocation();
   }, []);
-
-  useEffect(() => {
-    const collectData = async () => {
-      await fetch("/api/collection", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: location.data }),
-      })
-        .then((res) => res.json())
-        .catch((err) => setError(err));
-    };
-
-    const timeOutId = setTimeout(() => {
-      collectData();
-    }, 600);
-
-    return () => clearTimeout(timeOutId)
-  }, [location]);
 
   const value = {
     isLoading,

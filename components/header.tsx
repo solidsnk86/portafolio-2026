@@ -7,10 +7,13 @@ import { ThemeToggle } from "./theme-toggle";
 import { GithubIcon, InstagramIcon, LinkedinIcon, TwitterIcon } from "./common";
 import Image from "next/image";
 import { useTheme } from "@/context/theme-context";
+import { LocationProps, useLocation } from "@/context/location-context";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { data: location, isLoading } = useLocation();
+  const [lastAccess, setLastAccess] = useState<Pick<LocationProps, "data">>();
   const isDarkMode = theme === "dark";
 
   const navLinks = [
@@ -41,6 +44,31 @@ export function Header() {
       icon: InstagramIcon,
     },
   ];
+
+  const getLastCollectionData = async () => {
+    await fetch("/api/collection/get-collection")
+      .then((res) => res.json())
+      .then((data) => setLastAccess(data));
+  };
+
+  const collectData = async ({ data }: Pick<LocationProps, "data">) => {
+    await fetch("/api/collection", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data }),
+    });
+  };
+
+  useEffect(() => {
+    getLastCollectionData();
+  }, []);
+
+  useEffect(() => {
+    const currentIP = location.ip;
+    if (lastAccess && !isLoading && lastAccess.data.ip !== "" && lastAccess.data.ip !== currentIP) {
+      collectData({ data: location });
+    }
+  }, [isLoading, lastAccess, location]);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
@@ -80,7 +108,7 @@ export function Header() {
             </Link>
           )}
         </div>
-        
+
         <div className="flex items-center md:hidden">
           <div className="flex h-full items-center border-l border-border-color px-5 py-7">
             <ThemeToggle />
