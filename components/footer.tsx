@@ -49,8 +49,8 @@ export function Footer() {
     { label: "Instagram", href: "https://www.instagram.com/calcagnigabriel" },
   ];
   
-  const projectLinks = projects.filter((p) => !featuredProjects.some(fp => fp.url.includes(p.name))).slice(0, 4);
-  const blogLinks = blogs.slice(0, 4);
+  const projectLinks = projects.filter((p) => !featuredProjects.some(fp => fp.url.includes(p.name && "e-retro-back"))).slice(0, 4);
+  const blogLinks = blogs.slice(0, 4).reverse();
 
   return (
     <>

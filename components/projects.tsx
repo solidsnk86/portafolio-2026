@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Metrics } from "./metrics";
 
 const formatDate = (dateTime: string) =>
   new Intl.DateTimeFormat("es-ES", {
@@ -105,6 +106,7 @@ export function Projects() {
             </Link>
           ))}
       </div>
+      <Metrics />
     </section>
   );
 }

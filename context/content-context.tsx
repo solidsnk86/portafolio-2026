@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 
 export interface BlogEntry {
   name: string;
@@ -22,14 +28,24 @@ type ContentContextValue = {
   projects: ProjectEntry[];
   isLoadingBlogs: boolean;
   isLoadingProjects: boolean;
+  metrics: MetricsEntry;
+  isLoadingMetrics: boolean;
+};
+
+type MetricsEntry = {
+  geoRequests: number;
+  neoWifiUsers: number;
+  downloadCount: number;
 };
 
 const ContentContext = createContext<ContentContextValue | null>(null);
 
 let cachedBlogs: BlogEntry[] | null = null;
 let cachedProjects: ProjectEntry[] | null = null;
+let cachedMetrics: MetricsEntry | null = null;
 let blogsPromise: Promise<BlogEntry[]> | null = null;
 let projectsPromise: Promise<ProjectEntry[]> | null = null;
+let metricsPromise: Promise<MetricsEntry> | null = null;
 
 async function loadBlogs(): Promise<BlogEntry[]> {
   if (cachedBlogs) {
@@ -83,9 +99,37 @@ async function loadProjects(): Promise<ProjectEntry[]> {
   return projectsPromise as Promise<ProjectEntry[]>;
 }
 
+async function getMetrics(): Promise<MetricsEntry> {
+  if (cachedMetrics) return cachedMetrics;
+
+  if (!metricsPromise) {
+    metricsPromise = fetch("/api/metrics")
+      .then((res) => res.json())
+      .then((data) => {
+        const result: MetricsEntry = data ?? { geoRequests: 0, neoWifiUsers: 0, downloadCount: 0 };
+        cachedMetrics = result;
+        return result;
+      })
+      .catch(() => {
+        const result: MetricsEntry = { geoRequests: 0, neoWifiUsers: 0, downloadCount: 0 };
+        cachedMetrics = result;
+        return result;
+      })
+      .finally(() => {
+        metricsPromise = null;
+      });
+  }
+
+  return metricsPromise as Promise<MetricsEntry>;
+}
+
 export function ContentProvider({ children }: { children: ReactNode }) {
   const [blogs, setBlogs] = useState<BlogEntry[]>(cachedBlogs ?? []);
-  const [projects, setProjects] = useState<ProjectEntry[]>(cachedProjects ?? []);
+  const [projects, setProjects] = useState<ProjectEntry[]>(
+    cachedProjects ?? [],
+  );
+  const [metrics, setMetrics] = useState<MetricsEntry>(cachedMetrics ?? { geoRequests: 0, neoWifiUsers: 0, downloadCount: 0 });
+  const [isLoadingMetrics, setIsLoadingMetrics] = useState(!cachedMetrics);
   const [isLoadingBlogs, setIsLoadingBlogs] = useState(!cachedBlogs);
   const [isLoadingProjects, setIsLoadingProjects] = useState(!cachedProjects);
 
@@ -94,7 +138,11 @@ export function ContentProvider({ children }: { children: ReactNode }) {
 
     const hydrateContent = async () => {
       try {
-        const [nextBlogs, nextProjects] = await Promise.all([loadBlogs(), loadProjects()]);
+        const [nextBlogs, nextProjects, nextMetrics] = await Promise.all([
+          loadBlogs(),
+          loadProjects(),
+          getMetrics()
+        ]);
 
         if (!active) {
           return;
@@ -102,10 +150,12 @@ export function ContentProvider({ children }: { children: ReactNode }) {
 
         setBlogs(nextBlogs ?? []);
         setProjects(nextProjects ?? []);
+        setMetrics(nextMetrics ?? { geoRequests: 0, neoWifiUsers: 0, downloadCount: 0 });
       } finally {
         if (active) {
           setIsLoadingBlogs(false);
           setIsLoadingProjects(false);
+          setIsLoadingMetrics(false);
         }
       }
     };
@@ -118,7 +168,9 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <ContentContext.Provider value={{ blogs, projects, isLoadingBlogs, isLoadingProjects }}>
+    <ContentContext.Provider
+      value={{ blogs, projects, isLoadingBlogs, isLoadingProjects, metrics, isLoadingMetrics }}
+    >
       {children}
     </ContentContext.Provider>
   );

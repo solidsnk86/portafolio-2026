@@ -1,10 +1,8 @@
 "use client";
 
 import { useContentData } from "@/context/content-context";
-import Image from "next/image";
 import Link from "next/link";
 import { timeAgo } from "@/utils/formatRelativeTime";
-import { Loader2 } from "lucide-react";
 
 export function Blogs() {
   const { blogs, isLoadingBlogs } = useContentData();
@@ -12,7 +10,7 @@ export function Blogs() {
   return (
     <section
       id="blogs"
-      className="mx-auto max-w-6xl pt-1 border-b border-border-color"
+      className="mx-auto max-w-6xl border-b border-border-color"
     >
       <div className="space-y-3 mb-12 px-4">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
@@ -53,7 +51,7 @@ export function Blogs() {
             .map((blog) => (
               <article
                 key={blog.name}
-                className="border-b border-border-color p-4 hover:bg-secondary first:border-t last:border-0"
+                className="border-b border-border-color p-4 hover:bg-secondary odd:bg-card first:border-t last:border-0"
               >
                 <Link href={`/blog/${blog.name}`}>
                   <div className="mb-2 flex items-center justify-between">
