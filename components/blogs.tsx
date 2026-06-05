@@ -56,7 +56,7 @@ export function Blogs() {
                 <Link href={`/blog/${blog.name}`}>
                   <div className="mb-2 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="relative h-8 w-8 overflow-hidden rounded-full">
+                      <div className="relative h-8 w-8 overflow-hidden rounded">
                         <picture>
                           <img
                             src="/mgc.jfif"
