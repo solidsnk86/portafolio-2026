@@ -37,7 +37,7 @@ export function About() {
             Actualmente colaboro con un cliente en Chile en el proyecto
             <Link
               href="http://pascalecloset.com/"
-              className="mx-1 font-semibold hover:underline"
+              className="mx-1 font-semibold hover:underline text-accent"
             >
               @pascale-closet.
             </Link>

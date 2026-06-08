@@ -1,22 +1,21 @@
 "use client";
 
 import { useContentData } from "@/context/content-context";
+import { ChevronsLeftRightEllipsis, Download, Users } from "lucide-react";
 
 export const Metrics = () => {
   const { metrics } = useContentData();
 
   const appMetrics = [
-    { name: "Geolocation API", info: "consultas", count: metrics.geoRequests },
-    { name: "Neo WiFi Web", info: "usuarios", count: metrics.neoWifiUsers },
+    { name: "Geolocation API", info: "consultas", count: metrics.geoRequests, icon: ChevronsLeftRightEllipsis },
+    { name: "Neo WiFi Web", info: "usuarios", count: metrics.neoWifiUsers, icon: Users },
     {
       name: "Neo WiFi Desktop",
       info: "descargas",
-      count: metrics.downloadCount,
+      count: metrics.downloadCount, icon: Download
     },
-    { name: "Neo WiFi APK", info: "descargas", count: 16 },
+    { name: "Neo WiFi APK", info: "descargas", count: 16, icon: Download },
   ];
-
-  console.log(appMetrics);
 
   return (
     <section className="mx-auto max-w-6xl pt-8 border-b border-border-color">
@@ -35,15 +34,18 @@ export const Metrics = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
-        {appMetrics.map((app, i) => (
+        {appMetrics.map(({ name, count, info, icon: Icon }, i) => (
           <div
-            key={`${app.name}-${i + 1}`}
+            key={`${name}-${i + 1}`}
             className="border-t md:border-r last:border-r-0 last:border-l-0 border-border-color p-4 flex flex-col justify-center text-center"
           >
-            <p className="text-2xl">{app.name}</p>
-            <span className="text-3xl font-bold">{app.count}</span>
+            <p className="text-2xl">{name}</p>
+            <span className="text-3xl font-bold">{count}</span>
             <div className="flex justify-center mx-auto gap-1.5 items-center border border-border-color rounded-2xl px-2 py-1 w-fit bg-secondary">
-              <small className="capitalize">{app.info}</small>
+              <small className="capitalize flex items-center gap-1">
+                <Icon size={14} />
+                  {info}
+                </small>
             </div>
           </div>
         ))}
