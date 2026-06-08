@@ -24,10 +24,17 @@ export async function GET() {
       .limit(1)
       .order("created_at", { ascending: false });
 
+    const { data: apkDownloadsCount } = await supabase
+      .from("apk_downloads")
+      .select("id")
+      .order("created_at", { ascending: false })
+      .limit(1);
+
     return Response.json({
       geoRequests,
       neoWifiUsers: neoWifiUsers?.[0].id,
       downloadCount: downloadCount?.[0].download_count,
+      apkDownloadsCount: apkDownloadsCount?.[0].id
     });
   } catch (error) {
     return Response.json({ message: "Error", error });

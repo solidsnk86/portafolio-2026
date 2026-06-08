@@ -14,7 +14,7 @@ export const Metrics = () => {
       info: "descargas",
       count: metrics.downloadCount, icon: Download
     },
-    { name: "Neo WiFi APK", info: "descargas", count: 16, icon: Download },
+    { name: "Neo WiFi APK", info: "descargas", count: metrics.apkDownloadsCount, icon: Download },
   ];
 
   return (

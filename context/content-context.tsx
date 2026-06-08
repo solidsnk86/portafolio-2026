@@ -36,6 +36,7 @@ type MetricsEntry = {
   geoRequests: number;
   neoWifiUsers: number;
   downloadCount: number;
+  apkDownloadsCount: number;
 };
 
 const ContentContext = createContext<ContentContextValue | null>(null);
@@ -106,12 +107,12 @@ async function getMetrics(): Promise<MetricsEntry> {
     metricsPromise = fetch("/api/metrics")
       .then((res) => res.json())
       .then((data) => {
-        const result: MetricsEntry = data ?? { geoRequests: 0, neoWifiUsers: 0, downloadCount: 0 };
+        const result: MetricsEntry = data ?? { geoRequests: 0, neoWifiUsers: 0, downloadCount: 0, apkDonwloadsCount: 0 };
         cachedMetrics = result;
         return result;
       })
       .catch(() => {
-        const result: MetricsEntry = { geoRequests: 0, neoWifiUsers: 0, downloadCount: 0 };
+        const result: MetricsEntry = { geoRequests: 0, neoWifiUsers: 0, downloadCount: 0, apkDownloadsCount: 0 };
         cachedMetrics = result;
         return result;
       })
@@ -128,7 +129,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   const [projects, setProjects] = useState<ProjectEntry[]>(
     cachedProjects ?? [],
   );
-  const [metrics, setMetrics] = useState<MetricsEntry>(cachedMetrics ?? { geoRequests: 0, neoWifiUsers: 0, downloadCount: 0 });
+  const [metrics, setMetrics] = useState<MetricsEntry>(cachedMetrics ?? { geoRequests: 0, neoWifiUsers: 0, downloadCount: 0, apkDownloadsCount: 0 });
   const [isLoadingMetrics, setIsLoadingMetrics] = useState(!cachedMetrics);
   const [isLoadingBlogs, setIsLoadingBlogs] = useState(!cachedBlogs);
   const [isLoadingProjects, setIsLoadingProjects] = useState(!cachedProjects);
@@ -150,7 +151,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
 
         setBlogs(nextBlogs ?? []);
         setProjects(nextProjects ?? []);
-        setMetrics(nextMetrics ?? { geoRequests: 0, neoWifiUsers: 0, downloadCount: 0 });
+        setMetrics(nextMetrics ?? { geoRequests: 0, neoWifiUsers: 0, downloadCount: 0, apkDownloadsCount: 0 });
       } finally {
         if (active) {
           setIsLoadingBlogs(false);
