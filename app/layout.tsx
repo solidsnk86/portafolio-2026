@@ -19,7 +19,7 @@ const playfairDisplay = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "SolidSnk86 — Desarrollador Full-Stack",
+    default: "Gabriel Calcagni — Desarrollador Full-Stack",
     template: "%s | Portafolio",
   },
   description:
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es-ES",
     siteName: "Portafolio",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://solidsnk86.vercel.app/",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://gabrielcalcagni.vercel.app/",
     images: [
       {
         url: "/assets/solid-light-mode.png",
