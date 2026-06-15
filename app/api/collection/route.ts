@@ -10,6 +10,7 @@ export async function POST(req: Request) {
         ip: location.ip,
         city_name: location.city.name,
         country_name: location.country.name,
+        timezone: location.country.timezone,
         so: location.sysInfo.system,
         browser: location.sysInfo.webBrowser.browser,
         version: location.sysInfo.webBrowser.version,
