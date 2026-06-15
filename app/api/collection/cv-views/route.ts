@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
     if (viewsError) return Response.json({ message: viewsError.message });
 
-    return Response.json({ message: "CV view sent" }, { status: 200 });
+    return Response.json({}, { status: 204 });
   } catch (error) {
     return Response.json(
       { message: "Error en el servidor", error },

@@ -1,6 +1,33 @@
+"use client";
+
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 export function About() {
+  const searchParams = useSearchParams()
+  const source = searchParams.get("utm_source") || null;
+
+  const collectDataUTM = async (source: string) => {
+    try {
+      await fetch("/api/utm", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ utm: source, referer: document.referrer })
+      })
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    if (!source) return;
+
+    if (source) {
+      collectDataUTM(source)
+    }
+  }, [source])
+
   return (
     <section
       id="about"
