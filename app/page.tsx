@@ -15,7 +15,7 @@ export default async function Home({
   searchParams: Promise<{ utm_source?: string, fbclid?: string }>;
 }) {
   const fbclid = (await searchParams).fbclid;
-  const source = (await searchParams).utm_source || fbclid;
+  const source = (await searchParams).utm_source || `fbId=${fbclid}`;
 
   return (
     <ThemeProviderClient>

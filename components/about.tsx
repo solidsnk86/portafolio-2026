@@ -1,31 +1,31 @@
 "use client";
 
+import { useLocation } from "@/context/location-context";
 import Link from "next/link";
 import { useEffect } from "react";
 
-export const dynamic = "force-dynamic";
-
 export function About({ source }: { source?: string }) {
+  const { data: { lastAccess } } = useLocation();
 
-  const collectDataUTM = async (source: string) => {
+  useEffect(() => {
+    if (!source) return;
+
+    const collectDataUTM = async (source: string) => {
     try {
       await fetch("/api/utm", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ utm: source, referer: document.referrer })
+        body: JSON.stringify({ utm: source, referer: document.referrer, lastAccessId: lastAccess?.data.id })
       })
     } catch (error) {
       console.error(error);
     }
   }
 
-  useEffect(() => {
-    if (!source) return;
-
     if (source) {
       collectDataUTM(source)
     }
-  }, [source])
+  }, [source, lastAccess])
 
   return (
     <section

@@ -13,7 +13,6 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { data: location, isLoading } = useLocation();
-  const [lastAccess, setLastAccess] = useState<Pick<LocationProps, "data">>();
   const isDarkMode = theme === "dark";
 
   const navLinks = [
@@ -45,12 +44,6 @@ export function Header() {
     },
   ];
 
-  const getLastCollectionData = async () => {
-    await fetch("/api/collection/get-collection")
-      .then((res) => res.json())
-      .then((data) => setLastAccess(data));
-  };
-
   const collectData = async ({ data }: Pick<LocationProps, "data">) => {
     await fetch("/api/collection", {
       method: "POST",
@@ -60,15 +53,16 @@ export function Header() {
   };
 
   useEffect(() => {
-    getLastCollectionData();
-  }, []);
-
-  useEffect(() => {
     const currentIP = location.ip;
-    if (lastAccess && !isLoading && lastAccess.data.ip !== "" && lastAccess.data.ip !== currentIP) {
+    if (
+      location.lastAccess &&
+      !isLoading &&
+      location.lastAccess.data.ip !== "" &&
+      location.lastAccess.data.ip !== currentIP
+    ) {
       collectData({ data: location });
     }
-  }, [isLoading, lastAccess, location]);
+  }, [isLoading, location]);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "auto";

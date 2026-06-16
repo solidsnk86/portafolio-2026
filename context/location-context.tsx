@@ -3,12 +3,25 @@
 import {
   createContext,
   ReactNode,
-  useCallback,
   useContext,
   useEffect,
   useState,
 } from "react";
 
+interface LastAccessProps {
+  data: {
+    id: string;
+    ip: string;
+    city_name: string;
+    country_name: string;
+    so: string;
+    browser: string;
+    version: string;
+    emoji_flag: string;
+    lat: number;
+    lon: number;
+  };
+}
 export interface LocationProps {
   isLoading: boolean;
   error: TypeError | Error | undefined;
@@ -33,19 +46,7 @@ export interface LocationProps {
         version: string;
       };
     };
-  };
-}
-interface LastAccessProps {
-  data: {
-    ip: string;
-    city_name: string;
-    country_name: string;
-    so: string;
-    browser: string;
-    version: string;
-    emoji_flag: string;
-    lat: number;
-    lon: number;
+    lastAccess: LastAccessProps | undefined;
   };
 }
 
@@ -77,10 +78,25 @@ export const LocationProvider = ({ children }: { children: ReactNode }) => {
           version: "",
         },
       },
+      lastAccess: {
+        data: {
+          id: "",
+          ip: "",
+          city_name: "",
+          country_name: "",
+          so: "",
+          browser: "",
+          version: "",
+          emoji_flag: "",
+          lat: 0,
+          lon: 0,
+        },
+      },
     },
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | TypeError | undefined>(undefined);
+  const [lastAccess, setLastAccess] = useState<LastAccessProps>();
 
   useEffect(() => {
     const getLocation = async () => {
@@ -100,10 +116,22 @@ export const LocationProvider = ({ children }: { children: ReactNode }) => {
     getLocation();
   }, []);
 
+  const getLastCollectionData = async () => {
+    await fetch("/api/collection/get-collection")
+      .then((res) => res.json())
+      .then((data) => setLastAccess(data))
+      .catch((err) => setError(err));
+  };
+
+  useEffect(() => {
+    getLastCollectionData();
+  }, []);
+
   const value = {
     isLoading,
     error,
     data: location.data,
+    lastAccess,
   };
 
   return (
