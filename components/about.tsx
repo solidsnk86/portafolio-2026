@@ -5,7 +5,9 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 export function About({ source }: { source?: string }) {
-  const { data: { lastAccess } } = useLocation();
+  const { data: location, isLoading } = useLocation();
+
+  console.log(location.lastAccess?.emoji_flag)
 
   useEffect(() => {
     if (!source) return;
@@ -15,17 +17,17 @@ export function About({ source }: { source?: string }) {
       await fetch("/api/utm", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ utm: source, referer: document.referrer, lastAccessId: lastAccess?.data.id })
+        body: JSON.stringify({ utm: source, referer: document.referrer, lastAccessId: location.lastAccess?.id })
       })
     } catch (error) {
       console.error(error);
     }
   }
 
-    if (source) {
+    if (source && !isLoading) {
       collectDataUTM(source)
     }
-  }, [source, lastAccess])
+  }, [source, location, isLoading])
 
   return (
     <section

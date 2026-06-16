@@ -9,18 +9,16 @@ import {
 } from "react";
 
 interface LastAccessProps {
-  data: {
-    id: string;
-    ip: string;
-    city_name: string;
-    country_name: string;
-    so: string;
-    browser: string;
-    version: string;
-    emoji_flag: string;
-    lat: number;
-    lon: number;
-  };
+  id: string;
+  ip: string;
+  city_name: string;
+  country_name: string;
+  so: string;
+  browser: string;
+  version: string;
+  emoji_flag: string;
+  lat: number;
+  lon: number;
 }
 export interface LocationProps {
   isLoading: boolean;
@@ -46,7 +44,7 @@ export interface LocationProps {
         version: string;
       };
     };
-    lastAccess: LastAccessProps | undefined;
+    lastAccess: LastAccessProps;
   };
 }
 
@@ -79,24 +77,21 @@ export const LocationProvider = ({ children }: { children: ReactNode }) => {
         },
       },
       lastAccess: {
-        data: {
-          id: "",
-          ip: "",
-          city_name: "",
-          country_name: "",
-          so: "",
-          browser: "",
-          version: "",
-          emoji_flag: "",
-          lat: 0,
-          lon: 0,
-        },
+        id: "",
+        ip: "",
+        city_name: "",
+        country_name: "",
+        so: "",
+        browser: "",
+        version: "",
+        emoji_flag: "",
+        lat: 0,
+        lon: 0,
       },
     },
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | TypeError | undefined>(undefined);
-  const [lastAccess, setLastAccess] = useState<LastAccessProps>();
 
   useEffect(() => {
     const getLocation = async () => {
@@ -116,14 +111,21 @@ export const LocationProvider = ({ children }: { children: ReactNode }) => {
     getLocation();
   }, []);
 
-  const getLastCollectionData = async () => {
-    await fetch("/api/collection/get-collection")
-      .then((res) => res.json())
-      .then((data) => setLastAccess(data))
-      .catch((err) => setError(err));
-  };
-
   useEffect(() => {
+    const getLastCollectionData = async () => {
+      setIsLoading(true);
+      await fetch("/api/collection/get-collection")
+        .then((res) => res.json())
+        .then((colllection) => {
+          setLocation((prev) => ({ ...prev, data: { ...prev.data, lastAccess: colllection.data } }))
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setError(err);
+          setIsLoading(false);
+        });
+    };
+
     getLastCollectionData();
   }, []);
 
@@ -131,7 +133,6 @@ export const LocationProvider = ({ children }: { children: ReactNode }) => {
     isLoading,
     error,
     data: location.data,
-    lastAccess,
   };
 
   return (

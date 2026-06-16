@@ -57,8 +57,8 @@ export function Header() {
     if (
       location.lastAccess &&
       !isLoading &&
-      location.lastAccess.data.ip !== "" &&
-      location.lastAccess.data.ip !== currentIP
+      location.lastAccess.ip !== "" &&
+      location.lastAccess.ip !== currentIP
     ) {
       collectData({ data: location });
     }
