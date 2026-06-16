@@ -11,21 +11,27 @@ export function About({ source }: { source?: string }) {
     if (!source) return;
 
     const collectDataUTM = async (source: string) => {
-    try {
-      await fetch("/api/utm", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ utm: source, referer: document.referrer, lastAccessId: location.lastAccess?.id })
-      })
-    } catch (error) {
-      console.error(error);
-    }
-  }
+      try {
+        if (!isLoading && location.lastAccess) {
+          await fetch("/api/utm", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              utm: source,
+              referer: document.referrer,
+              lastAccessId: location.lastAccess.id,
+            }),
+          });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-    if (source && !isLoading) {
-      collectDataUTM(source)
+    if (source) {
+      collectDataUTM(source);
     }
-  }, [source, location, isLoading])
+  }, [source, location, isLoading]);
 
   return (
     <section
