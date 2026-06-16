@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 export const dynamic = "force-dynamic";
 
-export function About({ source }: { source: string }) {
+export function About({ source }: { source?: string }) {
 
   const collectDataUTM = async (source: string) => {
     try {

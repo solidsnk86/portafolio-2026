@@ -12,9 +12,10 @@ import {
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Promise<{ utm_source: string }>;
+  searchParams: Promise<{ utm_source?: string, fbclid?: string }>;
 }) {
-  const source = (await searchParams).utm_source;
+  const fbclid = (await searchParams).fbclid;
+  const source = (await searchParams).utm_source || fbclid;
 
   return (
     <ThemeProviderClient>
