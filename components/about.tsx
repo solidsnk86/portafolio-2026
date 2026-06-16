@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-export function About() {
-  const searchParams = useSearchParams()
-  const source = searchParams.get("utm_source") || null;
+export const dynamic = "force-dynamic";
+
+export function About({ source }: { source: string }) {
 
   const collectDataUTM = async (source: string) => {
     try {

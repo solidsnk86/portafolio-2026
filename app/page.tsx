@@ -1,7 +1,21 @@
 import { ThemeProviderClient } from "@/components/theme-provider-client";
-import { About, Blogs, Contact, Footer, Header, Hero, Projects } from "@/components";
+import {
+  About,
+  Blogs,
+  Contact,
+  Footer,
+  Header,
+  Hero,
+  Projects,
+} from "@/components";
 
-export default function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ utm_source: string }>;
+}) {
+  const source = (await searchParams).utm_source;
+
   return (
     <ThemeProviderClient>
       <section className="min-h-screen overflow-x-hidden px-3 md:px-0">
@@ -10,7 +24,7 @@ export default function Home() {
           <Header />
           <main className="border-x border-border-color">
             <Hero />
-            <About />
+            <About source={source} />
             <Projects />
             <Blogs />
             <Contact />
