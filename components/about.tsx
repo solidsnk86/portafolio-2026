@@ -7,8 +7,6 @@ import { useEffect } from "react";
 export function About({ source }: { source?: string }) {
   const { data: location, isLoading } = useLocation();
 
-  console.log(location.lastAccess?.emoji_flag)
-
   useEffect(() => {
     if (!source) return;
 
