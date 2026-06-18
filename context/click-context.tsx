@@ -44,20 +44,30 @@ export const ClickContextProvider = ({ children }: { children: ReactNode }) => {
 
   const sendAnalyticsData = async (payload: Payload) => {
     try {
-      await fetch("/api/collection/events", {
+      const response = await fetch("/api/collection/events", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+
+      if (!response.ok) {
+        return;
+      }
+
+      await response.json();
     } catch (err) {
-      console.error("Error sending analytics:", err);
+      // Error silencioso
     }
   };
 
   const flushAnalyticsData = async () => {
-    const payload = JSON.parse(
-      sessionStorage.getItem("solidsnk-analitycs") || "{}"
-    );
+    const stored = sessionStorage.getItem("solidsnk-analitycs");
+    
+    if (!stored) {
+      return;
+    }
+
+    const payload = JSON.parse(stored);
     if (payload && Object.keys(payload).length > 0) {
       await sendAnalyticsData(payload);
       sessionStorage.removeItem("solidsnk-analitycs");
@@ -101,26 +111,41 @@ export const ClickContextProvider = ({ children }: { children: ReactNode }) => {
 
     createAndStartWorker();
 
+    const saveAnalyticsData = () => {
+      const payload = {
+        event_clicked: clicksRef.current,
+        click_count: clicksRef.current.length,
+        elapsed_time: timeRef.current,
+        user_id: lastAccess?.id || "anonymous",
+      };
+      sessionStorage.setItem(
+        "solidsnk-analitycs",
+        JSON.stringify(payload)
+      );
+    };
+
     const handleBlur = () => {
       if (timerWorkerRef.current) {
         timerWorkerRef.current.terminate();
       }
+      saveAnalyticsData();
+      flushAnalyticsData();
+    };
 
-      sessionStorage.setItem(
-        "solidsnk-analitycs",
-        JSON.stringify({
-          event_clicked: clicksRef.current,
-          click_count: clicksRef.current.length,
-          elapsed_time: timeRef.current,
-          user_id: lastAccess?.id || "",
-        })
-      );
+    const handleBeforeUnload = () => {
+      if (timerWorkerRef.current) {
+        timerWorkerRef.current.terminate();
+      }
+      saveAnalyticsData();
+      flushAnalyticsData();
     };
 
     window.addEventListener("blur", handleBlur);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
       window.removeEventListener("blur", handleBlur);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
       if (timerWorkerRef.current) {
         timerWorkerRef.current.terminate();
       }
@@ -128,6 +153,7 @@ export const ClickContextProvider = ({ children }: { children: ReactNode }) => {
   }, [lastAccess]);
 
   useEffect(() => {
+    // Flush datos guardados de sesiones anteriores
     flushAnalyticsData();
   }, []);
 
