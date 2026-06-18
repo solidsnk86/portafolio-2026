@@ -9,7 +9,7 @@
   --foreground: #171717;
   --border-color: #e4e4e7;
   --secondary: #f4f4f5;
-  --accent: #4343ee;
+  --accent: oklch(58.5% 0.233 277.117);
   --bg-card: #ffffff;
   --muted-foreground: #71717a;
   --color-card: var(--bg-card);
@@ -22,7 +22,7 @@
   --foreground: #ededed;
   --border-color: #27272a;
   --secondary: #18181b;
-  --accent: #4343ee;
+  --accent: oklch(58.5% 0.233 277.117);
   --bg-card: #111111;
   --muted-foreground: #a1a1aa;
   --color-card: var(--bg-card);
@@ -50,7 +50,7 @@
     --foreground: #ededed;
     --border-color: #27272a;
     --secondary: #18181b;
-    --accent: #fce300;
+    --accent: oklch(58.5% 0.233 277.117);
     --bg-card: #111111;
     --muted-foreground: #a1a1aa;
     --color-card: var(--bg-card);

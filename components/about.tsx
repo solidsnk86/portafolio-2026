@@ -8,7 +8,7 @@ export function About({ source }: { source?: string }) {
   const { data: location, isLoading } = useLocation();
 
   useEffect(() => {
-    if (!source) return;
+    if (!source || source === "No se detectó el origen utm") return;
 
     const collectDataUTM = async (source: string) => {
       try {
@@ -28,9 +28,7 @@ export function About({ source }: { source?: string }) {
       }
     };
 
-    if (source) {
-      collectDataUTM(source);
-    }
+    collectDataUTM(source);
   }, [source, location, isLoading]);
 
   return (
@@ -69,7 +67,8 @@ export function About({ source }: { source?: string }) {
             Actualmente colaboro con un cliente en Chile en el proyecto
             <Link
               href="http://pascalecloset.com/"
-              className="mx-1 font-semibold hover:underline text-accent"
+              target="_blank"
+              className="mx-1 font-semibold hover:underline text-indigo-500"
             >
               @pascale-closet.
             </Link>

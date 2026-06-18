@@ -29,13 +29,13 @@ export function Contact() {
             href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors duration-300 hover:outline-4 hover:outline-accent"
+            className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors hover:outline-4 hover:outline-indigo-500"
           >
             Contáctame en WhatsApp
           </Link>
           <Link
             href={`mailto:${email}`}
-             className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors duration-300 hover:outline-4 hover:outline-accent"
+             className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors hover:outline-4 hover:outline-indigo-500"
           >
             {email}
           </Link>

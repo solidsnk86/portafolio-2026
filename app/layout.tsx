@@ -4,6 +4,8 @@ import { ContentProvider } from "@/context/content-context";
 import "./globals.css";
 import ThemeProviderClient from "@/components/theme-provider-client";
 import { LocationProvider } from "@/context/location-context";
+import { ClickContextProvider } from "@/context/click-context";
+import { AnalyticsWrapper } from "@/components";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -39,7 +41,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es-ES",
     siteName: "Portafolio",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://gabrielcalcagni.vercel.app/",
+    url:
+      process.env.NEXT_PUBLIC_SITE_URL || "https://gabrielcalcagni.vercel.app/",
     images: [
       {
         url: "/assets/solid-light-mode.png",
@@ -80,7 +83,10 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <LocationProvider>
           <ContentProvider>
-            <ThemeProviderClient>{children}</ThemeProviderClient>
+            <ClickContextProvider>
+              <AnalyticsWrapper />
+              <ThemeProviderClient>{children}</ThemeProviderClient>
+            </ClickContextProvider>
           </ContentProvider>
         </LocationProvider>
       </body>
