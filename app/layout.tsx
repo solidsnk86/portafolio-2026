@@ -45,7 +45,7 @@ export const metadata: Metadata = {
       process.env.NEXT_PUBLIC_SITE_URL || "https://gabrielcalcagni.vercel.app/",
     images: [
       {
-        url: "/assets/solid-light-mode.png",
+        url: "favicon.png",
         width: 1200,
         height: 630,
         alt: "Portafolio",
