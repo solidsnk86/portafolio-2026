@@ -6,6 +6,7 @@ import {
   useState,
   useEffect,
   useRef,
+  useCallback,
   ReactNode,
 } from "react";
 import { useLocation } from "./location-context";
@@ -29,12 +30,13 @@ interface MouseClickProps {
   flushAnalyticsData: () => Promise<void>;
 }
 
-const CLickContext = createContext<MouseClickProps | undefined>(undefined);
+const ClickContext = createContext<MouseClickProps | undefined>(undefined);
 
 export const ClickContextProvider = ({ children }: { children: ReactNode }) => {
   const [count, setCount] = useState<number>(0);
   const [element, setElement] = useState<Element | undefined>(undefined);
   const clicksRef = useRef<ClickRecord[]>([]);
+  const countRef = useRef<number>(0);
   const timeRef = useRef<number>(0);
   const timerWorkerRef = useRef<Worker | null>(null);
 
@@ -42,7 +44,7 @@ export const ClickContextProvider = ({ children }: { children: ReactNode }) => {
     data: { lastAccess },
   } = useLocation();
 
-  const sendAnalyticsData = async (payload: Payload) => {
+  const sendAnalyticsData = useCallback(async (payload: Payload) => {
     try {
       const response = await fetch("/api/collection/events", {
         method: "POST",
@@ -50,112 +52,81 @@ export const ClickContextProvider = ({ children }: { children: ReactNode }) => {
         body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
-        return;
-      }
+      if (!response.ok) return;
 
       await response.json();
-    } catch (err) {
+    } catch {
       // Error silencioso
     }
-  };
+  }, []);
 
-  const flushAnalyticsData = async () => {
+  const flushAnalyticsData = useCallback(async () => {
     const stored = sessionStorage.getItem("solidsnk-analitycs");
-    
-    if (!stored) {
-      return;
-    }
+    if (!stored) return;
 
     const payload = JSON.parse(stored);
     if (payload && Object.keys(payload).length > 0) {
       await sendAnalyticsData(payload);
       sessionStorage.removeItem("solidsnk-analitycs");
     }
-  };
+  }, [sendAnalyticsData]);
 
+  
   useEffect(() => {
     const detectClick = (e: PointerEvent) => {
-      if (e.target) {
-        const newCount = count + 1;
-        setCount(newCount);
-        setElement(e.target as Element);
+      if (!e.target) return;
 
-        clicksRef.current.push({
-          clickCount: newCount,
-          content: (e.target as Element).textContent || "",
-        });
-      }
+      countRef.current += 1;
+      setCount(countRef.current);
+      setElement(e.target as Element);
+
+      clicksRef.current.push({
+        clickCount: countRef.current,
+        content: (e.target as Element).textContent || "",
+      });
     };
 
     window.addEventListener("click", detectClick);
-    return () => {
-      window.removeEventListener("click", detectClick);
-    };
-  }, [count]);
+    return () => window.removeEventListener("click", detectClick);
+  }, []);
 
   useEffect(() => {
-    const createAndStartWorker = () => {
-      const timerWorker = new Worker(
-        new URL("../worker/time-worker.ts", import.meta.url)
-      );
-
-      timerWorker.postMessage(1000);
-      timerWorker.onmessage = (e) => {
-        const timer = e.data;
-        timeRef.current = timer;
-      };
-
-      timerWorkerRef.current = timerWorker;
+    const timerWorker = new Worker(
+      new URL("../worker/time-worker.ts", import.meta.url)
+    );
+    timerWorker.postMessage(1000);
+    timerWorker.onmessage = (e) => {
+      timeRef.current = e.data;
     };
-
-    createAndStartWorker();
+    timerWorkerRef.current = timerWorker;
 
     const saveAnalyticsData = () => {
       const payload = {
         event_clicked: clicksRef.current,
         click_count: clicksRef.current.length,
         elapsed_time: timeRef.current,
-        user_id: lastAccess?.id || "anonymous",
+        user_id: lastAccess!.id,
       };
-      sessionStorage.setItem(
-        "solidsnk-analitycs",
-        JSON.stringify(payload)
-      );
+      sessionStorage.setItem("solidsnk-analitycs", JSON.stringify(payload));
     };
 
     const handleBlur = () => {
-      if (timerWorkerRef.current) {
-        timerWorkerRef.current.terminate();
-      }
-      saveAnalyticsData();
-      flushAnalyticsData();
-    };
-
-    const handleBeforeUnload = () => {
-      if (timerWorkerRef.current) {
-        timerWorkerRef.current.terminate();
-      }
+      timerWorkerRef.current?.terminate();
       saveAnalyticsData();
       flushAnalyticsData();
     };
 
     window.addEventListener("blur", handleBlur);
-    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
       window.removeEventListener("blur", handleBlur);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      if (timerWorkerRef.current) {
-        timerWorkerRef.current.terminate();
-      }
+      timerWorkerRef.current?.terminate();
     };
-  }, [lastAccess]);
+  }, [lastAccess, flushAnalyticsData]);
 
   useEffect(() => {
-    // Flush datos guardados de sesiones anteriores
     flushAnalyticsData();
-  }, []);
+  }, [flushAnalyticsData]);
 
   const values: MouseClickProps = {
     count,
@@ -164,11 +135,11 @@ export const ClickContextProvider = ({ children }: { children: ReactNode }) => {
     flushAnalyticsData,
   };
 
-  return <CLickContext value={values}>{children}</CLickContext>;
+  return <ClickContext value={values}>{children}</ClickContext>;
 };
 
 export const useClick = () => {
-  const ctx = useContext(CLickContext);
+  const ctx = useContext(ClickContext);
   if (!ctx) throw new Error("Must execute inside the provider");
   return ctx;
 };

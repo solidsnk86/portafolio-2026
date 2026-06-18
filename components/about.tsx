@@ -46,21 +46,17 @@ export function About({ source }: { source?: string }) {
           </h2>
         </div>
         <article className="space-y-4 md:p-8">
-          <p className="text-base text-muted-foreground">
-            Transformo necesidades reales en productos claros, escalables y
-            útiles.
-          </p>
           <p className="text-base leading-relaxed text-muted-foreground">
-            Soy desarrollador web con 3 años de experiencia, egresado de la
+            Soy desarrollador con 4 años de experiencia, egresado de la
             UTN-FRSR. Trabajo con una mirada práctica, priorizo simplicidad,
             rendimiento y una buena experiencia de usuario en cada entrega.
           </p>
 
           <p className="text-base leading-relaxed text-muted-foreground">
-            Hoy potencio mi flujo con agentes de IA para investigar, prototipar,
-            refactorizar y documentar más rápido, sin perder criterio técnico.
-            La IA me ayuda a acelerar, pero las decisiones de arquitectura y
-            calidad siempre las guío en el contexto del proyecto.
+            Hoy potencio mi flujo con agentes de IA para investigar, prototipar
+            y documentar más rápido, sin perder criterio técnico. La IA me ayuda
+            a acelerar, pero las decisiones de arquitectura
+            y calidad siempre las guío en el contexto del proyecto.
           </p>
 
           <p className="text-base leading-relaxed text-muted-foreground">

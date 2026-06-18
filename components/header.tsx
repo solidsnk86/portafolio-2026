@@ -53,13 +53,12 @@ export function Header() {
   };
 
   useEffect(() => {
+    if (isLoading || !location || !location.lastAccess) return;
+
     const currentIP = location.ip;
-    if (
-      location.lastAccess &&
-      !isLoading &&
-      location.lastAccess.ip !== "" &&
-      location.lastAccess.ip !== currentIP
-    ) {
+    const lastIP = location.lastAccess.ip;
+
+    if (lastIP !== currentIP) {
       collectData({ data: location });
     }
   }, [isLoading, location]);

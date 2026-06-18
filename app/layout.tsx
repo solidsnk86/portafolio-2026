@@ -84,7 +84,6 @@ export default function RootLayout({
         <LocationProvider>
           <ContentProvider>
             <ClickContextProvider>
-              <AnalyticsWrapper />
               <ThemeProviderClient>{children}</ThemeProviderClient>
             </ClickContextProvider>
           </ContentProvider>
