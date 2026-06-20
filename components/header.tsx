@@ -59,7 +59,9 @@ export function Header() {
     const lastIP = location.lastAccess.ip;
 
     if (lastIP !== currentIP) {
-      collectData({ data: location });
+      setTimeout(() => {
+        collectData({ data: location });
+      }, 400);
     }
   }, [isLoading, location]);
 

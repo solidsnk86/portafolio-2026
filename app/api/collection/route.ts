@@ -3,7 +3,7 @@ import { supabase } from "@/utils/supabase";
 
 export async function POST(req: Request) {
   const { data: location }: Pick<LocationProps, "data"> = await req.json();
-
+  
   try {
     const { error } = await supabase.from("solidsnk_collection").insert([
       {
