@@ -9,7 +9,7 @@ export async function POST(req: Request) {
       .select("id")
       .order("created_at", { ascending: false })
       .limit(1)
-      .maybeSingle();
+      .single();
     if (error) {
       return Response.json({ message: "Error al obtener id", error });
     }
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     return Response.json({}, { status: 204 });
   } catch (error) {
     return Response.json(
-      { message: "Error en el servidor", error },
+      { message: "Error en el servidor", error: (error as TypeError).message },
       { status: 500 },
     );
   }
