@@ -11,7 +11,7 @@ export async function POST(req: Request) {
       .from("solidsnk_collection_utm")
       .insert([{ source: utm, referer, solidsnk_collection_id: lastAccessId }]);
     if (error) throw new Error(error.message);
-    return Response.json({}, { status: 204 });
+    return Response.json({}, { status: 200 });
   } catch (error) {
     return Response.json({ message: "Error", error });
   }
