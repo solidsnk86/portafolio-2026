@@ -23,16 +23,16 @@ interface Payload {
   user_id: string;
 }
 
-interface MouseClickProps {
+interface EventsProps {
   count: number;
   element: Element | undefined;
   sendAnalyticsData: (payload: Payload) => Promise<void>;
   flushAnalyticsData: () => Promise<void>;
 }
 
-const ClickContext = createContext<MouseClickProps | undefined>(undefined);
+const ClickContext = createContext<EventsProps | undefined>(undefined);
 
-export const ClickContextProvider = ({ children }: { children: ReactNode }) => {
+export const EventContextProvider = ({ children }: { children: ReactNode }) => {
   const [count, setCount] = useState<number>(0);
   const [element, setElement] = useState<Element | undefined>(undefined);
   const clicksRef = useRef<ClickRecord[]>([]);
@@ -128,7 +128,7 @@ export const ClickContextProvider = ({ children }: { children: ReactNode }) => {
     flushAnalyticsData();
   }, [flushAnalyticsData]);
 
-  const values: MouseClickProps = {
+  const values = {
     count,
     element,
     sendAnalyticsData,
@@ -138,7 +138,7 @@ export const ClickContextProvider = ({ children }: { children: ReactNode }) => {
   return <ClickContext value={values}>{children}</ClickContext>;
 };
 
-export const useClick = () => {
+export const useEvent = () => {
   const ctx = useContext(ClickContext);
   if (!ctx) throw new Error("Must execute inside the provider");
   return ctx;

@@ -4,8 +4,7 @@ import { ContentProvider } from "@/context/content-context";
 import "./globals.css";
 import ThemeProviderClient from "@/components/theme-provider-client";
 import { LocationProvider } from "@/context/location-context";
-import { ClickContextProvider } from "@/context/click-context";
-import { AnalyticsWrapper } from "@/components";
+import { EventContextProvider } from "@/context/event-context";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -83,9 +82,9 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <LocationProvider>
           <ContentProvider>
-            <ClickContextProvider>
+            <EventContextProvider>
               <ThemeProviderClient>{children}</ThemeProviderClient>
-            </ClickContextProvider>
+            </EventContextProvider>
           </ContentProvider>
         </LocationProvider>
       </body>

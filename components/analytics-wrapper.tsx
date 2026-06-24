@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect } from "react";
-import { useClick } from "@/context/click-context";
+import { useEvent } from "@/context/event-context";
 
 export const AnalyticsWrapper = () => {
-  const { flushAnalyticsData } = useClick();
+  const { flushAnalyticsData } = useEvent();
 
   useEffect(() => {
     const handleBeforeUnload = async () => {
