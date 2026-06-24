@@ -16,7 +16,7 @@ export const formatText = (text: string) =>
 export const featuredProjects = [
   {
     name: "Neo-WiFi Apk",
-    url: "neo-wifi-apk",
+    repo: "neo-wifi-apk",
     description:
       "Localización Inteligente de Antenas WiFi (gratuitas) para Android.",
     created_at: "2026-02-19T03:53:10Z",
@@ -24,7 +24,7 @@ export const featuredProjects = [
   },
   {
     name: "E-Commerce",
-    url: "frontend-e-retro-leyends",
+    repo: "frontend-e-retro-leyends",
     description:
       "Tienda E-Commerce full-stack (PERN) con pagos integrados y admin.",
     created_at: "2025-11-12T15:38:54Z",
@@ -32,28 +32,28 @@ export const featuredProjects = [
   },
   {
     name: "Neo-WiFi Web",
-    url: "neo-wifi",
+    repo: "neo-wifi",
     description: "Localización inteligente de antenas WiFi para cobertura.",
     created_at: "2025-01-28T03:18:53Z",
     platform: "web",
   },
   {
     name: "Geolocation API",
-    url: "geo_api",
+    repo: "geo_api",
     description: "API de geolocalización por IP o coordenadas en tiempo real.",
     created_at: "2024-02-07T15:38:54Z",
     platform: "web/api",
   },
   {
-    name: "App de tareas (PERN)",
-    url: "taskApp-doubleCommit",
-    description: "Gestor de tareas con usuarios, perfiles y asistencia IA.",
-    created_at: "2025-10-19T08:13:49Z",
+    name: "LinkData",
+    repo: "link-data",
+    description: "Transmite tu cámara o pantalla en vivo, también puedes compartir un archivo con un link.",
+    created_at: "2026-06-19T18:38:04Z",
     platform: "web",
   },
   {
     name: "Neo Wifi - v1.3.6",
-    url: "neo-wifi-desktop",
+    repo: "neo-wifi-desktop",
     description:
       "Aplicación para configurar automáticamente dispositivos TP-LINK.",
     created_at: "2025-07-08T15:38:54Z",
@@ -85,9 +85,9 @@ export function Projects() {
           )
           .map((project) => (
             <Link
-              href={`/project/${project.url}`}
-              key={project.url}
-              className="border-t border-r border-border-color bg-bg-card p-4 nth-last-[-n+3]:border-b hover:bg-secondary relative transition-colors"
+              href={`/project/${project.repo}`}
+              key={project.repo}
+              className="border-t border-r border-border-color bg-bg-card p-4 nth-last-[-n+3]:border-b xl:nth-[3]:border-r-0 last:border-r-0 last:border-t-0 xl:last:border-t xl:nth-[4]:border-r nth-[4]:border-r-0 hover:bg-secondary relative transition-colors"
             >
               <h3 className="text-lg font-semibold text-foreground capitalize">
                 {formatText(project.name)}

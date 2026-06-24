@@ -91,6 +91,7 @@ export const EventContextProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
+    if (!lastAccess) return;
     const timerWorker = new Worker(
       new URL("../worker/time-worker.ts", import.meta.url)
     );
@@ -105,7 +106,7 @@ export const EventContextProvider = ({ children }: { children: ReactNode }) => {
         event_clicked: clicksRef.current,
         click_count: clicksRef.current.length,
         elapsed_time: timeRef.current,
-        user_id: lastAccess!.id,
+        user_id: lastAccess.id,
       };
       sessionStorage.setItem("solidsnk-analitycs", JSON.stringify(payload));
     };
