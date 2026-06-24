@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Metrics } from "./metrics";
+import { timeAgo } from "@/utils/formatRelativeTime";
 
 const formatDate = (dateTime: string) =>
   new Intl.DateTimeFormat("es-ES", {
@@ -47,7 +48,8 @@ export const featuredProjects = [
   {
     name: "LinkData",
     repo: "link-data",
-    description: "Transmite tu cámara o pantalla en vivo, también puedes compartir un archivo con un link.",
+    description:
+      "Transmite tu cámara o pantalla en vivo, también puedes compartir un archivo con un link.",
     created_at: "2026-06-19T18:38:04Z",
     platform: "web",
   },
@@ -100,9 +102,14 @@ export function Projects() {
               <p className="mt-2 text-sm text-muted-foreground">
                 {project.description ?? "Sin descripción disponible."}
               </p>
-              <p className="mt-3 text-sm font-medium text-foreground">
-                {formatDate(String(project.created_at))}
-              </p>
+              <div className="flex items-center justify-between gap-2">
+                <p className="mt-3 text-sm font-medium text-foreground">
+                  {formatDate(String(project.created_at))}
+                </p>
+                <p className="mt-3 text-xs px-2 rounded-2xl text-green-600">
+                  {timeAgo(new Date(project.created_at))?.includes("días") && "Nuevo!"}
+                </p>
+              </div>
             </Link>
           ))}
       </div>
