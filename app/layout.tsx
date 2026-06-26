@@ -4,7 +4,6 @@ import { ContentProvider } from "@/context/content-context";
 import "./globals.css";
 import ThemeProviderClient from "@/components/theme-provider-client";
 import { LocationProvider } from "@/context/location-context";
-import { EventContextProvider } from "@/context/event-context";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -55,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Portafolio — Desarrollador Full-Stack",
     description:
-      "Desarrollador full‑stack con más de 3 años de experiencia. Me enfoco en resolver problemas reales aplicando buenas prácticas y entregando soluciones de impacto.",
+      "Desarrollador full‑stack con 4 años de experiencia. Me enfoco en resolver problemas reales aplicando buenas prácticas y entregando soluciones de impacto.",
     images: ["/texture-colors.png"],
   },
   robots: {
@@ -82,9 +81,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <LocationProvider>
           <ContentProvider>
-            <EventContextProvider>
-              <ThemeProviderClient>{children}</ThemeProviderClient>
-            </EventContextProvider>
+            <ThemeProviderClient>{children}</ThemeProviderClient>
           </ContentProvider>
         </LocationProvider>
       </body>

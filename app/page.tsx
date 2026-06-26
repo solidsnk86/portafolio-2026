@@ -8,6 +8,7 @@ import {
   Hero,
   Projects,
 } from "@/components";
+import { BackToTop } from "@/components/common/back-to-top";
 
 export default async function Home({
   searchParams,
@@ -34,6 +35,7 @@ export default async function Home({
           <div className="absolute top-0 h-full w-6 -right-6 bg-stripes md:-right-6" />
         </div>
       </section>
+      <BackToTop />
     </ThemeProviderClient>
   );
 }

@@ -61,7 +61,7 @@ export function Header() {
     if (lastIP !== currentIP) {
       setTimeout(() => {
         collectData({ data: location });
-      }, 400);
+      }, 600);
     }
   }, [isLoading, location]);
 
