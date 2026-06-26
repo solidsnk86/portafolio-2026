@@ -21,8 +21,7 @@ interface LastAccessProps {
   lon: number;
 }
 export interface LocationProps {
-  isLoadingLocation: boolean;
-  isLoadingCollection: boolean;
+  isLoading: boolean;
   error: TypeError | Error | undefined;
   data: {
     ip: string;
@@ -91,50 +90,38 @@ export const LocationProvider = ({ children }: { children: ReactNode }) => {
       },
     },
   });
-  const [isLoadingLocation, setIsLoadingLocation] = useState(false);
-  const [isLoadingCollection, setIsLoadingCollection] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | TypeError | undefined>(undefined);
 
   useEffect(() => {
-    const getLocation = async () => {
-      setIsLoadingLocation(true);
-      await fetch("https://solid-geolocation.vercel.app/location")
-        .then((res) => res.json())
-        .then((data) => {
-          setLocation({ data });
-          setIsLoadingLocation(false);
-        })
-        .catch((err) => {
-          setError(err);
-          setIsLoadingLocation(false);
-        });
+    const load = async () => {
+      setIsLoading(true);
+      try {
+        const [locationFetch, collectionFecth] = await Promise.all([
+          await fetch("https://solid-geolocation.vercel.app/location"),
+          await fetch("/api/collection/get-collection"),
+        ]);
+        const locationJson = await locationFetch.json();
+        const collectionJson = await collectionFecth.json();
+
+        setLocation({ data: locationJson });
+        setLocation((prev) => ({
+          ...prev,
+          data: { ...prev.data, lastAccess: collectionJson.data },
+        }));
+      } catch (error) {
+        setError(error as TypeError);
+        setIsLoading(false);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    getLocation();
-
-    const getLastCollectionData = async () => {
-      setIsLoadingCollection(true);
-      await fetch("/api/collection/get-collection")
-        .then((res) => res.json())
-        .then((colllection) => {
-          setLocation((prev) => ({
-            ...prev,
-            data: { ...prev.data, lastAccess: colllection.data },
-          }));
-          setIsLoadingCollection(false);
-        })
-        .catch((err) => {
-          setError(err);
-          setIsLoadingCollection(false);
-        });
-    };
-
-    getLastCollectionData();
+    load();
   }, []);
 
-  const value: LocationProps = {
-    isLoadingLocation,
-    isLoadingCollection,
+  const value = {
+    isLoading,
     error,
     data: location.data,
   };

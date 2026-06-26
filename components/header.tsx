@@ -22,11 +22,7 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { projects, blogs } = useContentData();
   const { theme, toggleTheme } = useTheme();
-  const {
-    data: location,
-    isLoadingLocation,
-    isLoadingCollection,
-  } = useLocation();
+  const { data: location, isLoading } = useLocation();
   const isDarkMode = theme === "dark";
   const [activeItems, setActiveItems] = useState<number[]>([]);
 
@@ -52,9 +48,7 @@ export function Header() {
               className="py-2 px-4 hover:bg-card border border-border-color sub-menu"
             >
               <div className="flex justify-between items-center">
-                <p className="capitalize text-xs">
-                  {project.name.replaceAll("-", " ")}
-                </p>
+                <p className="capitalize text-xs">{project.name.replaceAll("-", " ")}</p>
                 <MoveRight size={16} className="text-muted-foreground" />
               </div>
             </Link>
@@ -76,9 +70,9 @@ export function Header() {
             >
               <div className="flex justify-between items-center">
                 <p className="capitalize text-xs">
-                  {blog.name.replaceAll("-", " ")}
-                </p>
-                <MoveRight size={16} className="text-muted-foreground" />
+                {blog.name.replaceAll("-", " ")}
+              </p>
+               <MoveRight size={16} className="text-muted-foreground" />
               </div>
             </Link>
           ))}
@@ -142,16 +136,7 @@ export function Header() {
   };
 
   useEffect(() => {
-    if (
-      isLoadingLocation ||
-      !isLoadingCollection ||
-      !location ||
-      !location.ip ||
-      !location.city.name ||
-      !location.country.name ||
-      !location.lastAccess
-    )
-      return;
+    if (isLoading || !location || !location.lastAccess) return;
 
     const currentIP = location.ip;
     const lastIP = location.lastAccess.ip;
@@ -161,7 +146,7 @@ export function Header() {
         collectData({ data: location });
       }, 600);
     }
-  }, [isLoadingLocation, isLoadingCollection, location]);
+  }, [isLoading, location]);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
