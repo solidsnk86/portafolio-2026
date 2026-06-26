@@ -5,14 +5,14 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 export function About({ source }: { source?: string }) {
-  const { data: location, isLoading } = useLocation();
+  const { data: location, isLoadingLocation } = useLocation();
 
   useEffect(() => {
     if (!source || source === "No se detectó el origen utm") return;
 
     const collectDataUTM = async (source: string) => {
       try {
-        if (!isLoading && location.lastAccess) {
+        if (!isLoadingLocation && location.lastAccess) {
           await fetch("/api/utm", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -29,7 +29,7 @@ export function About({ source }: { source?: string }) {
     };
 
     collectDataUTM(source);
-  }, [source, location, isLoading]);
+  }, [source, location, isLoadingLocation]);
 
   return (
     <section

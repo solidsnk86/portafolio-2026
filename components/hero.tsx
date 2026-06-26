@@ -6,10 +6,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function Hero() {
-  const { data: location, isLoading } = useLocation();
+  const { data: location, isLoadingLocation } = useLocation();
 
   const dataCollect = async () => {
-    if (!isLoading) {
+    if (!isLoadingLocation) {
       await fetch("/api/collection/cv-views", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
