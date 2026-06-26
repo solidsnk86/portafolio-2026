@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, ChevronRight, Menu, MoveRight, X } from "lucide-react";
+import { ChevronRight, Menu, MoveRight, X } from "lucide-react";
 import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
@@ -10,7 +10,6 @@ import { useTheme } from "@/context/theme-context";
 import { LocationProps, useLocation } from "@/context/location-context";
 import { useContentData } from "@/context/content-context";
 import { email, whatsappLink } from "./contact";
-import { timeAgo } from "@/utils/formatRelativeTime";
 
 interface NavLinkInterface {
   id: number;
@@ -23,9 +22,12 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { projects, blogs } = useContentData();
   const { theme, toggleTheme } = useTheme();
-  const { data: location, isLoading } = useLocation();
+  const {
+    data: location,
+    isLoadingLocation,
+    isLoadingCollection,
+  } = useLocation();
   const isDarkMode = theme === "dark";
-  const [subMenuOpen, setSubMenuOpen] = useState(false);
   const [activeItems, setActiveItems] = useState<number[]>([]);
 
   const toggle = (id: number) => {
@@ -50,7 +52,9 @@ export function Header() {
               className="py-2 px-4 hover:bg-card border border-border-color sub-menu"
             >
               <div className="flex justify-between items-center">
-                <p className="capitalize text-xs">{project.name.replaceAll("-", " ")}</p>
+                <p className="capitalize text-xs">
+                  {project.name.replaceAll("-", " ")}
+                </p>
                 <MoveRight size={16} className="text-muted-foreground" />
               </div>
             </Link>
@@ -72,9 +76,9 @@ export function Header() {
             >
               <div className="flex justify-between items-center">
                 <p className="capitalize text-xs">
-                {blog.name.replaceAll("-", " ")}
-              </p>
-               <MoveRight size={16} className="text-muted-foreground" />
+                  {blog.name.replaceAll("-", " ")}
+                </p>
+                <MoveRight size={16} className="text-muted-foreground" />
               </div>
             </Link>
           ))}
@@ -138,7 +142,16 @@ export function Header() {
   };
 
   useEffect(() => {
-    if (isLoading || !location || !location.lastAccess) return;
+    if (
+      isLoadingLocation ||
+      !isLoadingCollection ||
+      !location ||
+      !location.ip ||
+      !location.city.name ||
+      !location.country.name ||
+      !location.lastAccess
+    )
+      return;
 
     const currentIP = location.ip;
     const lastIP = location.lastAccess.ip;
@@ -148,7 +161,7 @@ export function Header() {
         collectData({ data: location });
       }, 600);
     }
-  }, [isLoading, location]);
+  }, [isLoadingLocation, isLoadingCollection, location]);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "auto";

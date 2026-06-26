@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     return Response.json({ message: "Data collected" }, { status: 200 });
   } catch (error) {
     return Response.json(
-      { message: "Error en el servidor", error, data: location },
+      { message: "Error en el servidor", error: (error as TypeError).message },
       { status: 500 },
     );
   }

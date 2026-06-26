@@ -21,7 +21,8 @@ interface LastAccessProps {
   lon: number;
 }
 export interface LocationProps {
-  isLoading: boolean;
+  isLoadingLocation: boolean;
+  isLoadingCollection: boolean;
   error: TypeError | Error | undefined;
   data: {
     ip: string;
@@ -90,47 +91,50 @@ export const LocationProvider = ({ children }: { children: ReactNode }) => {
       },
     },
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingLocation, setIsLoadingLocation] = useState(false);
+  const [isLoadingCollection, setIsLoadingCollection] = useState(false);
   const [error, setError] = useState<Error | TypeError | undefined>(undefined);
 
   useEffect(() => {
     const getLocation = async () => {
-      setIsLoading(true);
+      setIsLoadingLocation(true);
       await fetch("https://solid-geolocation.vercel.app/location")
         .then((res) => res.json())
         .then((data) => {
           setLocation({ data });
-          setIsLoading(false);
+          setIsLoadingLocation(false);
         })
         .catch((err) => {
           setError(err);
-          setIsLoading(false);
+          setIsLoadingLocation(false);
         });
     };
 
     getLocation();
-  }, []);
 
-  useEffect(() => {
     const getLastCollectionData = async () => {
-      setIsLoading(true);
+      setIsLoadingCollection(true);
       await fetch("/api/collection/get-collection")
         .then((res) => res.json())
         .then((colllection) => {
-          setLocation((prev) => ({ ...prev, data: { ...prev.data, lastAccess: colllection.data } }))
-          setIsLoading(false);
+          setLocation((prev) => ({
+            ...prev,
+            data: { ...prev.data, lastAccess: colllection.data },
+          }));
+          setIsLoadingCollection(false);
         })
         .catch((err) => {
           setError(err);
-          setIsLoading(false);
+          setIsLoadingCollection(false);
         });
     };
 
     getLastCollectionData();
   }, []);
 
-  const value = {
-    isLoading,
+  const value: LocationProps = {
+    isLoadingLocation,
+    isLoadingCollection,
     error,
     data: location.data,
   };
