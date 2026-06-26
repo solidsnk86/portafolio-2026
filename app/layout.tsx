@@ -4,6 +4,7 @@ import { ContentProvider } from "@/context/content-context";
 import "./globals.css";
 import ThemeProviderClient from "@/components/theme-provider-client";
 import { LocationProvider } from "@/context/location-context";
+import { BackToTop } from "@/components/common/back-to-top";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -83,6 +84,7 @@ export default function RootLayout({
             <ThemeProviderClient>{children}</ThemeProviderClient>
           </ContentProvider>
         </LocationProvider>
+        <BackToTop />
       </body>
     </html>
   );
