@@ -49,7 +49,7 @@ export function Footer() {
     { label: "Instagram", href: "https://www.instagram.com/calcagnigabriel" },
   ];
   
-  const projectLinks = projects.filter((p) => !featuredProjects.some(fp => fp.repo.includes(p.name && "e-retro-back"))).slice(0, 4);
+  const projectLinks = projects.filter((project) => !featuredProjects.some((fp) => fp.name === project.name || project.name === "neo-wifi-apk")).slice(0, 4);
   const blogLinks = blogs.slice(0, 4).reverse();
 
   return (
@@ -119,9 +119,9 @@ export function Footer() {
         </div>
       </footer>
       <div className="flex justify-between border-t border-border-color items-center border-x p-4">
-        <div className="">
-          <p className="font-sans text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()} · Hecho con 💛 por SolidSnk86
+        <div className="ml-10 md:ml-0">
+          <p className="font-sans text-muted-foreground text-sm inline-flex">
+            &copy; {new Date().getFullYear()} · <span className="hidden md:block">Hecho con 💛 por</span> SolidSnk86
           </p>
         </div>
         <div className="translate-y-0.5">

@@ -2,6 +2,7 @@
 
 * {
   scroll-behavior: smooth;
+  scrollbar-width: thin;
 }
 
 :root {
@@ -239,5 +240,36 @@ dialog::backdrop {
   }
   75% {
     transform: rotateY(180deg);
+  }
+}
+
+.sub-menu {
+  transform-style: preserve-3d;
+}
+.sub-menu:nth-of-type(1) {
+  animation: appear 0.2s forwards;
+}
+.sub-menu:nth-of-type(2) {
+  animation: appear 0.4s forwards;
+}
+.sub-menu:nth-of-type(3) {
+  animation: appear 0.6s forwards;
+}
+.sub-menu:nth-of-type(4) {
+  animation: appear 0.8s forwards;
+}
+.sub-menu:nth-of-type(5) {
+  animation: appear 0.9s forwards;
+}
+.sub-menu:nth-of-type(6) {
+  animation: appear 1s forwards;
+}
+
+@keyframes appear {
+  0% {
+    scale: 0;
+  }
+  100% {
+    scale: 1;
   }
 }

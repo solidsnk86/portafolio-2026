@@ -28,7 +28,7 @@ export const BackToTop = () => {
     <>
       <div
         onClick={backToTop}
-        className={`fixed bottom-2 left-5 p-2 border border-border-color bg-stripes hover:opacity-80
+        className={`fixed bottom-2 left-5 p-2 border border-border-color bg-stripes backdrop-blur-[2px] hover:scale-105
             ${scrolled ? " translate-x-0" : "-translate-x-20"} transition-transform`}
       >
         <ArrowUp className="text-muted-foreground" />

@@ -1,13 +1,14 @@
 import Link from "next/link";
 
-export function Contact() {
-  const whatsappNumber = "+5492665290020";
-  const whatsappMessage = "Hola Gabriel, quiero hablar sobre un proyecto que tengo en mente.";
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    whatsappMessage
-  )}`;
-  const email = "calcagni.gabriel86@gmail.com";
+const whatsappNumber = "+5492665290020";
+const whatsappMessage =
+  "Hola Gabriel, quiero hablar sobre un proyecto que tengo en mente.";
+export const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+  whatsappMessage,
+)}`;
+export const email = "calcagni.gabriel86@gmail.com";
 
+export function Contact() {
   return (
     <section id="contact" className="mx-auto max-w-6xl px-4 py-16">
       <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-8">
@@ -19,8 +20,8 @@ export function Contact() {
             Hablemos de tu proximo proyecto
           </h2>
           <p className="max-w-2xl text-base text-muted-foreground">
-            Si tienes una idea o necesitás mejorar un producto existente, podemos
-            construir una solucion clara y escalable.
+            Si tienes una idea o necesitás mejorar un producto existente,
+            podemos construir una solucion clara y escalable.
           </p>
         </div>
 
@@ -35,7 +36,7 @@ export function Contact() {
           </Link>
           <Link
             href={`mailto:${email}`}
-             className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors hover:outline-4 hover:outline-indigo-500"
+            className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors hover:outline-4 hover:outline-indigo-500"
           >
             {email}
           </Link>
