@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s | Portafolio",
   },
   description:
-    "Desarrollador full‑stack con más de 3 años de experiencia. Me enfoco en resolver problemas reales aplicando buenas prácticas y entregando soluciones de impacto: no sólo conocimientos, sino resultados que transmiten valor.",
+    "Desarrollador full‑stack con 4 años de experiencia. Me enfoco en resolver problemas reales aplicando buenas prácticas y entregando soluciones de impacto: no sólo conocimientos, sino resultados que transmiten valor.",
   keywords: [
     "desarrollador full-stack",
     "desarrollador web",
@@ -35,12 +35,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Portafolio — Desarrollador Full-Stack",
     description:
-      "Desarrollador full‑stack con más de 3 años de experiencia. Me enfoco en resolver problemas reales aplicando buenas prácticas y entregando soluciones de impacto.",
+      "Desarrollador full‑stack con 4 años de experiencia. Me enfoco en resolver problemas reales aplicando buenas prácticas y entregando soluciones de impacto.",
     type: "website",
     locale: "es-ES",
     siteName: "Portafolio",
-    url:
-      process.env.NEXT_PUBLIC_SITE_URL || "https://gabrielcalcagni.vercel.app/",
+    url: "/open-graph-solidsnk.png",
     images: [
       {
         url: "favicon.png",
@@ -55,7 +54,7 @@ export const metadata: Metadata = {
     title: "Portafolio — Desarrollador Full-Stack",
     description:
       "Desarrollador full‑stack con 4 años de experiencia. Me enfoco en resolver problemas reales aplicando buenas prácticas y entregando soluciones de impacto.",
-    images: ["/texture-colors.png"],
+    images: ["/open-graph-solidsnk.png"],
   },
   robots: {
     index: true,
