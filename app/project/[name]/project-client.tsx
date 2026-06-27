@@ -13,6 +13,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/zoom";
 import { eCommerceGallery } from "@/utils/constants";
+import { LoaderBar } from "@/components/common/loader-bar";
 
 interface ProjectResponse {
   data: {
@@ -162,9 +163,8 @@ export function ProjectClient({ name }: { name: string }) {
           <span>Volver a proyectos</span>
         </Link>
         {isLoading ? (
-          <div className="flex h-dvh items-center justify-center gap-3 text-sm font-medium text-muted-foreground">
-            <Loader2 className="h-6 w-6 animate-spin text-foreground" />
-            <span>Cargando proyecto..</span>
+          <div className="grid h-dvh items-center justify-center">
+            <LoaderBar />
           </div>
         ) : error ? (
           <div className="h-dvh">
@@ -187,6 +187,12 @@ export function ProjectClient({ name }: { name: string }) {
                 {project?.data.description ?? "Sin descripción disponible."}
               </p>
             </header>
+
+            {name === "link-data" && (
+             <div className="flex justify-center">
+               <Image src={"/assets/link-data-hero.png"} width={800} height={800} alt={"Link data hero"} />
+             </div>
+            )}
 
             <MarkdownRenderer content={project?.decoded ?? ""} />
 

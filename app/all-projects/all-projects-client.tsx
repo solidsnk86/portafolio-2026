@@ -1,5 +1,6 @@
 "use client";
 
+import { LoaderBar } from "@/components/common/loader-bar";
 import { formatText } from "@/components/projects";
 import { useContentData } from "@/context/content-context";
 import { timeAgo } from "@/utils/formatRelativeTime";
@@ -17,13 +18,15 @@ export const ALlProjectsClient = () => {
         href="/"
         className="group flex items-center gap-2 text-sm text-(--mutted-color) hover:brightness-125 ml-4"
       >
-        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform duration-300" />
+        <ArrowLeft
+          size={16}
+          className="group-hover:-translate-x-1 transition-transform duration-300"
+        />
         <span>Volver al inicio</span>
       </Link>
       {isLoadingProjects ? (
-        <div className="flex items-center justify-center gap-2 py-20 text-sm h-svh font-medium text-muted-foreground">
-          <Loader2 className="h-6 w-6 animate-spin text-foreground" />
-          <span className="animate-pulse">Cargando proyectos..</span>
+        <div className="grid h-dvh items-center justify-center">
+          <LoaderBar />
         </div>
       ) : (
         <>
@@ -37,7 +40,9 @@ export const ALlProjectsClient = () => {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="max-w-50 md:max-w-3xl">
-                    <h3 className="text-xl font-semibold text-foreground capitalize line-clamp-1">{formatText(repo.name)}</h3>
+                    <h3 className="text-xl font-semibold text-foreground capitalize line-clamp-1">
+                      {formatText(repo.name)}
+                    </h3>
                     <p className="mt-2 text-sm text-muted-foreground text-ellipsis line-clamp-2">
                       {repo.description ?? "Sin descripción disponible."}
                     </p>
