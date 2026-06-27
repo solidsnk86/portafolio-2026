@@ -121,7 +121,7 @@ export function Footer() {
       <div className="flex justify-between border-t border-border-color items-center border-x p-4">
         <div className="ml-10 md:ml-0">
           <p className="font-sans text-muted-foreground text-sm inline-flex">
-            &copy; {new Date().getFullYear()} · <span className="hidden md:block">Hecho con 💛 por</span> SolidSnk86
+            &copy; {new Date().getFullYear()} · <span className="hidden md:block ml-1">Hecho con 💛 por</span> SolidSnk86
           </p>
         </div>
         <div className="translate-y-0.5">
