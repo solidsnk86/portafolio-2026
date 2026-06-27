@@ -5,9 +5,11 @@ import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import rehypeRaw from "rehype-raw";
-import remarkGfm from "remark-gfm"
+import remarkGfm from "remark-gfm";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { useRef } from "react";
+import Image from "next/image";
+import { showDialog } from "./common/dialog";
 
 export default function MarkdownRenderer({ content }: { content: string }) {
   const preRef = useRef<HTMLPreElement>(null);
@@ -19,7 +21,7 @@ export default function MarkdownRenderer({ content }: { content: string }) {
         rehypeHighlight,
         rehypeSlug,
         rehypeAutolinkHeadings,
-        remarkGfm
+        remarkGfm,
       ]}
       components={{
         h1: ({ children }) => (
@@ -33,27 +35,61 @@ export default function MarkdownRenderer({ content }: { content: string }) {
           </h2>
         ),
         h3: ({ children }) => (
-          <h3 className="mt-4 mb-2 xl:text-xl text-lg font-semibold">{children}</h3>
+          <h3 className="mt-4 mb-2 xl:text-xl text-lg font-semibold">
+            {children}
+          </h3>
         ),
-        p: ({ children }) => (
-          <p className="xl:text-base text-sm">{children}</p>
-        ),
+        p: ({ children }) => <p className="xl:text-base text-sm">{children}</p>,
         pre: ({ children }) => (
           <div className="my-3 xl:text-sm text-xs relative text-zinc-300">
-            <pre className="p-2 bg-[#1C1D21] rounded-lg overflow-auto" ref={preRef}>
+            <pre
+              className="p-2 bg-[#1C1D21] rounded-lg overflow-auto"
+              ref={preRef}
+            >
               {children}
             </pre>
           </div>
         ),
         li: ({ children }) => (
-          <li className="mb-2 list-disc list-inside xl:text-base text-sm">{children}</li>
+          <li className="mb-2 list-disc list-inside xl:text-base text-sm">
+            {children}
+          </li>
         ),
         a: ({ href, children }) => (
-          <a href={href} target="_blank" className="text-blue-400 hover:underline">
+          <a
+            href={href}
+            target="_blank"
+            className="text-blue-400 hover:underline"
+          >
             {children}
           </a>
         ),
         hr: () => <hr className="my-4 border-2 border-[var(--mutted-color)]" />,
+        img: ({ src, alt }) => (
+          <picture>
+            <img
+              src={src as string}
+              width={800}
+              height={800}
+              alt={alt as string}
+              onClick={() => {
+                showDialog({
+                  width: "100%",
+                  height: "100%",
+                  content: (
+                    <picture>
+                      <img
+                        src={src as string}
+                        className="w-full h-full"
+                        alt={alt as string}
+                      />
+                    </picture>
+                  ),
+                });
+              }}
+            />
+          </picture>
+        ),
       }}
     >
       {content}

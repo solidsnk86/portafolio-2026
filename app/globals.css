@@ -112,14 +112,11 @@ dialog {
   padding: 0;
   border: 1px solid var(--border);
   color: var(--background);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  border-radius: 2px;
   overflow: hidden;
 }
 
 dialog::backdrop {
   backdrop-filter: blur(6px);
-  background: rgba(0, 0, 0, 0.4);
   cursor: alias;
 }
 

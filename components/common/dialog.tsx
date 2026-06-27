@@ -4,10 +4,11 @@ import { createRoot } from "react-dom/client";
 interface DialogProps {
   content: ReactNode;
   width?: string;
+  height?: string;
   className?: string;
 }
 
-export const showDialog = ({ content, width = "50%", className }: DialogProps) => {
+export const showDialog = ({ content, width = "50%", height = "auto", className }: DialogProps) => {
   const dialog = document.createElement("dialog");
   const root = createRoot(dialog);
   const controller = new AbortController();
@@ -15,9 +16,10 @@ export const showDialog = ({ content, width = "50%", className }: DialogProps) =
   document.body.appendChild(dialog);
   dialog.showModal();
   dialog.style.width = width;
+  dialog.style.height = height;
   dialog.className = className ?? "";
   root.render(
-    <article className="p-5 border border-border-color relative">
+    <article className="p-3 relative">
       {content}
     </article>,
   );

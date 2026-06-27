@@ -26,6 +26,7 @@ const excludedRepos = [
 	"Electron-ServiciosElectricos",
 	"TP-Grupo-GitHub",
 	"Tecnicatura_UTN",
+	"e-retro-back"
 ];
 
 export async function GET() {
