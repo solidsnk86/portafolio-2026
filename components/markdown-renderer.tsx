@@ -65,31 +65,6 @@ export default function MarkdownRenderer({ content }: { content: string }) {
           </a>
         ),
         hr: () => <hr className="my-4 border-2 border-[var(--mutted-color)]" />,
-        img: ({ src, alt }) => (
-          <picture>
-            <img
-              src={src as string}
-              width={800}
-              height={800}
-              alt={alt as string}
-              onClick={() => {
-                showDialog({
-                  width: "100%",
-                  height: "100%",
-                  content: (
-                    <picture>
-                      <img
-                        src={src as string}
-                        className="w-full h-full"
-                        alt={alt as string}
-                      />
-                    </picture>
-                  ),
-                });
-              }}
-            />
-          </picture>
-        ),
       }}
     >
       {content}
