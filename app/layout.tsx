@@ -50,13 +50,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Portafolio — Desarrollador Full-Stack",
-    description:
-      "Desarrollador full‑stack con 4 años de experiencia. Me enfoco en resolver problemas reales aplicando buenas prácticas y entregando soluciones de impacto.",
-    images: ["/open-graph-solidsnk.png"],
-  },
   robots: {
     index: true,
     follow: true,

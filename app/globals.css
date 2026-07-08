@@ -285,3 +285,9 @@ dialog::backdrop {
   background: var(--foreground);
   transition: width 0.8s ease;
 }
+
+#textarea {
+  field-sizing: content;
+  resize: none;
+  min-height: 36px;
+}

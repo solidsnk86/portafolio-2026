@@ -26,7 +26,6 @@ export const BlogClient = ({ blog }: { blog: string }) => {
       }
     };
 
-    // call async fetch inside effect to avoid synchronous setState during render
     readBlog();
 
     return () => {

@@ -5,6 +5,8 @@ import { FileChartLine } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+const spanishLangs = ["AR", "CO", "ES", "VE", "PE", "CU", "CR", "CL", "PA", "NI", "UY", "PR", "EC", "DO", "SV", "GT"];
+
 export function Hero() {
   const { data: location, isLoading } = useLocation();
 
@@ -18,6 +20,15 @@ export function Hero() {
         }),
       });
     }
+  };
+
+  const detectCountry = () => {
+    const englishFile = "https://docs.google.com/document/d/1kocRsRUNb7osGJco5NZXoIGt3lRcqt6TiBLJ1TGxVRA/edit?usp=sharing";
+    const spanishFile = "https://docs.google.com/document/d/1npjJQOyls-A1fhNPE6j58W1xNdDH8BvzG3sX8OkjZbw/edit?usp=sharing";
+    if (!spanishLangs.includes(location.country.alpha)) {
+      return englishFile;
+    }
+    return spanishFile;
   };
 
   return (
@@ -47,9 +58,7 @@ export function Hero() {
                 title="Ver CV"
                 aria-label="Ver CV"
                 onClick={async () => await dataCollect()}
-                href={
-                  "https://docs.google.com/document/d/1npjJQOyls-A1fhNPE6j58W1xNdDH8BvzG3sX8OkjZbw/edit?usp=sharing"
-                }
+                href={detectCountry()}
                 target="_blank"
                 className="flex gap-1.5 items-center border border-border-color rounded-2xl px-2 py-1 w-fit bg-secondary hover:cursor-pointer hover:opacity-80"
               >

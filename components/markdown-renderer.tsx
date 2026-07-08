@@ -7,13 +7,20 @@ import rehypeSlug from "rehype-slug";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { useRef } from "react";
-import Image from "next/image";
-import { showDialog } from "./common/dialog";
+import { ReactNode, useRef } from "react";
 
-export default function MarkdownRenderer({ content }: { content: string }) {
+const PreContent = ({ children }: { children: ReactNode }) => {
   const preRef = useRef<HTMLPreElement>(null);
+  return (
+    <div className="my-3 xl:text-sm text-xs relative text-zinc-300">
+      <pre className="p-2 bg-[#1C1D21] rounded-lg overflow-auto" ref={preRef}>
+        {children}
+      </pre>
+    </div>
+  );
+};
 
+export default function MarkdownRenderer({ content, isChat }: { content: string, isChat?: boolean }) {
   return (
     <ReactMarkdown
       rehypePlugins={[
@@ -25,12 +32,12 @@ export default function MarkdownRenderer({ content }: { content: string }) {
       ]}
       components={{
         h1: ({ children }) => (
-          <h1 className="mt-8 mb-4 xl:text-3xl text-2xl font-bold pb-2 border-b border-[var(--border-color)]">
+          <h1 className="mt-8 mb-4 xl:text-3xl text-2xl font-bold pb-2 border-b border-border-color" style={{ fontSize: isChat ? "20px" : "" }}>
             {children}
           </h1>
         ),
         h2: ({ children }) => (
-          <h2 className="mt-6 mb-3 xl:text-2xl text-xl font-semibold pb-2 border-b border-[var(--border-color)]">
+          <h2 className="mt-6 mb-3 xl:text-2xl text-xl font-semibold pb-2 border-b border-border-color">
             {children}
           </h2>
         ),
@@ -39,19 +46,10 @@ export default function MarkdownRenderer({ content }: { content: string }) {
             {children}
           </h3>
         ),
-        p: ({ children }) => <p className="xl:text-base text-sm">{children}</p>,
-        pre: ({ children }) => (
-          <div className="my-3 xl:text-sm text-xs relative text-zinc-300">
-            <pre
-              className="p-2 bg-[#1C1D21] rounded-lg overflow-auto"
-              ref={preRef}
-            >
-              {children}
-            </pre>
-          </div>
-        ),
+        p: ({ children }) => <p className="xl:text-base text-sm text-background" style={{ fontSize: isChat ? "12px" : "" }}>{children}</p>,
+        pre: ({ children }) => <PreContent>{children}</PreContent>,
         li: ({ children }) => (
-          <li className="mb-2 list-disc list-inside xl:text-base text-sm">
+          <li className="ml-4 my-2 list-disc list-outside xl:text-base text-sm" style={{ fontSize: isChat ? "11px" : "" }}>
             {children}
           </li>
         ),
@@ -59,12 +57,12 @@ export default function MarkdownRenderer({ content }: { content: string }) {
           <a
             href={href}
             target="_blank"
-            className="text-blue-400 hover:underline"
+            className={`text-blue-400 hover:underline`}
           >
             {children}
           </a>
         ),
-        hr: () => <hr className="my-4 border-2 border-[var(--mutted-color)]" />,
+        hr: () => <hr className="my-4 border-2 border-muted-foreground" />,
       }}
     >
       {content}
