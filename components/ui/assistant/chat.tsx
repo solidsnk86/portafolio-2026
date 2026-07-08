@@ -119,11 +119,11 @@ export const Chat = () => {
               }`}
             >
               <div
-                className={`max-w-[82%] px-3 py-2 text-sm leading-6 shadow-sm
+                className={`max-w-[82%] px-3 py-2 text-sm leading-6
                 ${
                   chat.role === "user"
                     ? "bg-indigo-600 text-white rounded-2xl rounded-br-md"
-                    : "bg-zinc-100 text-white dark:bg-zinc-800 rounded-2xl rounded-bl-md"
+                    : "bg-foreground text-background rounded-2xl rounded-bl-md"
                 }`}
               >
                 <MarkdownRenderer content={chat.content} isChat={true} />

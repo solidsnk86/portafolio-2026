@@ -46,7 +46,7 @@ export default function MarkdownRenderer({ content, isChat }: { content: string,
             {children}
           </h3>
         ),
-        p: ({ children }) => <p className="xl:text-base text-sm text-background" style={{ fontSize: isChat ? "12px" : "" }}>{children}</p>,
+        p: ({ children }) => <p className="xl:text-base text-sm" style={{ fontSize: isChat ? "12px" : "" }}>{children}</p>,
         pre: ({ children }) => <PreContent>{children}</PreContent>,
         li: ({ children }) => (
           <li className="ml-4 my-2 list-disc list-outside xl:text-base text-sm" style={{ fontSize: isChat ? "11px" : "" }}>
