@@ -93,7 +93,7 @@ export const Chat = () => {
         {
           role: "assistant",
           content:
-            "Al parecer algo salío mal, vuelva a interlo después nuevamente.",
+            "Al parecer algo salío mal, vuelva a intentarlo después nuevamente.",
         },
       ]);
     } finally {
