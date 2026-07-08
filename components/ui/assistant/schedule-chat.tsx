@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/common";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Chat } from "./chat";
 
 export const ScheduleChat = () => {
@@ -12,6 +12,14 @@ export const ScheduleChat = () => {
   const close = () => {
     setShow(false);
   };
+
+  useEffect(() => {
+    if (show) {
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.documentElement.style.overflow = "auto";
+    }
+  }, [show]);
 
   if (!show) {
     return (
