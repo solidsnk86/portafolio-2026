@@ -147,13 +147,15 @@ export const ScheduleChat = () => {
                       <div className="absolute bottom-2 outline-2 outline-background left-6.5 w-1.5 h-1.5 rounded-full bg-zinc-500"></div>
                     )}
 
-                    <Image
-                      src="/mgc.jfif"
-                      alt="Gabriel avatar"
-                      width={36}
-                      height={36}
-                      className="object-cover rounded-full border-2 border-background"
-                    />
+                    <picture>
+                      <img
+                        src="/mgc.jfif"
+                        alt="Gabriel avatar"
+                        width={36}
+                        height={36}
+                        className="object-cover rounded-full border-2 border-background"
+                      />
+                    </picture>
                     <div className="flex flex-col -space-y-1">
                       <h4 className="font-semibold">Gabriel Calcagni</h4>
                       <div className="flex gap-1 items-center text-muted-foreground">
