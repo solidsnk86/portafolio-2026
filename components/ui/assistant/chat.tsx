@@ -96,7 +96,8 @@ export const Chat = () => {
           city,
           country,
           lang: country.alpha,
-          time: new Date().toLocaleDateString("es-AR", { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" })
+          time: new Date().toLocaleDateString("es-AR", { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" }),
+          createdAt: new Date().toLocaleTimeString("es-AR")
         }),
       });
 

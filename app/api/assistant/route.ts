@@ -39,7 +39,7 @@ async function sendConfirmationEmail(userEmail: string) {
 }
 
 export async function POST(request: Request) {
-  const { query, historyChat, city, country, lang, time } = await request.json();
+  const { query, historyChat, city, country, lang, time, createdAt } = await request.json();
 
   if (!query || !city || !country || !lang || !time) {
     return NextResponse.json({ message: "Faltan parámetros" });
