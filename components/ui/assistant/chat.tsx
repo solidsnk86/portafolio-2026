@@ -23,7 +23,6 @@ export const Chat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | undefined>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const timerWorkerRef = useRef<Worker | null>(null);
   const messagesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -143,85 +142,6 @@ export const Chat = () => {
   };
 
   const clearChat = () => setChatResponses([]);
-
-  useEffect(() => {
-    const timerWorker = new Worker(
-      new URL("../../../worker/time-worker.ts", import.meta.url),
-    );
-    
-    timerWorkerRef.current = timerWorker;
-    timerWorker.postMessage(1000);
-    timerWorker.onmessage = async (e) => {
-      const timer = e.data;
-      
-      if (timer === 30) {
-        try {
-          const response = await fetch("/api/assistant", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              query: `Han pasado ${timer} segundos y todavía no escribe el usuario. Preguntale, hay alguien allí?`,
-              historyChat: [],
-              city,
-              country,
-              lang: country.alpha,
-              time: new Date().toLocaleDateString("es-AR", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-                second: "numeric",
-              }),
-              createdAt: new Date().toLocaleTimeString(),
-            }),
-          });
-
-          const jsonData = await response.json();
-
-          if (!response.ok) throw new Error(jsonData.message);
-
-          playBubbleSound();
-
-          setChatResponses((prev) => [
-            ...prev,
-            {
-              role: "assistant",
-              content: jsonData.context ?? "Hubo un error?",
-              createdAt: jsonData.createdAt,
-              readed: true,
-            },
-          ]);
-        } catch (error) {
-          console.log((error as TypeError).message);
-          setChatResponses([
-            { role: "user", content: query },
-            {
-              role: "assistant",
-              content:
-                "Al parecer algo salío mal, vuelva a intentarlo después nuevamente.",
-              createdAt: new Date().toLocaleTimeString(),
-            },
-          ]);
-        } finally {
-          setQuery("");
-          setIsLoading(false);
-          if (textareaRef.current) textareaRef.current.style.height = "36px";
-          setCharCount(0);
-        }
-      } else if (timer === 60) {
-        setChatResponses((prev) => [...prev, { role: "assistant", content: "Ha pasado 1 minuto, quieres agendar una reunión?", readed: true, createdAt: new Date().toLocaleTimeString() }]);
-        timerWorker.terminate();
-      }
-    };
-
-    return () => {
-      timerWorker.terminate();
-      timerWorkerRef.current = null;
-    };
-  }, [timerWorkerRef, city, country, query]);
 
   return (
     <div className="flex flex-col h-full relative">
