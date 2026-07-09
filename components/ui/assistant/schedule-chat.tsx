@@ -18,7 +18,7 @@ export const ScheduleChat = () => {
   const [lastConnection, setLastConnection] = useState<HistoryChat | null>(
     historyChat,
   );
-
+  console.log({historyChat, lastConnection})
   const playCloseSound = () => {
     const audio = new Audio("/assets/sounds/notification.mp3");
     if (audio) {
@@ -147,7 +147,7 @@ export const ScheduleChat = () => {
                 <div>
                   <div className="flex items-center gap-1 relative">
                     {timeAgo(
-                      new Date(lastConnection?.created_at as string),
+                      new Date(lastConnection?.created_at as string || historyChat?.created_at as string),
                     )?.includes("segundo") ? (
                       <div className="absolute bottom-2 outline-2 outline-background left-6.5 w-1.5 h-1.5 rounded-full bg-green-500"></div>
                     ) : (
@@ -168,21 +168,21 @@ export const ScheduleChat = () => {
                       <div className="flex gap-1 items-center text-muted-foreground">
                         <small className="text-accent flex gap-1 items-center text-xs">
                           {timeAgo(
-                            new Date(lastConnection?.created_at as string),
+                            new Date(lastConnection?.created_at as string || historyChat?.created_at as string),
                           )?.includes("segundo")
                             ? "En Línea"
                             : "Desconectado"}
                         </small>
                         ·
                         {timeAgo(
-                          new Date(lastConnection?.created_at as string),
+                          new Date(lastConnection?.created_at as string || historyChat?.created_at as string),
                         )?.includes("segundo") ? (
                           <small className="text-xs">conectado ahora</small>
                         ) : (
                           <small className="text-xs">
                             última actividad{" "}
                             {timeAgo(
-                              new Date(lastConnection?.created_at as string),
+                              new Date(lastConnection?.created_at as string || historyChat?.created_at as string),
                             )}
                           </small>
                         )}
