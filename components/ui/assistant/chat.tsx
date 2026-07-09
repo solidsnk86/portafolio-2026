@@ -151,7 +151,7 @@ export const Chat = () => {
           title="Nuevo chat"
           className="absolute top-0 left-0 flex w-fit group cursor-pointer"
         >
-          <button className="flex items-center gap-1 p-2 backdrop-blur-lg relative z-50 mask-b-from-[80%]">
+          <button className="flex items-center gap-1 p-2 backdrop-blur-lg relative z-50 mask-b-from-80%">
             <Plus size={12} className="" />
             <p
               onClick={clearChat}

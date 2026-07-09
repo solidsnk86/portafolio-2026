@@ -2,6 +2,7 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -166,7 +167,9 @@ async function getHistoryChat(force = false): Promise<HistoryChat | null> {
     historyPromise = fetch("/api/collection/history/last")
       .then((res) => res.json())
       .then((data) => {
-        const result: HistoryChat | null = data?.success ? data.data ?? null : null;
+        const result: HistoryChat | null = data?.success
+          ? (data.data ?? null)
+          : null;
         cachedHistory = result;
         return result;
       })
@@ -188,7 +191,9 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   const [projects, setProjects] = useState<ProjectEntry[]>(
     cachedProjects ?? [],
   );
-  const [metrics, setMetrics] = useState<MetricsEntry>(cachedMetrics ?? defaultMetrics);
+  const [metrics, setMetrics] = useState<MetricsEntry>(
+    cachedMetrics ?? defaultMetrics,
+  );
   const [isLoadingMetrics, setIsLoadingMetrics] = useState(!cachedMetrics);
   const [isLoadingBlogs, setIsLoadingBlogs] = useState(!cachedBlogs);
   const [isLoadingProjects, setIsLoadingProjects] = useState(!cachedProjects);
@@ -204,12 +209,13 @@ export function ContentProvider({ children }: { children: ReactNode }) {
 
     const hydrateContent = async () => {
       try {
-        const [nextBlogs, nextProjects, nextMetrics, nextHistoryChat] = await Promise.all([
-          loadBlogs(),
-          loadProjects(),
-          getMetrics(),
-          getHistoryChat(),
-        ]);
+        const [nextBlogs, nextProjects, nextMetrics, nextHistoryChat] =
+          await Promise.all([
+            loadBlogs(),
+            loadProjects(),
+            getMetrics(),
+            getHistoryChat(),
+          ]);
 
         if (!active) {
           return;
@@ -217,9 +223,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
 
         setBlogs(nextBlogs ?? []);
         setProjects(nextProjects ?? []);
-        setMetrics(
-          nextMetrics ?? { ...defaultMetrics },
-        );
+        setMetrics(nextMetrics ?? { ...defaultMetrics });
         setHistoryChat(nextHistoryChat);
       } finally {
         if (active) {
@@ -238,7 +242,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  const refreshHistory = async () => {
+  const refreshHistory = useCallback(async () => {
     setIsLoadingHistoryChat(true);
 
     const historyChat = await getHistoryChat(true);
@@ -246,7 +250,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     setIsLoadingHistoryChat(false);
 
     return historyChat;
-  };
+  }, []);
 
   return (
     <ContentContext.Provider
@@ -259,7 +263,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
         isLoadingMetrics,
         historyChat,
         isLoadingHistoryChat,
-        refreshHistory
+        refreshHistory,
       }}
     >
       {children}
