@@ -2,13 +2,14 @@
 
 import MarkdownRenderer from "@/components/markdown-renderer";
 import { useLocation } from "@/context/location-context";
-import { Loader, Plus } from "lucide-react";
+import { Check, CheckCheck, Loader, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export interface Message {
   role: "user" | "assistant";
   content: string;
   createdAt?: Date | string;
+  readed?: boolean;
 }
 
 export const Chat = () => {
@@ -44,6 +45,8 @@ export const Chat = () => {
       top: messagesRef.current.scrollHeight,
       behavior: "smooth",
     });
+
+    sessionStorage.setItem("history-chat", JSON.stringify(chatResponses));
   }, [chatResponses, isLoading]);
 
   const playBubbleSound = () => {
@@ -60,7 +63,15 @@ export const Chat = () => {
       return;
     }
 
-    setChatResponses((prev) => [...prev, { role: "user", content: query, createdAt: new Date().toLocaleTimeString() }]);
+    setChatResponses((prev) => [
+      ...prev,
+      {
+        role: "user",
+        content: query,
+        createdAt: new Date().toLocaleTimeString(),
+        readed: true,
+      },
+    ]);
     setError(undefined);
     setIsLoading(true);
     setQuery("");
@@ -68,7 +79,10 @@ export const Chat = () => {
 
     if (textareaRef.current) textareaRef.current.style.height = "36px";
 
-    const messageToSEnd = chatResponses.map(({ createdAt, ...message }) => message);
+    const messageToSend = chatResponses.map(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      ({ createdAt, readed, ...message }) => message,
+    );
 
     try {
       const response = await fetch("/api/assistant", {
@@ -78,10 +92,11 @@ export const Chat = () => {
         },
         body: JSON.stringify({
           query,
-          historyChat: messageToSEnd,
+          historyChat: messageToSend,
           city,
           country,
           lang: country.alpha,
+          time: new Date().toLocaleDateString("es-AR", { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" })
         }),
       });
 
@@ -96,7 +111,8 @@ export const Chat = () => {
         {
           role: "assistant",
           content: jsonData.context ?? "Hubo un error?",
-          createdAt: jsonData.createdAt
+          createdAt: jsonData.createdAt,
+          readed: true,
         },
       ]);
     } catch (error) {
@@ -140,7 +156,7 @@ export const Chat = () => {
       )}
       <div
         ref={messagesRef}
-        className="flex-1 overflow-y-auto px-4 py-4 space-y-3"
+        className="flex-1 overflow-y-auto px-4 py-8 space-y-3 mask-b-from-85%"
       >
         {chatResponses.map((chat, idx) => {
           return (
@@ -159,7 +175,26 @@ export const Chat = () => {
                 }`}
               >
                 <MarkdownRenderer content={chat.content} isChat={true} />
-                <time className="text-[11px] text-zinc-400">{chat.createdAt as string}</time>
+                <div className="flex justify-between items-center">
+                  <time className="text-[11px] text-zinc-400">
+                    {chat.createdAt as string}
+                  </time>
+
+                  {chat.readed ? (
+                    <div className="relative flex -space-x-2">
+                      <Check
+                        size={13}
+                        className="text-blue-500 translate-y-0.75"
+                      />
+                      <Check
+                        size={13}
+                        className="text-blue-500 translate-y-0.75"
+                      />
+                    </div>
+                  ) : (
+                    <Check size={13} className=" translate-y-0.5" />
+                  )}
+                </div>
                 {chat.role === "assistant" && (
                   <div className="absolute -bottom-5 -left-4">
                     <picture>
@@ -201,7 +236,7 @@ export const Chat = () => {
               setQuery(e.target.value);
               setCharCount(e.target.value.length);
             }}
-            placeholder="Escriba su consulta..."
+            placeholder="Escriba su consulta/@email"
             className="
               flex-1
               resize-none

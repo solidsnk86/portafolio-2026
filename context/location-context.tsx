@@ -19,6 +19,7 @@ interface LastAccessProps {
   emoji_flag: string;
   lat: number;
   lon: number;
+  created_at?: Date | string;
 }
 export interface LocationProps {
   isLoading: boolean;

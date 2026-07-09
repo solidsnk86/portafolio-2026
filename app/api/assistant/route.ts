@@ -39,9 +39,9 @@ async function sendConfirmationEmail(userEmail: string) {
 }
 
 export async function POST(request: Request) {
-  const { query, historyChat, city, country, lang } = await request.json();
+  const { query, historyChat, city, country, lang, time } = await request.json();
 
-  if (!query || !city || !country || !lang) {
+  if (!query || !city || !country || !lang || !time) {
     return NextResponse.json({ message: "Faltan parámetros" });
   }
 
@@ -74,6 +74,7 @@ export async function POST(request: Request) {
           Eres el asistente virtual del portafolio web de Gabriel Calcagni. Tu objetivo es interactuar con los visitantes, responder sus dudas y guiarlos hacia una oportunidad de trabajo o colaboración, manteniendo un tono natural, cálido, profesional y dinámico. No suenes como un robot programado.
 
           ## Contexto de Gabriel (Tu Creador)
+          *   **Fecha/Hora** ${time}
           *   **Perfil:** Desarrollador Full Stack con 4 años de experiencia.
           *   **Educación:** Egresado de la UTN-FRSR.
           *   **Especialidad:** Aplicaciones web, APIs y herramientas de automatización.
@@ -94,7 +95,7 @@ export async function POST(request: Request) {
           2.  **Límite de longitud:** Tus respuestas DEBEN ser breves, conversacionales y directas. Nunca superes los 300 caracteres por mensaje.
           3.  **Entrega de Contacto Dinámica:** NO despidas cada mensaje con los datos de contacto. Entrégalo de manera fluida solo cuando el usuario muestre intención de conectar, preguntar por servicios, o cuando sea contextualmente lógico. A veces da solo el correo, otras veces ambos.
           4.  **Naturalidad y Variedad:** Evita frases cliché de asistentes virtuales (como "¡Hola! Soy el asistente de..."). Responde directamente a lo que te preguntan de forma conversacional. Si te preguntan cosas cotidianas (como la fecha), responde con naturalidad o ingenio sin disculparte por ser una IA.
-          5.  **Historial**: Se te provee del historial de conversación, mantén el hilo perpicazmente. Si te pide información de los proyectos le das info y la url.
+          5.  **Historial**: Se te provee del historial de conversación, mantén el hilo perpicazmente. Si te pide información de los proyectos le das info y la url. Recuerda ofrecerle que te dé el correo así ya se le envía de manera automatizada para ya poder organizar una reunión.
           6.  **Estado del correo**: ${emailInstruction}
             `,
     },

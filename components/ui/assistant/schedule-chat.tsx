@@ -3,11 +3,19 @@
 import { Button } from "@/components/common";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Chat } from "./chat";
+import { Chat, Message } from "./chat";
+import { useLocation } from "@/context/location-context";
+import Image from "next/image";
+import { timeAgo } from "@/utils/formatRelativeTime";
+import { useContentData } from "@/context/content-context";
 
 export const ScheduleChat = () => {
   const [start, setStart] = useState(false);
   const [show, setShow] = useState(false);
+  const {
+    data: { lastAccess },
+  } = useLocation();
+  const { historyChat, refreshHistory } = useContentData();
 
   const playCloseSound = () => {
     const audio = new Audio("/assets/sounds/notification.mp3");
@@ -17,9 +25,25 @@ export const ScheduleChat = () => {
     }
   };
 
-  const close = () => {
+  const sendHistory = async () => {
+    const sessionHistory = sessionStorage.getItem("history-chat");
+    const messages: Message[] = JSON.parse(sessionHistory || "[]");
+    try {
+      await fetch("/api/collection/history", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: lastAccess.id, messages }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const close = async () => {
     playCloseSound();
     setShow(false);
+    await sendHistory();
+    await refreshHistory();
   };
 
   const playInitSound = () => {
@@ -106,34 +130,55 @@ export const ScheduleChat = () => {
 
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                     Obtén una respuesta inmediata mediante el asistente o agenda
-                    una reunión si prefieres una atención personalizada.
+                    una reunión si prefieres una atención personalizada dándole
+                    tu correo.
                   </p>
                 </>
               )}
 
               {start && (
                 <div>
-                  <picture className="flex items-center gap-1">
-                    <img
+                  <div className="flex items-center gap-1 relative">
+                    {timeAgo(
+                      new Date(historyChat?.created_at as string),
+                    )?.includes("segundo") ? (
+                      <div className="absolute bottom-2 outline-2 outline-background left-6.5 w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                    ) : (
+                      <div className="absolute bottom-2 outline-2 outline-background left-6.5 w-1.5 h-1.5 rounded-full bg-zinc-500"></div>
+                    )}
+
+                    <Image
                       src="/mgc.jfif"
                       alt="Gabriel avatar"
-                      width="28px"
-                      height="28px"
-                      className="object-cover rounded-full border-3 border-background"
+                      width={36}
+                      height={36}
+                      className="object-cover rounded-full border-2 border-background"
                     />
-                     <h4 className="font-semibold">Gabriel Calcagni</h4>
-                  </picture>
-                  <small className="ml-1 text-accent flex gap-1 items-center uppercase tracking-wider text-xs">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                    Online
-                  </small>
+                    <div className="flex flex-col -space-y-1">
+                      <h4 className="font-semibold">Gabriel Calcagni</h4>
+                      <div className="flex gap-1 items-center text-muted-foreground">
+                        <small className="text-accent flex gap-1 items-center text-xs">
+                          {timeAgo(
+                            new Date(historyChat?.created_at as string),
+                          )?.includes("segundo")
+                            ? "En Línea"
+                            : "Desconectado"}
+                        </small>
+                        ·
+                        <small className="text-xs">
+                          última actividad{" "}
+                          {timeAgo(new Date(historyChat?.created_at as string))}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
             </header>
 
             <main
               className={`min-h-0 overflow-hidden transition-all duration-300 ${
-                start ? "flex-1 md:h-80 md:flex-none" : "h-0 flex-none"
+                start ? "flex-1 md:h-86 md:flex-none" : "h-0 flex-none"
               }`}
             >
               <Chat />
