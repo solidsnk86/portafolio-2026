@@ -167,10 +167,20 @@ export const ScheduleChat = () => {
                             : "Desconectado"}
                         </small>
                         ·
-                        <small className="text-xs">
-                          última actividad{" "}
-                          {timeAgo(new Date(historyChat?.created_at as string))}
+                        {timeAgo(
+                          new Date(historyChat?.created_at as string),
+                        )?.includes("minuto") ? (
+                          <small className="text-xs">
+                            última actividad{" "}
+                            {timeAgo(
+                              new Date(historyChat?.created_at as string),
+                            )}
+                          </small>
+                        ): (
+                          <small className="text-xs">
+                          conectado ahora
                         </small>
+                        )}
                       </div>
                     </div>
                   </div>
