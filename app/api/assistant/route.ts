@@ -112,7 +112,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       context: response.choices[0].message?.content,
       emailSent: emailStatus === "enviado",
-      createdAt: time
+      createdAt: createdAt
     });
   } catch (error) {
     return NextResponse.json({

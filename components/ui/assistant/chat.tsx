@@ -97,7 +97,7 @@ export const Chat = () => {
           country,
           lang: country.alpha,
           time: new Date().toLocaleDateString("es-AR", { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" }),
-          createdAt: new Date().toLocaleTimeString("es-AR")
+          createdAt: new Date().toLocaleTimeString()
         }),
       });
 
@@ -124,6 +124,7 @@ export const Chat = () => {
           role: "assistant",
           content:
             "Al parecer algo salío mal, vuelva a intentarlo después nuevamente.",
+            createdAt: new Date().toLocaleTimeString()
         },
       ]);
     } finally {
@@ -177,7 +178,7 @@ export const Chat = () => {
               >
                 <MarkdownRenderer content={chat.content} isChat={true} />
                 <div className="flex justify-between items-center">
-                  <time className="text-[11px] text-zinc-400">
+                  <time className="text-[11px] text-zinc-400 uppercase">
                     {chat.createdAt as string}
                   </time>
 

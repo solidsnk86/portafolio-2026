@@ -119,7 +119,7 @@ export const ScheduleChat = () => {
               <X size={16} />
             </button>
 
-            <header className="border-b border-border-color px-6 py-5 shrink-0">
+            <header className="border-b border-border-color px-4 py-4 shrink-0">
               {!start && (
                 <>
                   <div className="flex gap-2 items-center">
