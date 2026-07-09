@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Chat, Message } from "./chat";
 import { useLocation } from "@/context/location-context";
 import { timeAgo } from "@/utils/formatRelativeTime";
-import { useContentData } from "@/context/content-context";
+import { HistoryChat, useContentData } from "@/context/content-context";
 
 export const ScheduleChat = () => {
   const [start, setStart] = useState(false);
@@ -15,6 +15,9 @@ export const ScheduleChat = () => {
     data: { lastAccess },
   } = useLocation();
   const { historyChat, refreshHistory } = useContentData();
+  const [lastConnection, setLastConnection] = useState<HistoryChat | null>(
+    historyChat,
+  );
 
   const playCloseSound = () => {
     const audio = new Audio("/assets/sounds/notification.mp3");
@@ -38,11 +41,16 @@ export const ScheduleChat = () => {
     }
   };
 
+  const refresh = async (): Promise<void> => {
+    const historyChat = await refreshHistory();
+    setLastConnection(historyChat);
+  };
+
   const close = async () => {
     playCloseSound();
     setShow(false);
     await sendHistory();
-    await refreshHistory();
+    await refresh();
   };
 
   const playInitSound = () => {
@@ -139,7 +147,7 @@ export const ScheduleChat = () => {
                 <div>
                   <div className="flex items-center gap-1 relative">
                     {timeAgo(
-                      new Date(historyChat?.created_at as string),
+                      new Date(lastConnection?.created_at as string),
                     )?.includes("segundo") ? (
                       <div className="absolute bottom-2 outline-2 outline-background left-6.5 w-1.5 h-1.5 rounded-full bg-green-500"></div>
                     ) : (
@@ -160,21 +168,21 @@ export const ScheduleChat = () => {
                       <div className="flex gap-1 items-center text-muted-foreground">
                         <small className="text-accent flex gap-1 items-center text-xs">
                           {timeAgo(
-                            new Date(historyChat?.created_at as string),
+                            new Date(lastConnection?.created_at as string),
                           )?.includes("segundo")
                             ? "En Línea"
                             : "Desconectado"}
                         </small>
                         ·
                         {timeAgo(
-                          new Date(historyChat?.created_at as string),
+                          new Date(lastConnection?.created_at as string),
                         )?.includes("segundo") ? (
                           <small className="text-xs">conectado ahora</small>
                         ) : (
                           <small className="text-xs">
                             última actividad{" "}
                             {timeAgo(
-                              new Date(historyChat?.created_at as string),
+                              new Date(lastConnection?.created_at as string),
                             )}
                           </small>
                         )}

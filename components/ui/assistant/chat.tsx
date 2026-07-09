@@ -71,6 +71,7 @@ export const Chat = () => {
         readed: true,
       },
     ]);
+
     setError(undefined);
     setIsLoading(true);
     setQuery("");
