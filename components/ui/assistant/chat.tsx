@@ -212,7 +212,7 @@ export const Chat = () => {
           setCharCount(0);
         }
       } else if (timer === 60) {
-s        setChatResponses((prev) => [...prev, { role: "assistant", content: "Ha pasado 1 minuto, quieres agendar una reunión?", readed: true, createdAt: new Date().toLocaleTimeString() }]);
+        setChatResponses((prev) => [...prev, { role: "assistant", content: "Ha pasado 1 minuto, quieres agendar una reunión?", readed: true, createdAt: new Date().toLocaleTimeString() }]);
         timerWorker.terminate();
       }
     };
