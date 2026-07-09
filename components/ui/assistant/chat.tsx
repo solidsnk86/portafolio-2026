@@ -2,7 +2,7 @@
 
 import MarkdownRenderer from "@/components/markdown-renderer";
 import { useLocation } from "@/context/location-context";
-import { Check, CheckCheck, Loader, Plus } from "lucide-react";
+import { Check, Loader, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export interface Message {

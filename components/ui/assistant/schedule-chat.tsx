@@ -113,7 +113,7 @@ export const ScheduleChat = () => {
             <div className="absolute left-0 top-0 h-40 w-40 rounded-full bg-zinc-300/20 blur-3xl" />
 
             <button
-              className="absolute right-3 top-3 z-10 rounded-full p-2 hover:bg-secondary transition-colors"
+              className="absolute right-2.5 top-2.5 z-10 rounded-full p-2 hover:bg-secondary transition-colors"
               onClick={close}
             >
               <X size={16} />
