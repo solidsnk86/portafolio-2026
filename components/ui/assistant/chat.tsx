@@ -2,12 +2,13 @@
 
 import MarkdownRenderer from "@/components/markdown-renderer";
 import { useLocation } from "@/context/location-context";
-import { Loader } from "lucide-react";
+import { Loader, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export interface Message {
   role: "user" | "assistant";
   content: string;
+  createdAt?: Date | string;
 }
 
 export const Chat = () => {
@@ -45,19 +46,29 @@ export const Chat = () => {
     });
   }, [chatResponses, isLoading]);
 
+  const playBubbleSound = () => {
+    const audio = new Audio("/assets/sounds/bubble-pop.mp3");
+    if (audio) {
+      audio.volume = 0.5;
+      audio.play();
+    }
+  };
+
   const onSubmit = async () => {
     if (!query.trim()) {
       setError(new Error("Escriba un mensaje."));
       return;
     }
 
-    setChatResponses((prev) => [...prev, { role: "user", content: query }]);
+    setChatResponses((prev) => [...prev, { role: "user", content: query, createdAt: new Date().toLocaleTimeString() }]);
     setError(undefined);
     setIsLoading(true);
     setQuery("");
     setCharCount(0);
 
     if (textareaRef.current) textareaRef.current.style.height = "36px";
+
+    const messageToSEnd = chatResponses.map(({ createdAt, ...message }) => message);
 
     try {
       const response = await fetch("/api/assistant", {
@@ -67,7 +78,7 @@ export const Chat = () => {
         },
         body: JSON.stringify({
           query,
-          historyChat: chatResponses,
+          historyChat: messageToSEnd,
           city,
           country,
           lang: country.alpha,
@@ -78,14 +89,16 @@ export const Chat = () => {
 
       if (!response.ok) throw new Error(jsonData.message);
 
+      playBubbleSound();
+
       setChatResponses((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: jsonData.context ?? "",
+          content: jsonData.context ?? "Hubo un error?",
+          createdAt: jsonData.createdAt
         },
       ]);
-
     } catch (error) {
       console.log((error as TypeError).message);
       setChatResponses([
@@ -104,8 +117,27 @@ export const Chat = () => {
     }
   };
 
+  const clearChat = () => setChatResponses([]);
+
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full relative">
+      {chatResponses.length > 0 && (
+        <div
+          onClick={clearChat}
+          title="Nuevo chat"
+          className="absolute top-0 left-0 flex w-fit group cursor-pointer"
+        >
+          <button className="flex items-center gap-1 bg-background/40 p-2 backdrop-blur-lg relative z-50 mask-b-from-[80%] mask-r-from-[95%]">
+            <Plus size={12} className="" />
+            <p
+              onClick={clearChat}
+              className="text-xs group-hover:text-accent hover:underline"
+            >
+              Nuevo chat
+            </p>
+          </button>
+        </div>
+      )}
       <div
         ref={messagesRef}
         className="flex-1 overflow-y-auto px-4 py-4 space-y-3"
@@ -114,7 +146,7 @@ export const Chat = () => {
           return (
             <div
               key={idx}
-              className={`flex ${
+              className={`flex relative ${
                 chat.role === "user" ? "justify-end" : "justify-start"
               }`}
             >
@@ -127,6 +159,20 @@ export const Chat = () => {
                 }`}
               >
                 <MarkdownRenderer content={chat.content} isChat={true} />
+                <time className="text-[11px] text-zinc-400">{chat.createdAt as string}</time>
+                {chat.role === "assistant" && (
+                  <div className="absolute -bottom-5 -left-4">
+                    <picture>
+                      <img
+                        src="/mgc.jfif"
+                        alt="Gabriel avatar"
+                        width="28px"
+                        height="28px"
+                        className="object-cover rounded-full border-3 border-background"
+                      />
+                    </picture>
+                  </div>
+                )}
               </div>
             </div>
           );
@@ -135,7 +181,8 @@ export const Chat = () => {
         {isLoading && (
           <div className="text-sm text-muted-foreground animate-pulse">
             <small className="flex gap-1 items-center">
-              <Loader size={14} className="animate-spin -translate-y-px" /> Procesando...
+              <Loader size={14} className="animate-spin -translate-y-px" />{" "}
+              Procesando...
             </small>
           </div>
         )}
@@ -173,13 +220,17 @@ export const Chat = () => {
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
+                playBubbleSound();
                 onSubmit();
               }
             }}
           />
 
           <button
-            onClick={onSubmit}
+            onClick={() => {
+              playBubbleSound();
+              onSubmit();
+            }}
             disabled={!query.trim() || isLoading}
             className="
               h-9

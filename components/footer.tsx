@@ -61,7 +61,7 @@ export function Footer() {
 
   return (
     <>
-      <footer className="border-t border-x border-border-color z-50 bg-background">
+      <footer className="border-t border-x border-border-color z-40 bg-background">
         <div className="grid grid-cols-1 md:grid-cols-4">
           <div className="flex flex-col justify-start gap-2 py-4 px-4">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
@@ -138,7 +138,7 @@ export function Footer() {
           </div>
         </div>
       </footer>
-      <div className="flex justify-between border-t border-border-color items-center border-x p-4 z-50 bg-background">
+      <div className="flex justify-between border-t border-border-color items-center border-x p-4 z-40 bg-background">
         <div className="ml-10 md:ml-0">
           <p className="font-sans text-muted-foreground text-sm inline-flex">
             &copy; {new Date().getFullYear()} ·{" "}

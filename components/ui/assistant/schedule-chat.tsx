@@ -9,8 +9,25 @@ export const ScheduleChat = () => {
   const [start, setStart] = useState(false);
   const [show, setShow] = useState(false);
 
+  const playCloseSound = () => {
+    const audio = new Audio("/assets/sounds/notification.mp3");
+    if (audio) {
+      audio.volume = 0.5;
+      audio.play();
+    }
+  };
+
   const close = () => {
+    playCloseSound();
     setShow(false);
+  };
+
+  const playInitSound = () => {
+    const audio = new Audio("/assets/sounds/ui-sound.mp3");
+    if (audio) {
+      audio.volume = 0.5;
+      audio.play();
+    }
   };
 
   useEffect(() => {
@@ -21,43 +38,54 @@ export const ScheduleChat = () => {
     }
   }, [show]);
 
-  if (!show) {
-    return (
-      <section
-        className="fixed right-2 bottom-2 cursor-pointer z-10"
-        onClick={() => setShow(true)}
-      >
-        <button className="flex items-center gap-1 pl-1 pr-2 py-1 rounded-full bg-foreground">
-          <div className="relative h-8 w-8 overflow-hidden rounded-full">
-            <picture>
-              <img
-                src="/mgc.jfif"
-                alt="Gabriel avatar"
-                width="100%"
-                height="100%"
-                className="object-cover"
-              />
-            </picture>
-          </div>
-          <h3 className="text-background">Asistencia?</h3>
-        </button>
-      </section>
-    );
-  }
-
   return (
-    show && (
-      <section className="fixed inset-0 bg-black/40 z-50" onClick={close}>
+    <>
+      {!show && (
+        <section
+          className="fixed right-2 bottom-2 cursor-pointer z-10"
+          onClick={() => {
+            playInitSound();
+            setShow(true);
+          }}
+        >
+          <button className="flex items-center gap-0.5 py-1 pl-1 pr-0.5 rounded-full bg-accent group relative">
+            <div className="relative h-8 w-8 overflow-hidden rounded-full">
+              <picture>
+                <img
+                  src="/mgc.jfif"
+                  alt="Gabriel avatar"
+                  width="100%"
+                  height="100%"
+                  className="object-cover"
+                />
+              </picture>
+            </div>
+            <h3 className="text-white overflow-hidden whitespace-nowrap max-w-0 pr-0 opacity-0 translate-x-0 transition-all duration-500 ease-out group-hover:max-w-24 group-hover:pr-1.5 group-hover:opacity-100 group-hover:translate-x-0">
+              Asistencia?
+            </h3>
+          </button>
+        </section>
+      )}
+
+      <section
+        className={`fixed inset-0 z-50 transition-opacity duration-300 ${
+          show
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+        onClick={close}
+      >
+        <div className="absolute inset-0 bg-black/40" />
         <div
           onClick={(e) => e.stopPropagation()}
           className="
-          fixed inset-0 h-[100dvh] w-full
+          fixed inset-0 h-dvh w-full
           md:inset-auto md:top-auto md:left-auto md:bottom-6 md:right-6
           md:h-auto md:w-97.5 md:max-w-[calc(100vw-2rem)]
           transition-all duration-300
         "
         >
-          <article className="flex h-full flex-col overflow-hidden rounded-none border border-border-color bg-background shadow-xl relative md:h-auto md:rounded-xl">
+          <article className="flex h-full flex-col overflow-hidden rounded-none border border-border-color bg-background shadow-xl relative md:h-auto md:rounded-xl z-50">
             <div className="absolute left-0 top-0 h-40 w-40 rounded-full bg-zinc-300/20 blur-3xl" />
 
             <button
@@ -68,16 +96,39 @@ export const ScheduleChat = () => {
             </button>
 
             <header className="border-b border-border-color px-6 py-5 shrink-0">
-              <h3 className="text-xl font-semibold">
-                {start ? "¿En qué puedo ayudarte?" : "¿Te puedo asistir?"}
-              </h3>
+              {!start && (
+                <>
+                  <div className="flex gap-2 items-center">
+                    <h3 className="text-xl font-semibold">
+                      ¿Te puedo asistir?
+                    </h3>
+                  </div>
 
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                {start
-                  ? "Contame qué necesitás y, si me dejás tu correo, Gabriel te va a contactar automáticamente para coordinar."
-                  : `Obtén una respuesta inmediata mediante el asistente o agenda una
-              reunión si prefieres una atención personalizada.`}
-              </p>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                    Obtén una respuesta inmediata mediante el asistente o agenda
+                    una reunión si prefieres una atención personalizada.
+                  </p>
+                </>
+              )}
+
+              {start && (
+                <div>
+                  <picture className="flex items-center gap-1">
+                    <img
+                      src="/mgc.jfif"
+                      alt="Gabriel avatar"
+                      width="28px"
+                      height="28px"
+                      className="object-cover rounded-full border-3 border-background"
+                    />
+                     <h4 className="font-semibold">Gabriel Calcagni</h4>
+                  </picture>
+                  <small className="ml-1 text-accent flex gap-1 items-center uppercase tracking-wider text-xs">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                    Online
+                  </small>
+                </div>
+              )}
             </header>
 
             <main
@@ -92,7 +143,9 @@ export const ScheduleChat = () => {
               {!start && (
                 <Button
                   className="w-full"
-                  onClick={() => setStart(true)}
+                  onClick={() => {
+                    setStart(true);
+                  }}
                   type="button"
                 >
                   Iniciar conversación
@@ -107,6 +160,6 @@ export const ScheduleChat = () => {
           </article>
         </div>
       </section>
-    )
+    </>
   );
 };
