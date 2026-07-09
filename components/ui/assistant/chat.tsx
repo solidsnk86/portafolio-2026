@@ -151,7 +151,7 @@ export const Chat = () => {
           title="Nuevo chat"
           className="absolute top-0 left-0 flex w-fit group cursor-pointer"
         >
-          <button className="flex items-center gap-1 bg-background/40 p-2 backdrop-blur-lg relative z-50 mask-b-from-[80%] mask-r-from-[95%]">
+          <button className="flex items-center gap-1 p-2 backdrop-blur-lg relative z-50 mask-b-from-[80%]">
             <Plus size={12} className="" />
             <p
               onClick={clearChat}
@@ -164,7 +164,7 @@ export const Chat = () => {
       )}
       <div
         ref={messagesRef}
-        className="flex-1 overflow-y-auto px-4 py-8 space-y-3 mask-b-from-85%"
+        className="flex-1 overflow-y-auto px-4 py-8 space-y-3 mask-b-from-90%"
       >
         {chatResponses.map((chat, idx) => {
           return (

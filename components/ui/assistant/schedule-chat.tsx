@@ -5,7 +5,6 @@ import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Chat, Message } from "./chat";
 import { useLocation } from "@/context/location-context";
-import Image from "next/image";
 import { timeAgo } from "@/utils/formatRelativeTime";
 import { useContentData } from "@/context/content-context";
 
@@ -66,7 +65,7 @@ export const ScheduleChat = () => {
     <>
       {!show && (
         <section
-          className="fixed right-2 bottom-2 cursor-pointer z-10"
+          className="fixed right-5 bottom-2 cursor-pointer z-10"
           onClick={() => {
             playInitSound();
             setShow(true);
@@ -169,17 +168,15 @@ export const ScheduleChat = () => {
                         ·
                         {timeAgo(
                           new Date(historyChat?.created_at as string),
-                        )?.includes("minuto") ? (
+                        )?.includes("segundo") ? (
+                          <small className="text-xs">conectado ahora</small>
+                        ) : (
                           <small className="text-xs">
                             última actividad{" "}
                             {timeAgo(
                               new Date(historyChat?.created_at as string),
                             )}
                           </small>
-                        ): (
-                          <small className="text-xs">
-                          conectado ahora
-                        </small>
                         )}
                       </div>
                     </div>

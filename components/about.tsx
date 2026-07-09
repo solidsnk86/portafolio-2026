@@ -60,7 +60,7 @@ export function About({ source }: { source?: string }) {
           </p>
 
           <p className="text-base leading-relaxed text-muted-foreground">
-            Actualmente colaboro con un cliente en Chile en el proyecto
+            Hace poco colaboré con un cliente en Chile en el proyecto
             <Link
               href="http://pascalecloset.com/"
               target="_blank"
