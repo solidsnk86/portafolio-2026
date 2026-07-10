@@ -4,7 +4,7 @@ import MarkdownRenderer from "@/components/markdown-renderer";
 import { useContentData } from "@/context/content-context";
 import { useLocation } from "@/context/location-context";
 import { timeAgo } from "@/utils/formatRelativeTime";
-import { Check, Loader, Plus } from "lucide-react";
+import { Check, Loader, Navigation, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export interface Message {
@@ -27,7 +27,7 @@ export const Chat = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesRef = useRef<HTMLDivElement>(null);
   const { historyChat } = useContentData();
-  const [status, setStatus] = useState<'active' | 'inactive'>('inactive');
+  const [status, setStatus] = useState<"active" | "inactive">("inactive");
 
   useEffect(() => {
     if (!textareaRef.current) return;
@@ -75,7 +75,7 @@ export const Chat = () => {
         readed: true,
       },
     ]);
-    
+
     setError(undefined);
     setIsLoading(true);
     setQuery("");
@@ -193,18 +193,22 @@ export const Chat = () => {
             </div>
           </div>
         </div>
-        <aside
-          title={chatResponses.length === 0 ? "" : "Nuevo chat"}
-          className="flex w-fit my-1"
-        >
+        <aside className="flex items-center w-full justify-between my-1">
           <button
             onClick={clearChat}
+            title={chatResponses.length === 0 ? "Escriba en el chat" : "Nuevo chat"}
             disabled={chatResponses.length === 0}
-            className="flex items-center gap-0.5 py-0.5 px-1 bg-foreground rounded text-background disabled:bg-foreground/50 transition-colors"
+            className="flex items-center gap-0.5 py-0.5 px-1 disabled:text-muted-foreground transition-colors hover:opacity-80"
           >
-            <Plus size={12} />
+            <Plus size={12} className="text-accent" />
             <p className="text-[11px]">Nuevo chat</p>
           </button>
+          <div className="flex items-center gap-1">
+            <Navigation size={11} className="text-accent" />
+            <p className="text-[11px]">
+              Ubicación: {city.name}, {country.alpha}
+            </p>
+          </div>
         </aside>
       </header>
 
@@ -230,7 +234,7 @@ export const Chat = () => {
               >
                 <MarkdownRenderer content={chat.content} isChat={true} />
                 <div className="flex justify-between gap-1.5 items-center">
-                  <time className="text-[10.5px] text-muted-foreground uppercase">
+                  <time className="text-[10.5px] text-zinc-400 uppercase">
                     {chat.createdAt as string}
                   </time>
 
@@ -244,16 +248,28 @@ export const Chat = () => {
                   )}
                 </div>
                 {chat.role === "assistant" && (
-                  <div className="absolute -bottom-5 -left-4">
+                  <div className="absolute -bottom-4.5 -left-4">
                     <picture>
                       <img
                         src="/mgc.jfif"
                         alt="Gabriel avatar"
-                        width="28px"
-                        height="28px"
+                        width="27px"
+                        height="27px"
                         className="object-cover rounded-full border-3 border-background"
                       />
                     </picture>
+                  </div>
+                )}
+                {chat.role === "user" && (
+                  <div className="absolute -bottom-4.5 -right-4">
+                    <div
+                      style={{ width: "27px", height: "27px" }}
+                      className="grid content-center justify-center border-2 border-background bg-foreground rounded-full"
+                    >
+                      <small className="text-[10px] text-background">
+                        {country.emojiFlag}
+                      </small>
+                    </div>
                   </div>
                 )}
               </div>
