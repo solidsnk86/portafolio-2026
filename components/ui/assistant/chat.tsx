@@ -18,7 +18,7 @@ export const Chat = () => {
   const {
     data: { city, country },
   } = useLocation();
-  const MAX_CHAR = 250;
+  const MAX_CHAR = 300;
   const [chatResponses, setChatResponses] = useState<Message[]>([]);
   const [query, setQuery] = useState("");
   const [charCount, setCharCount] = useState<number>(0);
@@ -214,7 +214,7 @@ export const Chat = () => {
 
       <div
         ref={messagesRef}
-        className="flex-1 overflow-y-auto px-4 pt-4 pb-10 space-y-3 mask-b-from-90%"
+        className="flex-1 overflow-y-auto px-4 pt-4 pb-10 space-y-3 mask-b-from-90% overflow-x-hidden"
       >
         {chatResponses.map((chat, idx) => {
           return (
@@ -228,7 +228,7 @@ export const Chat = () => {
                 className={`max-w-[82%] px-3 py-2 text-sm leading-6
                 ${
                   chat.role === "user"
-                    ? "bg-indigo-600 text-white rounded-2xl rounded-br-md"
+                    ? "bg-indigo-600 text-white rounded-2xl rounded-br-md overflow-x-hidden"
                     : "bg-foreground text-background rounded-2xl rounded-bl-md"
                 }`}
               >
@@ -322,9 +322,12 @@ export const Chat = () => {
             Enviar
           </button>
         </div>
-        <div className="ml-1">
+        <div className="ml-1 mt-0.5 flex justify-between items-center">
           <small className="text-[10px] text-muted-foreground">
             {charCount}/{MAX_CHAR}
+          </small>
+          <small className="text-[10px] text-muted-foreground">
+            Max. {MAX_CHAR} caracteres
           </small>
         </div>
       </div>
