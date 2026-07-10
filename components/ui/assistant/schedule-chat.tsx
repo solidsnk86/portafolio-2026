@@ -5,8 +5,7 @@ import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Chat, Message } from "./chat";
 import { useLocation } from "@/context/location-context";
-import { timeAgo } from "@/utils/formatRelativeTime";
-import { HistoryChat, useContentData } from "@/context/content-context";
+import { useContentData } from "@/context/content-context";
 
 export const ScheduleChat = () => {
   const [start, setStart] = useState(false);
@@ -14,11 +13,8 @@ export const ScheduleChat = () => {
   const {
     data: { lastAccess },
   } = useLocation();
-  const { historyChat, refreshHistory } = useContentData();
-  const [lastConnection, setLastConnection] = useState<HistoryChat | null>(
-    historyChat,
-  );
-  console.log({historyChat, lastConnection})
+  const { refreshHistory } = useContentData();
+
   const playCloseSound = () => {
     const audio = new Audio("/assets/sounds/notification.mp3");
     if (audio) {
@@ -41,16 +37,11 @@ export const ScheduleChat = () => {
     }
   };
 
-  const refresh = async (): Promise<void> => {
-    const historyChat = await refreshHistory();
-    setLastConnection(historyChat);
-  };
-
   const close = async () => {
     playCloseSound();
     setShow(false);
     await sendHistory();
-    await refresh();
+    await refreshHistory();
   };
 
   const playInitSound = () => {
@@ -120,82 +111,29 @@ export const ScheduleChat = () => {
             <div className="absolute left-0 top-0 h-40 w-40 rounded-full bg-zinc-300/20 blur-3xl" />
 
             <button
-              className="absolute right-2.5 top-2.5 z-10 rounded-full p-2 hover:bg-secondary transition-colors"
+              className="absolute right-1.5 top-1.5 z-10 rounded-full p-2 hover:bg-secondary transition-colors"
               onClick={close}
             >
               <X size={16} />
             </button>
 
-            <header className="border-b border-border-color px-4 py-4 shrink-0">
-              {!start && (
-                <>
-                  <div className="flex gap-2 items-center">
-                    <h3 className="text-xl font-semibold">
-                      ¿Te puedo asistir?
-                    </h3>
-                  </div>
-
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    Obtén una respuesta inmediata mediante el asistente o agenda
-                    una reunión si prefieres una atención personalizada dándole
-                    tu correo.
-                  </p>
-                </>
-              )}
-
-              {start && (
-                <div>
-                  <div className="flex items-center gap-1 relative">
-                    {timeAgo(
-                      new Date(lastConnection?.created_at as string || historyChat?.created_at as string),
-                    )?.includes("segundo") ? (
-                      <div className="absolute bottom-2 outline-2 outline-background left-6.5 w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                    ) : (
-                      <div className="absolute bottom-2 outline-2 outline-background left-6.5 w-1.5 h-1.5 rounded-full bg-zinc-500"></div>
-                    )}
-
-                    <picture>
-                      <img
-                        src="/mgc.jfif"
-                        alt="Gabriel avatar"
-                        width={36}
-                        height={36}
-                        className="object-cover rounded-full border-2 border-background"
-                      />
-                    </picture>
-                    <div className="flex flex-col -space-y-1">
-                      <h4 className="font-semibold">Gabriel Calcagni</h4>
-                      <div className="flex gap-1 items-center text-muted-foreground">
-                        <small className="text-accent flex gap-1 items-center text-xs">
-                          {timeAgo(
-                            new Date(lastConnection?.created_at as string || historyChat?.created_at as string),
-                          )?.includes("segundo")
-                            ? "En Línea"
-                            : "Desconectado"}
-                        </small>
-                        ·
-                        {timeAgo(
-                          new Date(lastConnection?.created_at as string || historyChat?.created_at as string),
-                        )?.includes("segundo") ? (
-                          <small className="text-xs">conectado ahora</small>
-                        ) : (
-                          <small className="text-xs">
-                            última actividad{" "}
-                            {timeAgo(
-                              new Date(lastConnection?.created_at as string || historyChat?.created_at as string),
-                            )}
-                          </small>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+            {!start && (
+              <header className="border-b border-border-color px-4 py-4 shrink-0">
+                <div className="flex gap-2 items-center">
+                  <h3 className="text-xl font-semibold">¿Te puedo asistir?</h3>
                 </div>
-              )}
-            </header>
+
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  Obtén una respuesta inmediata mediante el asistente o agenda
+                  una reunión si prefieres una atención personalizada dándole tu
+                  correo.
+                </p>
+              </header>
+            )}
 
             <main
               className={`min-h-0 overflow-hidden transition-all duration-300 ${
-                start ? "flex-1 md:h-86 md:flex-none" : "h-0 flex-none"
+                start ? "flex-1 md:h-118 md:flex-none" : "h-0 flex-none"
               }`}
             >
               <Chat />
@@ -214,7 +152,10 @@ export const ScheduleChat = () => {
                 </Button>
               )}
 
-              <small className="mt-3 block text-left text-[11px] text-muted-foreground">
+              <small
+                className="block text-left text-[11px] text-muted-foreground"
+                style={{ marginTop: !start ? "12px" : "" }}
+              >
                 Esta conversación puede ser registrada para mejorar la calidad
                 del servicio.
               </small>

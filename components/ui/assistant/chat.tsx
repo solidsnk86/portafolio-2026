@@ -1,7 +1,9 @@
 "use client";
 
 import MarkdownRenderer from "@/components/markdown-renderer";
+import { useContentData } from "@/context/content-context";
 import { useLocation } from "@/context/location-context";
+import { timeAgo } from "@/utils/formatRelativeTime";
 import { Check, Loader, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -24,6 +26,8 @@ export const Chat = () => {
   const [error, setError] = useState<Error | undefined>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesRef = useRef<HTMLDivElement>(null);
+  const { historyChat } = useContentData();
+  const [status, setStatus] = useState<'active' | 'inactive'>('inactive');
 
   useEffect(() => {
     if (!textareaRef.current) return;
@@ -71,7 +75,7 @@ export const Chat = () => {
         readed: true,
       },
     ]);
-
+    
     setError(undefined);
     setIsLoading(true);
     setQuery("");
@@ -113,7 +117,7 @@ export const Chat = () => {
       if (!response.ok) throw new Error(jsonData.message);
 
       playBubbleSound();
-
+      setStatus("active");
       setChatResponses((prev) => [
         ...prev,
         {
@@ -146,26 +150,67 @@ export const Chat = () => {
 
   return (
     <div className="flex flex-col h-full relative">
-      {chatResponses.length > 0 && (
-        <div
-          onClick={clearChat}
-          title="Nuevo chat"
-          className="absolute top-0 left-0 flex w-fit group cursor-pointer"
-        >
-          <button className="flex items-center gap-1 p-2 backdrop-blur-lg relative z-50 mask-b-from-80%">
-            <Plus size={12} className="" />
-            <p
-              onClick={clearChat}
-              className="text-xs group-hover:text-accent hover:underline"
-            >
-              Nuevo chat
-            </p>
-          </button>
+      <header className="border-b border-border-color px-4 pt-4 shrink-0">
+        <div className="flex items-center gap-1 relative">
+          {timeAgo(new Date(historyChat?.created_at as string))?.includes(
+            "segundo",
+          ) || status === "active" ? (
+            <div className="absolute bottom-2 outline-2 outline-background left-6.5 w-1.5 h-1.5 rounded-full bg-green-500" />
+          ) : (
+            <div className="absolute bottom-2 outline-2 outline-background left-6.5 w-1.5 h-1.5 rounded-full bg-zinc-500" />
+          )}
+
+          <picture>
+            <img
+              src="/mgc.jfif"
+              alt="Gabriel avatar"
+              width={36}
+              height={36}
+              className="object-cover rounded-full border-2 border-background"
+            />
+          </picture>
+          <div className="flex flex-col -space-y-1">
+            <h4 className="font-semibold">Gabriel Calcagni</h4>
+            <div className="flex gap-1 items-center text-muted-foreground">
+              <small className="text-accent flex gap-1 items-center text-xs">
+                {timeAgo(new Date(historyChat?.created_at as string))?.includes(
+                  "segundo",
+                ) || status === "active"
+                  ? "En Línea"
+                  : "Desconectado"}
+              </small>
+              ·
+              {timeAgo(new Date(historyChat?.created_at as string))?.includes(
+                "segundo",
+              ) || status === "active" ? (
+                <small className="text-xs">conectado ahora</small>
+              ) : (
+                <small className="text-xs">
+                  última actividad{" "}
+                  {timeAgo(new Date(historyChat?.created_at as string))}
+                </small>
+              )}
+            </div>
+          </div>
         </div>
-      )}
+        <aside
+          title={chatResponses.length === 0 ? "" : "Nuevo chat"}
+          className="flex w-fit my-1"
+        >
+          <button
+            onClick={clearChat}
+            disabled={chatResponses.length === 0}
+            className="flex items-center gap-0.5 py-0.5 px-1 bg-foreground rounded text-background disabled:bg-foreground/50 transition-colors"
+          >
+            <Plus size={12} />
+            <p className="text-[11px]">Nuevo chat</p>
+          </button>
+        </aside>
+      </header>
+
       <div
         ref={messagesRef}
-        className="flex-1 overflow-y-auto px-4 py-8 space-y-3 mask-b-from-90%"
+        className="flex-1 overflow-y-auto px-4 pt-4 pb-10 space-y-3 mask-b-from-90%"
       >
         {chatResponses.map((chat, idx) => {
           return (
@@ -184,24 +229,18 @@ export const Chat = () => {
                 }`}
               >
                 <MarkdownRenderer content={chat.content} isChat={true} />
-                <div className="flex justify-between items-center">
-                  <time className="text-[10.5px] text-zinc-400 uppercase">
+                <div className="flex justify-between gap-1.5 items-center">
+                  <time className="text-[10.5px] text-muted-foreground uppercase">
                     {chat.createdAt as string}
                   </time>
 
                   {chat.readed ? (
                     <div className="relative flex -space-x-2">
-                      <Check
-                        size={13}
-                        className="text-blue-500 translate-y-0.75"
-                      />
-                      <Check
-                        size={13}
-                        className="text-blue-500 translate-y-0.75"
-                      />
+                      <Check size={13} className="text-blue-500" />
+                      <Check size={13} className="text-blue-500" />
                     </div>
                   ) : (
-                    <Check size={13} className=" translate-y-0.5" />
+                    <Check size={13} />
                   )}
                 </div>
                 {chat.role === "assistant" && (
@@ -246,21 +285,7 @@ export const Chat = () => {
               setCharCount(e.target.value.length);
             }}
             placeholder="Escriba su consulta/@email"
-            className="
-              flex-1
-              resize-none
-              overflow-y-hidden
-              rounded-lg
-              border
-              border-border-color
-              bg-transparent
-              px-3
-              py-2
-              text-sm
-              outline-none
-              focus:ring-3
-              focus:ring-indigo-500/30
-            "
+            className="flex-1 resize-none overflow-y-hidden rounded-lg border border-border-color bg-transparent px-3 py-2 text-sm outline-none focus:ring-3 focus:ring-indigo-500/30"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -276,17 +301,7 @@ export const Chat = () => {
               onSubmit();
             }}
             disabled={!query.trim() || isLoading}
-            className="
-              h-9
-              px-4
-              rounded-lg
-              bg-foreground
-              text-background
-              text-sm
-              disabled:opacity-50
-              disabled:cursor-not-allowed
-              transition-colors
-            "
+            className="h-9 px-4 rounded-lg bg-foreground text-background text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             Enviar
           </button>
