@@ -141,7 +141,7 @@ export function Header() {
     const currentIP = location.ip;
     const lastIP = location.lastAccess.ip;
 
-    if (lastIP !== currentIP) {
+    if (lastIP !== currentIP && !currentIP.includes("45.178.0")) {
       const timeoutId = setTimeout(() => {
         collectData({ data: location });
       }, 600);

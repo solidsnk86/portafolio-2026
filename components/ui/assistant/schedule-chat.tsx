@@ -50,19 +50,20 @@ export const ScheduleChat = () => {
   }, [show]);
 
   useEffect(() => {
-    const sessionHistory = sessionStorage.getItem("history-chat");
-    const messages: Message[] = JSON.parse(sessionHistory || "[]");
-
-    if (!sessionHistory || messages.length === 0) return;
+    if (!lastAccess.id) return;
 
     const sendHistory = async () => {
       try {
+        const sessionHistory = sessionStorage.getItem("history-chat");
+        const messages: Message[] = JSON.parse(sessionHistory || "[]");
+
+        if (messages.length === 0) return;
+
         await fetch("/api/collection/history", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ userId: lastAccess.id, messages }),
         });
-        
       } catch (error) {
         console.log(error);
       }
