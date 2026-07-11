@@ -39,7 +39,7 @@ async function sendConfirmationEmail(userEmail: string) {
 }
 
 export async function POST(request: Request) {
-  const { query, historyChat, city, country, lang, time, createdAt } = await request.json();
+  const { query, selectedModel, historyChat, city, country, lang, time, createdAt } = await request.json();
 
   if (!query || !city || !country || !lang || !time) {
     return NextResponse.json({ message: "Faltan parámetros" });
@@ -106,14 +106,14 @@ export async function POST(request: Request) {
 
   try {
     const response = await client.chat.completions.create({
-      model: "llama-3.1-8b-instant",
+      model: selectedModel || "llama-3.1-8b-instant",
       messages,
     });
 
     return NextResponse.json({
       context: response.choices[0].message?.content,
       emailSent: emailStatus === "enviado",
-      createdAt: createdAt
+      createdAt
     });
   } catch (error) {
     return NextResponse.json({

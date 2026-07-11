@@ -1,7 +1,11 @@
-import type { Dispatch, RefObject, SetStateAction } from "react";
+"use client";
+
+import { type Dispatch, type RefObject, type SetStateAction } from "react";
 
 interface FooterSectionChatProps {
   query: string;
+  selectedModel: Model;
+  setSelectedModel: Dispatch<SetStateAction<Model>>;
   setQuery: Dispatch<SetStateAction<string>>;
   charCount: number;
   setCharCount: Dispatch<SetStateAction<number>>;
@@ -12,9 +16,24 @@ interface FooterSectionChatProps {
   maxChar: number;
 }
 
+export type Model =
+  | "openai/gpt-oss-120b"
+  | "llama-3.1-8b-instant"
+  | "llama-3.3-70b-versatile"
+  | "openai/gpt-oss-20b";
+
+export const models = [
+  "llama-3.1-8b-instant",
+  "openai/gpt-oss-120b",
+  "llama-3.3-70b-versatile",
+  "openai/gpt-oss-20b",
+];
+
 export const FooterSectionChat = ({
   query,
   setQuery,
+  selectedModel,
+  setSelectedModel,
   charCount,
   setCharCount,
   isLoading,
@@ -25,6 +44,20 @@ export const FooterSectionChat = ({
 }: FooterSectionChatProps) => {
   return (
     <div className="border-t border-border-color p-3 bg-background">
+      <label className="text-[11px]">
+        Modelo:{" "}
+        <select
+          onChange={(e) => setSelectedModel(e.target.value as Model)}
+          value={selectedModel}
+          className="px-2 text-[11px] mb-2 bg-background rounded-md border border-border-color"
+        >
+          {models.map((model) => (
+            <option key={model} value={model}>
+              {model}
+            </option>
+          ))}
+        </select>
+      </label>
       <div className="flex gap-2 items-end">
         <textarea
           rows={1}
@@ -35,7 +68,7 @@ export const FooterSectionChat = ({
             setQuery(e.target.value);
             setCharCount(e.target.value.length);
           }}
-          placeholder="Escriba su consulta/@email"
+          placeholder="Escriba su consulta /email"
           className="flex-1 resize-none overflow-y-hidden rounded-lg border border-border-color bg-transparent px-3 py-2 text-sm outline-none focus:ring-3 focus:ring-indigo-500/30"
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
@@ -52,7 +85,7 @@ export const FooterSectionChat = ({
             onSubmit();
           }}
           disabled={!query.trim() || isLoading}
-          className="h-9 px-4 rounded-lg bg-foreground text-background text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="py-2 px-4 rounded-lg bg-foreground text-background border border-border-color text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           Enviar
         </button>

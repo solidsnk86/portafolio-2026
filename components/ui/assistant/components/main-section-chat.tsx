@@ -36,7 +36,7 @@ export const MainSectionChat = ({
                 ${
                   chat.role === "user"
                     ? "bg-indigo-600 text-white rounded-2xl rounded-br-md overflow-x-hidden"
-                    : "bg-foreground text-background rounded-2xl rounded-bl-md"
+                    : "bg-foreground text-background rounded-2xl rounded-bl-md overflow-x-hidden"
                 }`}
             >
               <MarkdownRenderer content={chat.content} isChat={true} />
