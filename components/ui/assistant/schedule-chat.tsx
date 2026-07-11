@@ -23,25 +23,10 @@ export const ScheduleChat = () => {
     }
   };
 
-  const sendHistory = async () => {
-    const sessionHistory = sessionStorage.getItem("history-chat");
-    const messages: Message[] = JSON.parse(sessionHistory || "[]");
-    try {
-      await fetch("/api/collection/history", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: lastAccess.id, messages }),
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const close = async () => {
     playCloseSound();
     setShow(false);
-    await sendHistory();
-    await refreshHistory();
+    refreshHistory();
   };
 
   const playInitSound = () => {
@@ -58,7 +43,37 @@ export const ScheduleChat = () => {
     } else {
       document.documentElement.style.overflow = "auto";
     }
+
+    return () => {
+      document.documentElement.style.overflow = "auto";
+    };
   }, [show]);
+
+  useEffect(() => {
+    const sessionHistory = sessionStorage.getItem("history-chat");
+    const messages: Message[] = JSON.parse(sessionHistory || "[]");
+
+    if (!sessionHistory || messages.length === 0) return;
+
+    const sendHistory = async () => {
+      try {
+        await fetch("/api/collection/history", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId: lastAccess.id, messages }),
+        });
+        
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    window.addEventListener("blur", sendHistory);
+
+    return () => {
+      window.removeEventListener("blur", sendHistory);
+    };
+  }, [lastAccess]);
 
   return (
     <>

@@ -142,17 +142,20 @@ export function Header() {
     const lastIP = location.lastAccess.ip;
 
     if (lastIP !== currentIP) {
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         collectData({ data: location });
       }, 600);
+
+      return () => clearTimeout(timeoutId);
     }
+
   }, [isLoading, location]);
 
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
+    document.documentElement.style.overflow = isMenuOpen ? "hidden" : "auto";
 
     return () => {
-      document.body.style.overflow = "auto";
+      document.documentElement.style.overflow = "auto";
     };
   }, [isMenuOpen]);
 
