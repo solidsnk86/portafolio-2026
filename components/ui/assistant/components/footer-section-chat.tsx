@@ -65,6 +65,7 @@ export const FooterSectionChat = ({
             setCharCount(e.target.value.length);
           }}
           placeholder="Escriba su consulta /email"
+          style={{ color: query.match("/buscar") ? "var(--color-accent)" : "" }}
           className="flex-1 resize-none overflow-y-hidden rounded-lg border border-border-color bg-transparent px-3 py-2 text-sm outline-none focus:ring-3 focus:ring-indigo-500/30"
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {

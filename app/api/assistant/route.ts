@@ -2,12 +2,13 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import nodemailer from "nodemailer";
 import { template } from "./template";
-import { chromium } from "playwright";
+import { tavily, TavilySearchResponse } from "@tavily/core";
 
 const client = new OpenAI({
   apiKey: process.env.SOLID_SNK_API_KEY,
   baseURL: "https://api.groq.com/openai/v1",
 });
+const tvly = tavily({ apiKey: process.env.TVLY_API_KEY });
 const ownEmail = process.env.GMAIL_USER ?? "clacagni.gabriel86@gmail.com";
 
 function detectEmail(text: string) {
@@ -65,7 +66,8 @@ export async function POST(request: Request) {
 
   let emailStatus: "no_aplica" | "enviado" | "fallo" = "no_aplica";
   let searchStatus: "no_aplica" | "buscado" | "fallo" = "no_aplica";
-  let searchResult = "";
+  let responseTime: number = 0;
+  let searchResult: TavilySearchResponse["results"] = [];
 
   if (userEmail) {
     try {
@@ -77,35 +79,17 @@ export async function POST(request: Request) {
     }
   }
 
-  if (search) {
-    const browser = await chromium.launch({ headless: true });
-    const context = await browser.newContext({ ignoreHTTPSErrors: true });
-
+  if (search) { 
     try {
-      const page = await context.newPage();
-
-      await page.goto("https://duckduckgo.com/");
-      const input = page.locator('//*[@id="searchbox_input"]');
-      await input.fill(query);
-      await input.press("Enter");
-
-      await page.waitForSelector("ol li", { timeout: 5000 });
-
-      const text = await page.evaluate(() => {
-        const firstResult = document.querySelector("ol li");
-       
-        return firstResult?.textContent || "No se pudo obtener el scraping de los elementos.";
-      });
-
-      searchResult = text;
+      const searchResponse = await tvly.search(query);
+      const results = searchResponse.results;
+      searchResult = results;
+      responseTime = searchResponse.responseTime;
       searchStatus = "buscado";
     } catch (error) {
       console.log("Error al buscar en la web:", error);
       searchStatus = "fallo";
-      await browser.close();
-    } finally {
-      await browser.close();
-    }
+    } 
   }
 
   const emailInstruction =
@@ -117,7 +101,7 @@ export async function POST(request: Request) {
 
   const searchInstruction =
     searchStatus === "buscado"
-      ? `Se detectó que el usaurio quiere realizar una búsqueda, por lo que empezo la búsqueda con playwright a traves de scraping resultado obtenido: [${searchResult}].
+      ? `Se detectó que el usuario quiere realizar una búsqueda, por lo que la búsqueda con tavily devuelve el resultado: [${JSON.stringify(searchResult, null, 2)}] -> Los resultados deben ser presentados en markdown usando y mapeando todo el array del results y quede bien estilado usando los estilos markdown disponibles para una buena presentación con, title, content, url, ...etc.
   `
       : searchStatus === "fallo"
         ? `Se detectó la sugerencia de búsqueda del usuario pero terminó en error o FALLÓ, se le pide disculpas y se sugiere buscar de nuevo.`
@@ -175,6 +159,7 @@ export async function POST(request: Request) {
       createdAt,
       searched: searchDetected(query)?.includes("busc") ? true : false,
       searchResult,
+      responseTime
     });
   } catch (error) {
     return NextResponse.json({
