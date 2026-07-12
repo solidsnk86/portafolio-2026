@@ -78,7 +78,7 @@ export async function POST(request: Request) {
   }
 
   if (search) {
-    const browser = await chromium.launch({ headless: false });
+    const browser = await chromium.launch({ headless: true });
     const context = await browser.newContext({ ignoreHTTPSErrors: true });
 
     try {
