@@ -12,6 +12,7 @@ export interface Message {
   content: string;
   createdAt?: Date | string;
   readed?: boolean;
+  searchResult?: string;
 }
 
 export const Chat = () => {
@@ -85,7 +86,7 @@ export const Chat = () => {
 
     const messageToSend = chatResponses.map(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      ({ createdAt, readed, ...message }) => message,
+      ({ createdAt, readed, searchResult, ...message }) => message,
     );
 
     try {
@@ -122,9 +123,10 @@ export const Chat = () => {
         ...prev,
         {
           role: "assistant",
-          content: jsonData.context ?? "Hubo un error?",
+          content: jsonData.context ?? "Ooops parece que hubo un error. Intenta más tarde.",
           createdAt: jsonData.createdAt,
           readed: true,
+          searchResult: jsonData.searchResult
         },
       ]);
     } catch (error) {

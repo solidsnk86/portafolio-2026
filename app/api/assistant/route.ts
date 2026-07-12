@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import nodemailer from "nodemailer";
 import { template } from "./template";
+import { chromium } from "playwright";
 
 const client = new OpenAI({
   apiKey: process.env.SOLID_SNK_API_KEY,
@@ -15,8 +16,11 @@ function detectEmail(text: string) {
 }
 
 function searchDetected(text: string) {
-  const match = text.match("buscar".toLowerCase());
-  return match
+  const match =
+    text.toLowerCase().match("buscar") ||
+    text.toLowerCase().match("búsqueda") ||
+    text.toLowerCase().match("/buscar");
+  return match?.[0];
 }
 
 async function sendConfirmationEmail(userEmail: string, createdAt: string) {
@@ -36,23 +40,32 @@ async function sendConfirmationEmail(userEmail: string, createdAt: string) {
       userEmail,
       userName: userEmail.split("@")[0],
       ownEmail,
-      message: "Me encantaría coordinar una reunión para escuchar bien tu idea y ver cómo puedo ayudarte. ¿Cuándo te queda cómodo?. Agendamos una videollamada de 15-20 min esta semana?",
-      date: new Date(createdAt).toLocaleDateString("es-AR", { year: "numeric", month: "long", day: "numeric" }),
+      message:
+        "Me encantaría coordinar una reunión para escuchar bien tu idea y ver cómo puedo ayudarte. ¿Cuándo te queda cómodo?. Agendamos una videollamada de 15-20 min esta semana?",
+      date: new Date(createdAt).toLocaleDateString("es-AR", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
       portfolioUrl: "http://gabrielcalcagni.vercel.app/",
     }),
   });
 }
 
 export async function POST(request: Request) {
-  const { query, historyChat, city, country, lang, time, createdAt } = await request.json();
+  const { query, historyChat, city, country, lang, time, createdAt } =
+    await request.json();
 
   if (!query || !city || !country || !lang || !time) {
     return NextResponse.json({ message: "Faltan parámetros" });
   }
 
   const userEmail = detectEmail(query);
+  const search = searchDetected(query);
 
   let emailStatus: "no_aplica" | "enviado" | "fallo" = "no_aplica";
+  let searchStatus: "no_aplica" | "buscado" | "fallo" = "no_aplica";
+  let searchResult = "";
 
   if (userEmail) {
     try {
@@ -64,12 +77,51 @@ export async function POST(request: Request) {
     }
   }
 
+  if (search) {
+    const browser = await chromium.launch({ headless: false });
+    const context = await browser.newContext({ ignoreHTTPSErrors: true });
+
+    try {
+      const page = await context.newPage();
+
+      await page.goto("https://duckduckgo.com/");
+      const input = page.locator('//*[@id="searchbox_input"]');
+      await input.fill(query);
+      await input.press("Enter");
+
+      await page.waitForSelector("ol li", { timeout: 5000 });
+
+      const text = await page.evaluate(() => {
+        const firstResult = document.querySelector("ol li");
+       
+        return firstResult?.textContent || "No se pudo obtener el scraping de los elementos.";
+      });
+
+      searchResult = text;
+      searchStatus = "buscado";
+    } catch (error) {
+      console.log("Error al buscar en la web:", error);
+      searchStatus = "fallo";
+      await browser.close();
+    } finally {
+      await browser.close();
+    }
+  }
+
   const emailInstruction =
     emailStatus === "enviado"
       ? `Se detectó el correo [${userEmail}] y el envío fue EXITOSO. Avisale al usuario que el mail de confirmación ya está en camino.`
       : emailStatus === "fallo"
-      ? `Se detectó el correo [${userEmail}] pero el envío FALLÓ. Pedile disculpas breves y decile que te escriba directo a ${ownEmail} o por WhatsApp +5492665290020 para coordinar.`
-      : `No se detectó ningún correo en el mensaje del usuario.`;
+        ? `Se detectó el correo [${userEmail}] pero el envío FALLÓ. Pedile disculpas breves y decile que te escriba directo a ${ownEmail} o por WhatsApp +5492665290020 para coordinar.`
+        : `No se detectó ningún correo en el mensaje del usuario.`;
+
+  const searchInstruction =
+    searchStatus === "buscado"
+      ? `Se detectó que el usaurio quiere realizar una búsqueda, por lo que empezo la búsqueda con playwright a traves de scraping resultado obtenido: [${searchResult}].
+  `
+      : searchStatus === "fallo"
+        ? `Se detectó la sugerencia de búsqueda del usuario pero terminó en error o FALLÓ, se le pide disculpas y se sugiere buscar de nuevo.`
+        : `No se detectó o se sugerió ninguna busqueda por parte del usuario.`;
 
   const messages = [
     {
@@ -103,6 +155,8 @@ export async function POST(request: Request) {
           4.  **Naturalidad y Variedad:** Evita frases cliché de asistentes virtuales (como "¡Hola! Soy el asistente de..."). Responde directamente a lo que te preguntan de forma conversacional. Si te preguntan cosas cotidianas (como la fecha), responde con naturalidad o ingenio sin disculparte por ser una IA.
           5.  **Historial**: Se te provee del historial de conversación, mantén el hilo perpicazmente. Si te pide información de los proyectos le das info y la url. Recuerda ofrecerle que te dé el correo así ya se le envía de manera automatizada para ya poder organizar una reunión.
           6.  **Estado del correo**: ${emailInstruction}
+          7.  **Puedes buscar en la web**: Lo que no tengas acceso o no sepas, busca. hay una función detectando si el usuario quiere buscar. Si el usuario no sabe como, le explicas que puede digitar '/buscar -> lo que se requiera buscar aquí.' 
+          7.  **Estado para la buscar en la web**: ${searchInstruction}
             `,
     },
     ...(Array.isArray(historyChat) ? historyChat : []),
@@ -119,7 +173,8 @@ export async function POST(request: Request) {
       context: response.choices[0].message?.content,
       emailSent: emailStatus === "enviado",
       createdAt,
-      search: searchDetected(query)
+      searched: searchDetected(query)?.includes("busc") ? true : false,
+      searchResult,
     });
   } catch (error) {
     return NextResponse.json({

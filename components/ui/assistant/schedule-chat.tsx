@@ -26,7 +26,7 @@ export const ScheduleChat = () => {
   const close = async () => {
     playCloseSound();
     setShow(false);
-    refreshHistory();
+    // refreshHistory();
   };
 
   const playInitSound = () => {
@@ -49,32 +49,32 @@ export const ScheduleChat = () => {
     };
   }, [show]);
 
-  useEffect(() => {
-    if (!lastAccess.id) return;
+  // useEffect(() => {
+  //   if (!lastAccess.id) return;
 
-    const sendHistory = async () => {
-      try {
-        const sessionHistory = sessionStorage.getItem("history-chat");
-        const messages: Message[] = JSON.parse(sessionHistory || "[]");
+  //   const sendHistory = async () => {
+  //     try {
+  //       const sessionHistory = sessionStorage.getItem("history-chat");
+  //       const messages: Message[] = JSON.parse(sessionHistory || "[]");
 
-        if (messages.length === 0) return;
+  //       if (messages.length === 0) return;
 
-        await fetch("/api/collection/history", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId: lastAccess.id, messages }),
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //       await fetch("/api/collection/history", {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({ userId: lastAccess.id, messages }),
+  //       });
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    window.addEventListener("blur", sendHistory);
+  //   window.addEventListener("blur", sendHistory);
 
-    return () => {
-      window.removeEventListener("blur", sendHistory);
-    };
-  }, [lastAccess]);
+  //   return () => {
+  //     window.removeEventListener("blur", sendHistory);
+  //   };
+  // }, [lastAccess]);
 
   return (
     <>
