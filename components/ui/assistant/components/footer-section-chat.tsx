@@ -4,8 +4,6 @@ import { type Dispatch, type RefObject, type SetStateAction } from "react";
 
 interface FooterSectionChatProps {
   query: string;
-  selectedModel: Model;
-  setSelectedModel: Dispatch<SetStateAction<Model>>;
   setQuery: Dispatch<SetStateAction<string>>;
   charCount: number;
   setCharCount: Dispatch<SetStateAction<number>>;
@@ -17,8 +15,8 @@ interface FooterSectionChatProps {
 }
 
 export type Model =
-  | "openai/gpt-oss-120b"
   | "llama-3.1-8b-instant"
+  | "openai/gpt-oss-120b"
   | "llama-3.3-70b-versatile"
   | "openai/gpt-oss-20b";
 
@@ -32,8 +30,6 @@ export const models = [
 export const FooterSectionChat = ({
   query,
   setQuery,
-  selectedModel,
-  setSelectedModel,
   charCount,
   setCharCount,
   isLoading,
@@ -44,12 +40,12 @@ export const FooterSectionChat = ({
 }: FooterSectionChatProps) => {
   return (
     <div className="border-t border-border-color p-3 bg-background">
-      <label className="text-[11px]">
+      {/* <label className="text-[11px]">
         Modelo:{" "}
         <select
           onChange={(e) => setSelectedModel(e.target.value as Model)}
           value={selectedModel}
-          className="px-2 text-[11px] mb-2 bg-background rounded-md border border-border-color"
+          className="px-2 text-[11px] mb-2 bg-background rounded-md border border-border-color focus:ring-2 ring-accent/50"
         >
           {models.map((model) => (
             <option key={model} value={model}>
@@ -57,7 +53,7 @@ export const FooterSectionChat = ({
             </option>
           ))}
         </select>
-      </label>
+      </label> */}
       <div className="flex gap-2 items-end">
         <textarea
           rows={1}

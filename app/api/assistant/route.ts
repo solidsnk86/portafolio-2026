@@ -14,7 +14,12 @@ function detectEmail(text: string) {
   return match?.[0]?.replace(/[.,;:!?]+$/, "");
 }
 
-async function sendConfirmationEmail(userEmail: string) {
+function searchDetected(text: string) {
+  const match = text.match("buscar".toLowerCase());
+  return match
+}
+
+async function sendConfirmationEmail(userEmail: string, createdAt: string) {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -32,14 +37,14 @@ async function sendConfirmationEmail(userEmail: string) {
       userName: userEmail.split("@")[0],
       ownEmail,
       message: "Me encantaría coordinar una reunión para escuchar bien tu idea y ver cómo puedo ayudarte. ¿Cuándo te queda cómodo?. Agendamos una videollamada de 15-20 min esta semana?",
-      date: new Date().toLocaleDateString("es-AR", { year: "numeric", month: "long", day: "numeric" }),
+      date: new Date(createdAt).toLocaleDateString("es-AR", { year: "numeric", month: "long", day: "numeric" }),
       portfolioUrl: "http://gabrielcalcagni.vercel.app/",
     }),
   });
 }
 
 export async function POST(request: Request) {
-  const { query, selectedModel, historyChat, city, country, lang, time, createdAt } = await request.json();
+  const { query, historyChat, city, country, lang, time, createdAt } = await request.json();
 
   if (!query || !city || !country || !lang || !time) {
     return NextResponse.json({ message: "Faltan parámetros" });
@@ -51,7 +56,7 @@ export async function POST(request: Request) {
 
   if (userEmail) {
     try {
-      await sendConfirmationEmail(userEmail);
+      await sendConfirmationEmail(userEmail, createdAt);
       emailStatus = "enviado";
     } catch (err) {
       console.error("Error enviando correo:", err);
@@ -92,7 +97,7 @@ export async function POST(request: Request) {
           *   **Stack Tecnológico**: React, NextJS, TypeScript, JavaScript, Nodejs, Supabase, NeónDB, PostgresSQL, mySQL, SQL. <- Este es el stack de todos los días. (En la faculatad aprendí Java, Springboot, Python, FastAPI).
 
           ## Instrucciones y Restricciones
-          1.  **Idioma y Localización:** El usuario te contacta desde: ${city}, ${country} - ${lang}. Adapta tu idioma y modismos para que la conversación sea fluida en su idioma.
+          1.  **Idioma y Localización:** El usuario te contacta desde: ${city.name}, ${country.name} - ${lang}. Adapta tu idioma y modismos para que la conversación sea fluida en su idioma.
           2.  **Límite de longitud:** Tus respuestas DEBEN ser breves, conversacionales y directas. Nunca superes los 300 caracteres por mensaje.
           3.  **Entrega de Contacto Dinámica:** NO despidas cada mensaje con los datos de contacto. Entrégalo de manera fluida solo cuando el usuario muestre intención de conectar, preguntar por servicios, o cuando sea contextualmente lógico. A veces da solo el correo, otras veces ambos.
           4.  **Naturalidad y Variedad:** Evita frases cliché de asistentes virtuales (como "¡Hola! Soy el asistente de..."). Responde directamente a lo que te preguntan de forma conversacional. Si te preguntan cosas cotidianas (como la fecha), responde con naturalidad o ingenio sin disculparte por ser una IA.
@@ -106,14 +111,15 @@ export async function POST(request: Request) {
 
   try {
     const response = await client.chat.completions.create({
-      model: selectedModel || "llama-3.1-8b-instant",
+      model: "llama-3.3-70b-versatile",
       messages,
     });
 
     return NextResponse.json({
       context: response.choices[0].message?.content,
       emailSent: emailStatus === "enviado",
-      createdAt
+      createdAt,
+      search: searchDetected(query)
     });
   } catch (error) {
     return NextResponse.json({

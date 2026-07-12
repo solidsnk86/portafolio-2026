@@ -3,7 +3,7 @@
 import { useContentData } from "@/context/content-context";
 import { useLocation } from "@/context/location-context";
 import { useEffect, useRef, useState } from "react";
-import { FooterSectionChat, Model } from "./components/footer-section-chat";
+import { FooterSectionChat } from "./components/footer-section-chat";
 import { HeaderSectionChat } from "./components/header-section-chat";
 import { MainSectionChat } from "./components/main-section-chat";
 
@@ -28,7 +28,6 @@ export const Chat = () => {
   const messagesRef = useRef<HTMLDivElement>(null);
   const { historyChat } = useContentData();
   const [status, setStatus] = useState<"active" | "inactive">("inactive");
-  const [selectedModel, setSelectedModel] = useState<Model>("openai/gpt-oss-120b");
 
   useEffect(() => {
     if (!textareaRef.current) return;
@@ -97,7 +96,6 @@ export const Chat = () => {
         },
         body: JSON.stringify({
           query,
-          selectedModel,
           historyChat: messageToSend,
           city,
           country,
@@ -150,8 +148,6 @@ export const Chat = () => {
 
   const clearChat = () => setChatResponses([]);
 
-  console.log(selectedModel)
-
   return (
     <div className="flex flex-col h-full relative">
       <HeaderSectionChat
@@ -173,8 +169,6 @@ export const Chat = () => {
 
       <FooterSectionChat
         query={query}
-        setSelectedModel={setSelectedModel}
-        selectedModel={selectedModel}
         setQuery={setQuery}
         charCount={charCount}
         setCharCount={setCharCount}
