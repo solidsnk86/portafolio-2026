@@ -39,12 +39,13 @@ export const MainSectionChat = ({
                     : "bg-foreground text-background rounded-2xl rounded-bl-md overflow-x-hidden"
                 }`}
             >
-              <MarkdownRenderer content={chat.content} isChat={true} />
               {chat.role === "assistant" && chat.searchResult?.length !== 0 && (
-                <div className="flex gap-2 justify-between items-center my-2 text-background bg-accent/10 rounded px-2">
-                  <small>Tiempo empleado en la búsqueda</small><small>{chat.responseTime}s.</small>
+                <div className="flex gap-2 justify-between items-center my-2 text-muted-foreground italic">
+                  <small>Tiempo empleado en la búsqueda {chat.responseTime}s</small>
                 </div>
               )}
+              <MarkdownRenderer content={chat.content} isChat={true} />
+
               <div className="flex justify-between gap-1.5 items-center">
                 <time className="text-[10.5px] text-zinc-400 uppercase">
                   {chat.createdAt as string}

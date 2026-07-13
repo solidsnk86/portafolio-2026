@@ -79,7 +79,7 @@ export async function POST(request: Request) {
     }
   }
 
-  if (search) { 
+  if (search) {
     try {
       const searchResponse = await tvly.search(query);
       const results = searchResponse.results;
@@ -89,7 +89,9 @@ export async function POST(request: Request) {
     } catch (error) {
       console.log("Error al buscar en la web:", error);
       searchStatus = "fallo";
-    } 
+      responseTime = 0;
+      searchResult = [];
+    }
   }
 
   const emailInstruction =
@@ -157,13 +159,37 @@ export async function POST(request: Request) {
       context: response.choices[0].message?.content,
       emailSent: emailStatus === "enviado",
       createdAt,
-      searched: searchDetected(query)?.includes("busc") ? true : false,
+      searched: searchStatus === "buscado",
       searchResult,
-      responseTime
+      responseTime,
+      model: response.model
     });
   } catch (error) {
+    if ((error as TypeError).message.includes("429")) {
+      try {
+        const response = await client.chat.completions.create({
+          model: "llama-3.1-8b-instant",
+          messages,
+        });
+
+        return NextResponse.json({
+          context: response.choices[0].message?.content,
+          emailSent: emailStatus === "enviado",
+          createdAt,
+          searched: searchStatus === "buscado",
+          searchResult,
+          responseTime,
+          model: response.model,
+          catch: true
+        });
+      } catch (subErr) {
+        return NextResponse.json({
+          message: "Error en el servidor: " + (subErr as TypeError).message,
+        });
+      }
+    }
     return NextResponse.json({
-      message: "Error en el servidor" + (error as TypeError).message,
+      message: "Error en el servidor: " + (error as TypeError).message,
     });
   }
 }
