@@ -77,7 +77,9 @@ export const ScheduleChat = () => {
             setShow(true);
           }}
         >
-          <button className="flex items-center gap-0.5 py-1 pl-1 pr-0.5 rounded-full bg-accent group relative">
+          <button className="flex items-center gap-0.5 py-1 pl-1 pr-0.5 rounded-full bg-stripes bg-secondary group relative">
+            <div className="absolute top-0 right-0 w-2 h-2 bg-red-400 rounded-full animate-ping z-40" />
+             <div className="absolute top-0 right-0 w-2 h-2 bg-red-400 rounded-full z-50" />
             <div className="relative h-8 w-8 overflow-hidden rounded-full">
               <picture>
                 <img
@@ -89,7 +91,7 @@ export const ScheduleChat = () => {
                 />
               </picture>
             </div>
-            <h3 className="text-white overflow-hidden whitespace-nowrap max-w-0 pr-0 opacity-0 translate-x-0 transition-all duration-500 ease-out group-hover:max-w-24 group-hover:pr-1.5 group-hover:opacity-100 group-hover:translate-x-0">
+            <h3 className="text-foreground overflow-hidden whitespace-nowrap max-w-0 pr-0 opacity-0 translate-x-0 transition-all duration-500 ease-out group-hover:max-w-24 group-hover:pr-1.5 group-hover:opacity-100 group-hover:translate-x-0">
               Asistencia?
             </h3>
           </button>

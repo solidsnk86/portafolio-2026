@@ -1,6 +1,6 @@
 import { HistoryChat } from "@/context/content-context";
 import { timeAgo } from "@/utils/formatRelativeTime";
-import { Navigation, Plus } from "lucide-react";
+import { Navigation, PenBoxIcon, Plus } from "lucide-react";
 import type { Message } from "../chat";
 
 interface HeaderSectionChatProps {
@@ -71,9 +71,9 @@ export const HeaderSectionChat = ({
             chatResponses.length === 0 ? "Escriba en el chat" : "Nuevo chat"
           }
           disabled={chatResponses.length === 0}
-          className="flex items-center gap-0.5 py-0.5 px-1 disabled:text-muted-foreground disabled:hover:opacity-100 transition-colors hover:opacity-80"
+          className="flex items-center gap-1 py-0.5 px-1 disabled:text-muted-foreground disabled:hover:opacity-100 transition-colors hover:opacity-80"
         >
-          <Plus size={12} className="text-accent" />
+          <PenBoxIcon size={12} className="text-accent" />
           <p className="text-[11px]">Nuevo chat</p>
         </button>
         <div className="flex items-center gap-1">

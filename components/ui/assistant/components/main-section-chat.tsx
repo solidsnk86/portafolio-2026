@@ -42,9 +42,9 @@ export const MainSectionChat = ({
             >
               <MarkdownRenderer content={chat.content} isChat={true} />
               {chat.role === "assistant" && chat.searchResult?.length !== 0 && (
-                <div className="flex gap-2 justify-between items-center my-2 text-muted-foreground italic">
+                <div className="flex gap-2 justify-between items-center my-2 text-xs md:text-base text-muted-foreground italic">
                   <small>
-                    Tiempo empleado en la búsqueda {chat.responseTime}s
+                    Búsqueda realizada en {chat.responseTime}s
                   </small>
                   <small>powered by <Link href={"https://www.tavily.com/"} className="text-emerald-500">Tavily</Link></small>
                 </div>
