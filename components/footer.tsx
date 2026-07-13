@@ -142,7 +142,7 @@ export function Footer() {
         <div className="ml-10 md:ml-0">
           <p className="font-sans text-muted-foreground text-sm inline-flex">
             &copy; {new Date().getFullYear()} ·
-            <span className="hidden md:block ml-1">Hecho con 💛 por</span>{" "}
+            <span className="hidden md:block ml-1">Hecho con 💜 por</span>{" "}
             <Link href={"https://github.com/solidsnk86"} className="hover:text-accent ml-1 hover:underline">SolidSnk86</Link>
           </p>
         </div>
