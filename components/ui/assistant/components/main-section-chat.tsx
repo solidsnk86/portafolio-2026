@@ -42,11 +42,11 @@ export const MainSectionChat = ({
             >
               <MarkdownRenderer content={chat.content} isChat={true} />
               {chat.role === "assistant" && chat.searchResult?.length !== 0 && (
-                <div className="flex gap-2 justify-between items-center my-2 text-xs md:text-base text-muted-foreground italic">
+                <div className="flex gap-2 justify-between items-center my-2 text-xs text-muted-foreground italic">
                   <small>
                     Búsqueda realizada en {chat.responseTime}s
                   </small>
-                  <small>powered by <Link href={"https://www.tavily.com/"} className="text-emerald-500">Tavily</Link></small>
+                  <small>Powered by <Link href={"https://www.tavily.com/"} className="text-emerald-500 hover:underline">Tavily</Link></small>
                 </div>
               )}
               <div className="flex justify-between gap-1.5 items-center">
