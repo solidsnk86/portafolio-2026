@@ -2,6 +2,7 @@ import { Ref } from "react";
 import type { Message } from "../chat";
 import MarkdownRenderer from "@/components/markdown-renderer";
 import { Check, Loader } from "lucide-react";
+import Link from "next/link";
 
 interface MainSectionChatProps {
   messagesRef: Ref<HTMLDivElement>;
@@ -39,13 +40,15 @@ export const MainSectionChat = ({
                     : "bg-foreground text-background rounded-2xl rounded-bl-md overflow-x-hidden"
                 }`}
             >
+              <MarkdownRenderer content={chat.content} isChat={true} />
               {chat.role === "assistant" && chat.searchResult?.length !== 0 && (
                 <div className="flex gap-2 justify-between items-center my-2 text-muted-foreground italic">
-                  <small>Tiempo empleado en la búsqueda {chat.responseTime}s</small>
+                  <small>
+                    Tiempo empleado en la búsqueda {chat.responseTime}s
+                  </small>
+                  <small>powered by <Link href={"https://www.tavily.com/"} className="text-emerald-500">Tavily</Link></small>
                 </div>
               )}
-              <MarkdownRenderer content={chat.content} isChat={true} />
-
               <div className="flex justify-between gap-1.5 items-center">
                 <time className="text-[10.5px] text-zinc-400 uppercase">
                   {chat.createdAt as string}
