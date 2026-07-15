@@ -68,12 +68,12 @@ export const HeaderSectionChat = ({
         <button
           onClick={clearChat}
           title={
-            chatResponses.length === 0 ? "Escriba en el chat" : "Nuevo chat"
+            chatResponses.length === 0 ? "Escriba al menos un mensaje" : "Nuevo chat"
           }
           disabled={chatResponses.length === 0}
-          className="flex items-center gap-1 py-0.5 px-1 disabled:text-muted-foreground disabled:hover:opacity-100 transition-colors hover:opacity-80"
+          className="flex items-center gap-1 py-0.5 px-1 disabled:text-muted-foreground disabled:hover:opacity-100 transition-colors hover:opacity-80 group"
         >
-          <PenBoxIcon size={12} className="text-accent" />
+          <PenBoxIcon size={12} className="text-accent group-disabled:text-accent/50" />
           <p className="text-[11px]">Nuevo chat</p>
         </button>
         <div className="flex items-center gap-1">
