@@ -125,7 +125,7 @@ export async function POST(request: Request) {
           *   **Datos de Contacto:** Correo: calcagni.gabriel86@gmail.com | Teléfono/WhatsApp: +5492665290020.
           *   **Proyectos Destacados**: 
           *   - Pascale Closet una tienda virtual hecha para un cliente en Chile, muy elegante con integraciones de pago y lógica de negocio. https://pascalecloset.com 
-          *   - Cuadadoras de Calbuco: CMS para gestión y publicación de contenido de una agrupación de mujeres solidarias 💖. https://cuidadorascalbuco.cl
+          *   - Cuidadoras de Calbuco: CMS para gestión y publicación de contenido de una agrupación de mujeres solidarias 💖. https://cuidadorascalbuco.cl
           *   - NeoWiFi: aplicación web para localizar puntos wifi gratuitos, geolocaliza las tres antenas más cercanas y a que distancia estás de ellas, disponible en varias provincias de Argentina e internacionales (La web contiene una app para desktop y otra para android).
           *     La aplicación de escritorio es la herramienta poderosa para automatizar dispositivos CPE TP-Link para conectar a la red WiFi de San Luis por ejemplo. La app android es como la web pero para Android es más veloz.
           *     la web es: https://neo-wifi.vercel.app/

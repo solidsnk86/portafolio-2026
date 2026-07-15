@@ -2,15 +2,15 @@ import { supabase } from "@/utils/supabase";
 
 export async function POST(req: Request) {
   try {
-    const { userId: user_id, messages } = await req.json();
+    const { messages, cityName: city_name, countryName: country_name, ip } = await req.json();
     
-    if (!user_id) {
-      return Response.json({ message: "Falta userId" }, { status: 400 });
+    if (!messages) {
+      return Response.json({ message: "No messages" }, { status: 400 });
     }
 
     const { error } = await supabase
       .from("assistant_history")
-      .insert([{ user_id, messages }]);
+      .insert([{ messages, city_name, country_name, ip }]);
 
     if (error) {
       throw new Error(error.message);

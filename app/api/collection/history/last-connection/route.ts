@@ -14,6 +14,10 @@ export async function GET() {
       throw new Error(error.message);
     }
 
+    if (!data) {
+      return Response.json({ success: true, message: "No hay datos" })
+    }
+
     return Response.json({ success: true, data }, { status: 200 });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);

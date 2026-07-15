@@ -27,7 +27,7 @@ export function Blogs() {
       <div className="grid">
         {isLoadingBlogs ? (
           <>
-            {Array.from({ length: blogs.length }).map((_, i) => (
+            {Array.from({ length: 4 }).map((_, i) => (
               <article
                 key={`blog-${i + 1}`}
                 className="border-b border-border-color p-4 first:border-t last:border-0 animate-pulse"

@@ -1,6 +1,6 @@
 import { HistoryChat } from "@/context/content-context";
 import { timeAgo } from "@/utils/formatRelativeTime";
-import { Navigation, PenBoxIcon, Plus } from "lucide-react";
+import { Navigation, PenBoxIcon } from "lucide-react";
 import type { Message } from "../chat";
 
 interface HeaderSectionChatProps {

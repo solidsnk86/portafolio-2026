@@ -10,9 +10,7 @@ import { useContentData } from "@/context/content-context";
 export const ScheduleChat = () => {
   const [start, setStart] = useState(false);
   const [show, setShow] = useState(false);
-  const {
-    data: { lastAccess },
-  } = useLocation();
+  const { data: { ip, city, country } } = useLocation();
   const { refreshHistory } = useContentData();
 
   const playCloseSound = () => {
@@ -33,7 +31,7 @@ export const ScheduleChat = () => {
         await fetch("/api/collection/history", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId: lastAccess.id, messages }),
+          body: JSON.stringify({ messages, cityName: city.name, countryName: country.name, ip }),
         });
       } catch (error) {
         console.log(error);
