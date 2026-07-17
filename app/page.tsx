@@ -8,6 +8,7 @@ import {
   Projects,
 } from "@/components";
 import { ScheduleChat } from "@/components/ui/assistant/schedule-chat";
+import { WhatIDo } from "@/components/what-i-do";
 
 export default async function Home({
   searchParams,
@@ -31,6 +32,7 @@ export default async function Home({
           <Projects />
           <Blogs />
           <Contact />
+          <WhatIDo />
         </main>
         <ScheduleChat />
         <Footer />

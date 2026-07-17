@@ -38,7 +38,7 @@ export function Header() {
     {
       id: 1,
       name: "Proyectos",
-      section: "/#projects",
+      section: "/all-projects",
       subMenu: (
         <div className="grid gap-1 p-1">
           {projects.slice(0, 6).map((project) => (
@@ -48,7 +48,9 @@ export function Header() {
               className="py-2 px-4 hover:bg-card border border-border-color sub-menu"
             >
               <div className="flex justify-between items-center">
-                <p className="capitalize text-xs">{project.name.replaceAll("-", " ")}</p>
+                <p className="capitalize text-xs">
+                  {project.name.replaceAll("-", " ")}
+                </p>
                 <MoveRight size={16} className="text-muted-foreground" />
               </div>
             </Link>
@@ -70,9 +72,9 @@ export function Header() {
             >
               <div className="flex justify-between items-center">
                 <p className="capitalize text-xs">
-                {blog.name.replaceAll("-", " ")}
-              </p>
-               <MoveRight size={16} className="text-muted-foreground" />
+                  {blog.name.replaceAll("-", " ")}
+                </p>
+                <MoveRight size={16} className="text-muted-foreground" />
               </div>
             </Link>
           ))}
@@ -148,7 +150,6 @@ export function Header() {
 
       return () => clearTimeout(timeoutId);
     }
-
   }, [isLoading, location]);
 
   useEffect(() => {

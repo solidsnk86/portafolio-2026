@@ -10,7 +10,10 @@ export const email = "calcagni.gabriel86@gmail.com";
 
 export function Contact() {
   return (
-    <section id="contact" className="mx-auto max-w-6xl px-4 py-16 z-50 bg-background">
+    <section
+      id="contact"
+      className="mx-auto max-w-6xl px-4 py-16 z-50 bg-background border-b border-border-color"
+    >
       <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-8">
         <div className="space-y-3 flex-1">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">

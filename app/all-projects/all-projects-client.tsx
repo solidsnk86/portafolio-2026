@@ -59,7 +59,7 @@ export const ALlProjectsClient = () => {
                 onClick={() => SetProjects((project) => project + 10)}
                 className="button-bg relative flex items-center gap-2 mt-8 border border-border-color px-3 py-1 font-semibold text-(--mutted-color) outline-1 outline-offset-1 outline-border-color transition-transform duration-300 hover:bg-secondary hover:shadow-lg disabled:cursor-not-allowed"
               >
-                Cargar más proyectos
+                {projects >= repos.length ? "Estos son todos" : "Cargar más proyectos"}
               </button>
             </div>
           </div>

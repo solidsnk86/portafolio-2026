@@ -89,7 +89,7 @@ export function Projects() {
             <Link
               href={`/project/${project.repo}`}
               key={project.repo}
-              className="border-t border-r border-border-color bg-bg-card p-4 nth-last-[-n+3]:border-b xl:nth-[3]:border-r-0 last:border-r-0 last:border-t-0 xl:last:border-t xl:nth-[4]:border-r nth-[4]:border-r-0 hover:bg-secondary relative transition-colors"
+              className="border-t border-r border-border-color odd:bg-stripes p-4 nth-last-[-n+3]:border-b xl:nth-[3]:border-r-0 last:border-r-0 last:border-t-0 xl:last:border-t xl:nth-[4]:border-r nth-[4]:border-r-0 hover:bg-secondary relative transition-colors"
             >
               <h3 className="text-lg font-semibold text-foreground capitalize">
                 {formatText(project.name)}
