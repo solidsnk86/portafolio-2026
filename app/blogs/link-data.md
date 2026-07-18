@@ -1,6 +1,6 @@
 Junio 19, 2026
 
-# LinkData
+# LinkData: una forma simple de compartir archivos y transmitir en vivoa
 
 A lo largo de los años utilicé distintas herramientas para compartir archivos o mostrar mi pantalla de forma remota. Algunas requerían instalar aplicaciones, otras obligaban a crear una cuenta y muchas ofrecían más funciones de las que realmente necesitaba.
 
