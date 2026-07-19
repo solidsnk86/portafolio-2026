@@ -1,3 +1,6 @@
+"use client";
+
+import { useDiffLabel } from "@/app/hooks/use-diff-label";
 import { Clock, LinkIcon, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 
@@ -8,55 +11,42 @@ export const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURICom
   whatsappMessage,
 )}`;
 export const email = "calcagni.gabriel86@gmail.com";
-const visitorTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-function diffHoras(tzA: string, tzB: string, fecha = new Date()) {
-  const enA = new Date(
-    fecha.toLocaleString("en-US", { timeZone: tzA }),
-  ).getTime();
-  const enB = new Date(
-    fecha.toLocaleString("en-US", { timeZone: tzB }),
-  ).getTime();
-  return (enA - enB) / (1000 * 60 * 60);
-}
-console.log(visitorTZ)
-const determineDiff = () => {
-  const diff = diffHoras(visitorTZ, "America/Argentina/Buenos_Aires");
-  if (diff === 0) return ``;
-  if (diff > 0) return ` / diferencia ${diff} hs.`;
-  if (diff < 0) return ` / diferencia ${diff} hs.`;
-};
-
-const contacts = [
-  {
-    content:
-      new Date()
-        .toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit", timeZone: "America/Argentina/Buenos_Aires" })
-        .toUpperCase() + determineDiff(),
-    icon: Clock,
-  },
-   {
-    content: "+54 2665 290020",
-    src: "tel:+542665290020",
-    icon: Phone,
-  },
-  {
-    content: "Concarán - San Luis, Argentina",
-    icon: MapPin,
-  },
-  {
-    content: "calcagni.gabriel86@gmail.com",
-    src: "mailto:calcagni.gabriel86@gmail.com",
-    icon: Mail,
-  },
-  {
-    content: "gabrielcalcagni.vercel.app",
-    src: "https://gabrielcalcagni.vercel.app",
-    icon: LinkIcon,
-  },
-];
 
 export function Contact() {
+  const label = useDiffLabel();
+
+  const contacts = [
+    {
+      content:
+        new Date()
+          .toLocaleTimeString("es-AR", {
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZone: "America/Buenos_Aires",
+          })
+          .toUpperCase() + label,
+      icon: Clock,
+    },
+    {
+      content: "+54 2665 290020",
+      src: "tel:+542665290020",
+      icon: Phone,
+    },
+    {
+      content: "Concarán - San Luis, Argentina",
+      icon: MapPin,
+    },
+    {
+      content: "calcagni.gabriel86@gmail.com",
+      src: "mailto:calcagni.gabriel86@gmail.com",
+      icon: Mail,
+    },
+    {
+      content: "gabrielcalcagni.vercel.app",
+      src: "https://gabrielcalcagni.vercel.app",
+      icon: LinkIcon,
+    },
+  ];
   return (
     <section
       id="contact"
