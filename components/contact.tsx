@@ -19,7 +19,7 @@ function diffHoras(tzA: string, tzB: string, fecha = new Date()) {
   ).getTime();
   return (enA - enB) / (1000 * 60 * 60);
 }
-
+console.log(visitorTZ)
 const determineDiff = () => {
   const diff = diffHoras(visitorTZ, "America/Argentina/Buenos_Aires");
   if (diff === 0) return ``;
