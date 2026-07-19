@@ -74,7 +74,7 @@ export const Stack = () => {
   ];
   return (
     <section className="mx-auto max-w-6xl">
-      <div className="space-y-3 mb-12 px-4">
+      <div className="space-y-1 md:space-y-3 mb-6 md:mb-12 px-4">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
           Lo que más uso
         </p>
