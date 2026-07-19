@@ -31,7 +31,7 @@ const contacts = [
   {
     content:
       new Date()
-        .toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })
+        .toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit", timeZone: "America/Argentina/Buenos_Aires" })
         .toUpperCase() + determineDiff(),
     icon: Clock,
   },
