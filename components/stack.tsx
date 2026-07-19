@@ -96,7 +96,7 @@ export const Stack = () => {
               {section.title}
             </div>
 
-            <div className="flex flex-wrap gap-2 px-6 py-1 md:py-5">
+            <div className="flex flex-wrap gap-2 px-6 py-3 md:py-5">
               {section.items.map(({ name, icon: Icon }, i) => (
                 <div
                   key={`${name}-${i}`}
