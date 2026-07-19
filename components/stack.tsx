@@ -89,7 +89,7 @@ export const Stack = () => {
             key={`${section.title}-${index}`}
             className="grid grid-cols-1 md:grid-cols-[180px_1fr] border-b border-border-color last:border-b-0"
           >
-            <div className="md:border-r border-border-color px-6 py-1 md:py-5 text-sm text-neutral-500">
+            <div className="md:border-r border-border-color px-6 pt-3 md:pt-0 md:py-5 text-sm text-neutral-500">
               <span className="mr-2 font-mono text-muted-foreground">
                 {String(index + 1).padStart(2, "0")}
               </span>
