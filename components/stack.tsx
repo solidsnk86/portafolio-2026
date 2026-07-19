@@ -83,14 +83,14 @@ export const Stack = () => {
         </h2>
       </div>
 
-      <div className="overflow-hidden border border-border-color">
+      <div className="overflow-hidden border-t border-b border-border-color">
         {stacks.map((section, index) => (
           <div
             key={`${section.title}-${index}`}
-            className="grid grid-cols-[180px_1fr] border-b border-border-color last:border-b-0"
+            className="grid grid-cols-1 md:grid-cols-[180px_1fr] border-b border-border-color last:border-b-0"
           >
-            <div className="border-r border-border-color px-6 py-5 text-sm text-neutral-500">
-              <span className="mr-2 font-mono text-neutral-600">
+            <div className="md:border-r border-border-color px-6 py-5 text-sm text-neutral-500">
+              <span className="mr-2 font-mono text-muted-foreground">
                 {String(index + 1).padStart(2, "0")}
               </span>
               {section.title}
@@ -106,7 +106,8 @@ export const Stack = () => {
                     border border-border-color
                     bg-secondary
                     px-3 py-1
-                    text-xs
+                    md:text-xs
+                    text-[11px]
                     transition-colors
             "
                 >
