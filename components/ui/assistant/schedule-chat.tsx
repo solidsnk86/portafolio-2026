@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/common";
-import { X } from "lucide-react";
+import { Square, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Chat, Message } from "./chat";
 import { useLocation } from "@/context/location-context";
@@ -10,7 +10,10 @@ import { useContentData } from "@/context/content-context";
 export const ScheduleChat = () => {
   const [start, setStart] = useState(false);
   const [show, setShow] = useState(false);
-  const { data: { ip, city, country } } = useLocation();
+  const [maximize, setMaximize] = useState(false);
+  const {
+    data: { ip, city, country },
+  } = useLocation();
   const { refreshHistory } = useContentData();
 
   const playCloseSound = () => {
@@ -22,27 +25,36 @@ export const ScheduleChat = () => {
   };
 
   const sendHistory = async () => {
-      try {
-        const sessionHistory = sessionStorage.getItem("history-chat");
-        const messages: Message[] = JSON.parse(sessionHistory || "[]");
+    try {
+      const sessionHistory = sessionStorage.getItem("history-chat");
+      const messages: Message[] = JSON.parse(sessionHistory || "[]");
 
-        if (messages.length === 0) return;
+      if (messages.length === 0) return;
 
-        await fetch("/api/collection/history", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages, cityName: city.name, countryName: country.name, ip }),
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
+      await fetch("/api/collection/history", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages,
+          cityName: city.name,
+          countryName: country.name,
+          ip,
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const close = async () => {
     playCloseSound();
     setShow(false);
     sendHistory();
     refreshHistory();
+  };
+
+  const fullWindow = () => {
+    setMaximize(!maximize);
   };
 
   const playInitSound = () => {
@@ -77,7 +89,7 @@ export const ScheduleChat = () => {
         >
           <button className="flex items-center gap-0.5 py-1 pl-1 pr-0.5 rounded-full bg-stripes bg-secondary group relative">
             <div className="absolute top-0 right-0 w-2 h-2 bg-red-400 rounded-full animate-ping z-40" />
-             <div className="absolute top-0 right-0 w-2 h-2 bg-red-400 rounded-full z-50" />
+            <div className="absolute top-0 right-0 w-2 h-2 bg-red-400 rounded-full z-50" />
             <div className="relative h-8 w-8 overflow-hidden rounded-full">
               <picture>
                 <img
@@ -113,10 +125,33 @@ export const ScheduleChat = () => {
           md:h-auto md:w-97.5 md:max-w-[calc(100vw-2rem)]
           transition-all duration-300
         "
+          style={
+            maximize
+              ? {
+                  inset: 0,
+                  width: "100dvw",
+                  height: "100dvh",
+                  maxWidth: "none",
+                  maxHeight: "none",
+                }
+              : undefined
+          }
         >
-          <article className="flex h-full flex-col overflow-hidden rounded-none border border-border-color bg-background shadow-xl relative md:h-auto md:rounded-xl z-50">
+          <article
+            className={`flex h-full flex-col overflow-hidden rounded-none border border-border-color bg-background shadow-xl relative z-50 ${
+              maximize ? "md:h-full" : "md:h-auto"
+            } md:rounded-xl`}
+          >
             <div className="absolute left-0 top-0 h-40 w-40 rounded-full bg-zinc-300/20 blur-3xl" />
 
+            {start && (
+              <button
+                className="absolute right-8.5 top-1.5 z-10 rounded-full p-2 hover:bg-secondary transition-colors hidden md:block"
+                onClick={fullWindow}
+              >
+                <Square size={14} className="translate-y-px" />
+              </button>
+            )}
             <button
               className="absolute right-1.5 top-1.5 z-10 rounded-full p-2 hover:bg-secondary transition-colors"
               onClick={close}
@@ -142,6 +177,7 @@ export const ScheduleChat = () => {
               className={`min-h-0 overflow-hidden transition-all duration-300 ${
                 start ? "flex-1 md:h-118 md:flex-none" : "h-0 flex-none"
               }`}
+              style={{ height: maximize ? "92svh" : "" }}
             >
               <Chat />
             </main>
