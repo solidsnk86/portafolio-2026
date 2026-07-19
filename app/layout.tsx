@@ -5,7 +5,6 @@ import "./globals.css";
 import ThemeProviderClient from "@/components/theme-provider-client";
 import { LocationProvider } from "@/context/location-context";
 import { BackToTop } from "@/components/common/back-to-top";
-import { Banner } from "@/components/ui/banner/banner";
 
 const poppins = Poppins({
   variable: "--font-poppins",
