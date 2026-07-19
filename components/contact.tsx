@@ -21,7 +21,7 @@ function diffHoras(tzA: string, tzB: string, fecha = new Date()) {
 }
 
 const determineDiff = () => {
-  const diff = diffHoras("America/Los_Angeles", "America/Argentina/Buenos_Aires");
+  const diff = diffHoras(visitorTZ, "America/Argentina/Buenos_Aires");
   if (diff === 0) return ``;
   if (diff > 0) return ` / diferencia ${diff} hs.`;
   if (diff < 0) return ` / diferencia ${diff} hs.`;
