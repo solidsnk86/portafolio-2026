@@ -21,7 +21,7 @@ export const Chat = () => {
     data: { city, country },
   } = useLocation();
   const MAX_CHAR = 300;
-  const [chatResponses, setChatResponses] = useState<Message[]>([{ role: "assistant", content: "Buenas, en que te puedo ayudar? Si me dejás el correo te contacto al toque!", searchResult: "", createdAt: new Date().toLocaleTimeString(), readed: true }]);
+  const [chatResponses, setChatResponses] = useState<Message[]>([]);
   const [query, setQuery] = useState("");
   const [charCount, setCharCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);

@@ -8,6 +8,7 @@ import {
   Projects,
 } from "@/components";
 import { ScheduleChat } from "@/components/ui/assistant/schedule-chat";
+import { Separator } from "@/components/ui/sections/separator";
 
 export default async function Home({
   searchParams,
@@ -27,9 +28,11 @@ export default async function Home({
         <Header />
         <main className="border-x border-border-color">
           <Hero />
+          <Separator />
           <About source={source} />
           <Projects />
           <Blogs />
+          <Separator />
           <Contact />
         </main>
         <ScheduleChat />

@@ -53,6 +53,7 @@ export function Blogs() {
             .sort(
               (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
             )
+            .slice(0, 4)
             .map((blog) => (
               <article
                 key={blog.name}
@@ -87,6 +88,11 @@ export function Blogs() {
               </article>
             ))
         )}
+        {/* <div className="flex justify-center my-3">
+          <button className="flex gap-1.5 items-center border border-border-color rounded px-2 py-1 w-fit bg-secondary">
+            Todos los posts
+          </button>
+        </div> */}
       </div>
     </section>
   );
