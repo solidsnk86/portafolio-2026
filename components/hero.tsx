@@ -47,7 +47,7 @@ export function Hero() {
             </h1>
             <p className="max-w-xl text-base text-muted-foreground md:text-lg my-4">
               Desarrollador Full Stack especializado en aplicaciones web, APIs y
-              herramientas de automatización.
+              herramientas de automatización. 
             </p>
             <section className="flex items-center gap-2">
               <div className="flex gap-1.5 items-center border border-border-color rounded-2xl px-2 py-1 w-fit bg-secondary">

@@ -60,7 +60,7 @@ export function About({ source }: { source?: string }) {
           </p>
 
           <p className="text-base leading-relaxed text-muted-foreground">
-            Hace poco colaboré con un cliente en Chile en el proyecto
+            Hace poco colaboré con un cliente en Chile con una tienda online
             <Link
               href="http://pascalecloset.com/"
               target="_blank"
@@ -68,6 +68,10 @@ export function About({ source }: { source?: string }) {
             >
               @pascale-closet.
             </Link>
+          </p>
+
+          <p className="text-base leading-relaxed text-muted-foreground italic">
+            ¿Tu proyecto creció demasiado rápido con IA? Te ayudo a convertirlo en un producto mantenible.
           </p>
         </article>
       </div>
