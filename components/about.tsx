@@ -69,10 +69,6 @@ export function About({ source }: { source?: string }) {
               @pascale-closet.
             </Link>
           </p>
-
-          <p className="text-base leading-relaxed text-muted-foreground italic">
-            ¿Tu proyecto creció demasiado rápido con IA? Te ayudo a convertirlo en un producto mantenible.
-          </p>
         </article>
       </div>
     </section>

@@ -1,3 +1,4 @@
+import { Clock, LinkIcon, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 
 const whatsappNumber = "+5492665290020";
@@ -7,6 +8,53 @@ export const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURICom
   whatsappMessage,
 )}`;
 export const email = "calcagni.gabriel86@gmail.com";
+const visitorTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+function diffHoras(tzA: string, tzB: string, fecha = new Date()) {
+  const enA = new Date(
+    fecha.toLocaleString("en-US", { timeZone: tzA }),
+  ).getTime();
+  const enB = new Date(
+    fecha.toLocaleString("en-US", { timeZone: tzB }),
+  ).getTime();
+  return (enA - enB) / (1000 * 60 * 60);
+}
+
+const determineDiff = () => {
+  const diff = diffHoras("America/Los_Angeles", "America/Argentina/Buenos_Aires");
+  if (diff === 0) return ``;
+  if (diff > 0) return ` / diferencia ${diff} hs.`;
+  if (diff < 0) return ` / diferencia ${diff} hs.`;
+};
+
+const contacts = [
+  {
+    content:
+      new Date()
+        .toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })
+        .toUpperCase() + determineDiff(),
+    icon: Clock,
+  },
+   {
+    content: "+54 2665 290020",
+    src: "tel:+542665290020",
+    icon: Phone,
+  },
+  {
+    content: "Concarán - San Luis, Argentina",
+    icon: MapPin,
+  },
+  {
+    content: "calcagni.gabriel86@gmail.com",
+    src: "mailto:calcagni.gabriel86@gmail.com",
+    icon: Mail,
+  },
+  {
+    content: "gabrielcalcagni.vercel.app",
+    src: "https://gabrielcalcagni.vercel.app",
+    icon: LinkIcon,
+  },
+];
 
 export function Contact() {
   return (
@@ -26,24 +74,47 @@ export function Contact() {
             Si tienes una idea o necesitás mejorar un producto existente,
             podemos construir una solucion clara y escalable.
           </p>
+
+          <p className="max-w-2xl text-base text-muted-foreground">
+            ¿Tu proyecto creció demasiado rápido con IA? Te ayudo a convertirlo
+            en un producto mantenible.
+          </p>
         </div>
 
-        <div className="flex flex-col gap-3 md:mt-6">
-          <Link
-            href={whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors hover:outline-4 hover:outline-indigo-500"
-          >
-            Contáctame en WhatsApp
-          </Link>
-          <Link
-            href={`mailto:${email}`}
-            className="inline-flex items-center justify-center px-6 py-3 bg-foreground text-background font-semibold transition-colors hover:outline-4 hover:outline-indigo-500"
-          >
-            {email}
-          </Link>
-        </div>
+        <section className="md:mt-6">
+          <div className="flex flex-col gap-3">
+            {contacts.map(({ content, src, icon: Icon }) => {
+              return src ? (
+                <Link
+                  href={src as string}
+                  key={content}
+                  className="flex gap-4 items-center hover:underline"
+                >
+                  <div className="p-1 border border-border-color rounded-md bg-secondary outline-1 outline-border-color outline-offset-1">
+                    <Icon
+                      size={16}
+                      className="text-muted-foreground stroke-0.5"
+                    />
+                  </div>
+                  {content}
+                </Link>
+              ) : (
+                <div
+                  key={content}
+                  className="flex gap-4 cursor-default items-center"
+                >
+                  <div className="p-1 border border-border-color rounded-md bg-secondary outline-1 outline-border-color outline-offset-1 cursor-default">
+                    <Icon
+                      size={16}
+                      className="text-muted-foreground stroke-0.5"
+                    />
+                  </div>
+                  {content}
+                </div>
+              );
+            })}
+          </div>
+        </section>
       </div>
     </section>
   );

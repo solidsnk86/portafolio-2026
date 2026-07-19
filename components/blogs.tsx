@@ -18,6 +18,11 @@ export function Blogs() {
         </p>
         <h2 className="text-3xl font-semibold text-foreground md:text-4xl">
           Notas y aprendizajes
+          {blogs && (
+            <div className="inline-flex text-lg -translate-y-3 ml-1">
+              <span>({blogs.length})</span>
+            </div>
+          )}
         </h2>
         <p className="max-w-2xl text-base text-muted-foreground">
           Ideas, procesos y experiencias reales construyendo productos.
