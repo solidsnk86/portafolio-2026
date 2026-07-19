@@ -7,6 +7,7 @@ import {
   Hero,
   Projects,
 } from "@/components";
+import { Stack } from "@/components/stack";
 import { ScheduleChat } from "@/components/ui/assistant/schedule-chat";
 import { Separator } from "@/components/ui/sections/separator";
 
@@ -31,6 +32,7 @@ export default async function Home({
           <Separator />
           <About source={source} />
           <Projects />
+          <Stack />
           <Blogs />
           <Separator />
           <Contact />
