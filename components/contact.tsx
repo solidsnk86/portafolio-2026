@@ -75,16 +75,7 @@ export function Contact() {
       icon: Phone,
     },
     {
-      content: "Concarán · San Luis, Argentina",
-      icon: MapPin,
-    },
-    {
-      content: "calcagni.gabriel86@gmail.com",
-      src: "mailto:calcagni.gabriel86@gmail.com",
-      icon: Mail,
-    },
-    {
-      content: "Compartir portafolio",
+      content: "Compartir éste portafolio",
       icon: FaShareFromSquare,
       fx: async () => {
         await navigator.share({
@@ -93,6 +84,15 @@ export function Contact() {
           url: window.location.href,
         });
       },
+    },
+    {
+      content: "Concarán · San Luis, Argentina",
+      icon: MapPin,
+    },
+    {
+      content: "calcagni.gabriel86@gmail.com",
+      src: "mailto:calcagni.gabriel86@gmail.com",
+      icon: Mail,
     },
   ];
   return (
@@ -140,7 +140,11 @@ export function Contact() {
                 <div
                   key={content}
                   suppressHydrationWarning
-                  onClick={content.toLowerCase().startsWith("compartir") ? fx : undefined}
+                  onClick={
+                    content.toLowerCase().startsWith("compartir")
+                      ? fx
+                      : undefined
+                  }
                   className={`flex gap-4 cursor-default items-center ${content.toLowerCase().startsWith("compartir") ? "cursor-pointer" : ""}`}
                 >
                   <div className="p-1 border border-border-color rounded-md bg-secondary outline-1 outline-border-color outline-offset-1 cursor-default">

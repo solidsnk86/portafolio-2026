@@ -23,11 +23,13 @@ import {
   SiExpo,
   SiClaude,
   SiGooglegemini,
+  SiGithubactions,
 } from "react-icons/si";
 import { NeonIcon } from "./icons/icons";
 import { TbBrandVercelFilled } from "react-icons/tb";
 import { AiOutlineOpenAI } from "react-icons/ai";
 import { BsOpenai } from "react-icons/bs";
+import { FaTheaterMasks } from "react-icons/fa";
 
 export const Stack = () => {
   const stacks = [
@@ -55,6 +57,7 @@ export const Stack = () => {
         { name: "Node.js", icon: SiNodedotjs },
         { name: "Express", icon: SiExpress },
         { name: "Electron", icon: SiElectron },
+        { name: "Playwright", icon: FaTheaterMasks },
         { name: "Zod", icon: SiZod },
       ],
     },
@@ -72,6 +75,7 @@ export const Stack = () => {
       items: [
         { name: "Git", icon: SiGit },
         { name: "GitHub", icon: SiGithub },
+        { name: "GitHub Actions", icon: SiGithubactions },
         { name: "Vercel", icon: TbBrandVercelFilled },
         { name: "VS Code", icon: BiLogoVisualStudio },
         { name: "pnpm", icon: SiPnpm },

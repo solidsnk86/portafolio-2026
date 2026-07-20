@@ -1,7 +1,7 @@
 "use client";
 
 import { useContentData } from "@/context/content-context";
-import { ChevronsLeftRightEllipsis, Download, Users } from "lucide-react";
+import { ChevronsLeftRightEllipsis, Download, WifiSync } from "lucide-react";
 
 export const Metrics = () => {
   const { metrics } = useContentData();
@@ -18,7 +18,7 @@ const appMetrics = [
     name: "Neo WiFi Web",
     info: "coberturas",
     count: metrics.neoWifiUsers,
-    icon: Users,
+    icon: WifiSync,
     description: "Cálculos de cobertura ejecutados desde la aplicación web.",
   },
   {
