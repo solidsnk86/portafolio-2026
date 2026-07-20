@@ -10,6 +10,7 @@ import { useTheme } from "@/context/theme-context";
 import { LocationProps, useLocation } from "@/context/location-context";
 import { useContentData } from "@/context/content-context";
 import { email, whatsappLink } from "./contact";
+import { FaGithub, FaInstagram, FaLinkedin, FaX, FaXTwitter } from "react-icons/fa6";
 
 interface NavLinkInterface {
   id: number;
@@ -109,23 +110,23 @@ export function Header() {
   const socialLinks = [
     {
       label: "LinkedIn",
-      href: "https://linkedin.com/in/gabriel",
-      icon: LinkedinIcon,
+      href: "https://linkedin.com/in/gabriel-calcagni",
+      icon: FaLinkedin,
     },
     {
       label: "GitHub",
       href: "https://github.com/solidsnk86",
-      icon: GithubIcon,
+      icon: FaGithub,
     },
     {
       label: "Twitter",
       href: "https://twitter.com/solidsnk86",
-      icon: TwitterIcon,
+      icon: FaXTwitter,
     },
     {
       label: "Instagram",
       href: "https://instagram.com/solidsnk86",
-      icon: InstagramIcon,
+      icon: FaInstagram,
     },
   ];
 
@@ -257,7 +258,7 @@ export function Header() {
                   href={href}
                   className="p-5 border-x-0 border-r last:border-0 border-t last:border-t border-border-color w-full"
                 >
-                  <Icon className="w-full" width={24} height={24} />
+                  <Icon className="w-full" size={24} />
                 </Link>
               ))}
             </div>
