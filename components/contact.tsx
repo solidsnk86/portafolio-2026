@@ -3,6 +3,20 @@
 import { useDiffLabel } from "@/app/hooks/use-diff-label";
 import { Clock, LinkIcon, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import {
+  LuClock1,
+  LuClock10,
+  LuClock11,
+  LuClock12,
+  LuClock2,
+  LuClock3,
+  LuClock4,
+  LuClock5,
+  LuClock6,
+  LuClock7,
+  LuClock8,
+  LuClock9,
+} from "react-icons/lu";
 
 const whatsappNumber = "+5492665290020";
 const whatsappMessage =
@@ -11,21 +25,48 @@ export const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURICom
   whatsappMessage,
 )}`;
 export const email = "calcagni.gabriel86@gmail.com";
+const clockIcons = [
+  LuClock12,
+  LuClock1,
+  LuClock2,
+  LuClock3,
+  LuClock4,
+  LuClock5,
+  LuClock6,
+  LuClock7,
+  LuClock8,
+  LuClock9,
+  LuClock10,
+  LuClock11,
+];
 
 export function Contact() {
   const label = useDiffLabel();
 
+  const getBuenosAiresHour = () => {
+    const hourString = new Date().toLocaleString("en-US", {
+      hour: "2-digit",
+      hour12: false,
+      timeZone: "America/Buenos_Aires",
+    });
+    
+    return Number(hourString) % 24;
+  };
+
+  const detectHourForIcon = (hour: number) => clockIcons[hour % 12];
+
+  const currentTime = new Date().toLocaleTimeString("es-AR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "America/Buenos_Aires",
+  });
+
+  const ClockIcon = detectHourForIcon(getBuenosAiresHour());
+
   const contacts = [
     {
-      content:
-        new Date()
-          .toLocaleTimeString("es-AR", {
-            hour: "2-digit",
-            minute: "2-digit",
-            timeZone: "America/Buenos_Aires",
-          })
-          .toUpperCase() + label,
-      icon: Clock,
+      content: currentTime.toUpperCase() + label,
+      icon: ClockIcon,
     },
     {
       content: "+54 2665 290020",

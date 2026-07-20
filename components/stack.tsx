@@ -20,13 +20,19 @@ import {
   SiPnpm,
   SiElectron,
   SiZod,
+  SiExpo,
+  SiClaude,
+  SiGooglegemini,
 } from "react-icons/si";
 import { NeonIcon } from "./icons/icons";
+import { TbBrandVercelFilled } from "react-icons/tb";
+import { AiOutlineOpenAI } from "react-icons/ai";
+import { BsOpenai } from "react-icons/bs";
 
 export const Stack = () => {
   const stacks = [
     {
-      title: "Languages",
+      title: "Lenguages",
       items: [
         { name: "JavaScript", icon: SiJavascript },
         { name: "TypeScript", icon: SiTypescript },
@@ -38,6 +44,7 @@ export const Stack = () => {
         { name: "React", icon: SiReact },
         { name: "Next.js", icon: SiNextdotjs },
         { name: "Tailwind CSS", icon: SiTailwindcss },
+        { name: "Expo", icon: SiExpo },
         { name: "HTML5", icon: SiHtml5 },
         { name: "CSS3", icon: FaCss },
       ],
@@ -65,11 +72,17 @@ export const Stack = () => {
       items: [
         { name: "Git", icon: SiGit },
         { name: "GitHub", icon: SiGithub },
-        { name: "Vercel", icon: SiVercel },
-        { name: "Postman", icon: SiPostman },
+        { name: "Vercel", icon: TbBrandVercelFilled },
         { name: "VS Code", icon: BiLogoVisualStudio },
         { name: "pnpm", icon: SiPnpm },
-        { name: "Vercel", icon: SiVercel },
+      ],
+    },
+    {
+      title: "AI",
+      items: [
+        { name: "Claude", icon: SiClaude },
+        { name: "ChatGPT", icon: BsOpenai },
+        { name: "Gemini", icon: SiGooglegemini },
       ],
     },
   ];
@@ -77,7 +90,7 @@ export const Stack = () => {
     <section className="mx-auto max-w-6xl border-x border-border-color">
       <div className="space-y-1 md:space-y-3 mb-6 md:mb-12 px-4">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-          Lo que más uso
+          Tecnología que uso
         </p>
         <h2 className="text-3xl font-semibold text-foreground md:text-4xl">
           Stack

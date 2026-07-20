@@ -1,6 +1,6 @@
 "use client";
 
-import { DISALLOWED_WORDS } from "@/app/constants";
+import { DISALLOWED_WORDS } from "@/utils/constants";
 import { type Dispatch, type RefObject, type SetStateAction } from "react";
 
 interface FooterSectionChatProps {

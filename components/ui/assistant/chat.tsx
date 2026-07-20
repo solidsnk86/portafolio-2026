@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { FooterSectionChat } from "./components/footer-section-chat";
 import { HeaderSectionChat } from "./components/header-section-chat";
 import { MainSectionChat } from "./components/main-section-chat";
+import { showDialog } from "@/components/common/dialog";
 
 export interface Message {
   role: "user" | "assistant";
@@ -131,6 +132,9 @@ export const Chat = () => {
           responseTime: jsonData.responseTime
         },
       ]);
+      if (jsonData.context.toLowerCase().match("Se ha bloqueado la conversación.")) {
+        showDialog({ content: <div className="p-5">Lamentablemente se cerrará el chat por tu comportamiento.</div> })
+      }
     } catch (error) {
       console.log((error as TypeError).message);
       setChatResponses([
