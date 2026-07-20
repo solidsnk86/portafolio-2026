@@ -4,7 +4,7 @@ export async function GET() {
   try {
     const { data, error } = await supabase
       .from("assistant_history")
-      .select("*")
+      .select("id, created_at")
       .order("created_at", { ascending: false })
       .limit(1)
       .single()

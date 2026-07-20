@@ -121,7 +121,7 @@ export function Contact() {
 
         <section className="md:mt-6">
           <div className="flex flex-col gap-3">
-            {contacts.map(({ content, src, icon: Icon, fx }, i) => {
+            {contacts.map(({ content, src, icon: Icon, fx }) => {
               return src ? (
                 <Link
                   href={src as string}
@@ -140,8 +140,8 @@ export function Contact() {
                 <div
                   key={content}
                   suppressHydrationWarning
-                  onClick={i === 5 ? fx : undefined}
-                  className={`flex gap-4 cursor-default items-center ${i === 5 ? "cursor-pointer" : ""}`}
+                  onClick={content.toLowerCase().startsWith("compartir") ? fx : undefined}
+                  className={`flex gap-4 cursor-default items-center ${content.toLowerCase().startsWith("compartir") ? "cursor-pointer" : ""}`}
                 >
                   <div className="p-1 border border-border-color rounded-md bg-secondary outline-1 outline-border-color outline-offset-1 cursor-default">
                     <Icon
