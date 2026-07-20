@@ -32,7 +32,7 @@ export function Hero() {
   };
 
   return (
-    <section className="mx-auto max-w-6xl md:min-h-[90dvh] h-svh border-b border-border-color">
+    <section className="mx-auto max-w-6xl md:min-h-[90dvh] h-svh border-b border-border-color border-x">
       <div className="grid h-full items-stretch md:grid-cols-2">
         <div className="p-6 md:flex md:items-center md:h-full md:p-10 lg:p-12">
           <div className="mt-22 xl:mt-0">

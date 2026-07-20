@@ -27,7 +27,7 @@ export default async function Home({
       <div className="relative mx-auto flex max-w-6xl flex-col justify-center">
         <div className="absolute top-0 h-full w-6 -left-6 bg-stripes md:-left-6" />
         <Header />
-        <main className="border-x border-border-color">
+        <main className="">
           <Hero />
           <Separator />
           <About source={source} />

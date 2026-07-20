@@ -34,7 +34,7 @@ export function About({ source }: { source?: string }) {
   return (
     <section
       id="about"
-      className="mx-auto max-w-6xl border-b border-border-color px-4 py-16"
+      className="mx-auto max-w-6xl border-b border-border-color px-4 py-16 border-x"
     >
       <div className=" grid md:grid-cols-2 justify-center space-y-5 text-left">
         <div className="md:p-8">

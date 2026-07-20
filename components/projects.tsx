@@ -65,7 +65,7 @@ export const featuredProjects = [
 
 export function Projects() {
   return (
-    <section id="projects" className="mx-auto max-w-6xl py-16">
+    <section id="projects" className="mx-auto max-w-6xl py-14 border-x border-border-color">
       <div className="space-y-3 px-4">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
           Portfolio

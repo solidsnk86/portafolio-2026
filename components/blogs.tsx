@@ -10,7 +10,7 @@ export function Blogs() {
   return (
     <section
       id="blogs"
-      className="mx-auto max-w-6xl border-b border-border-color mt-8"
+      className="mx-auto max-w-6xl border-b border-border-color pt-8 border-x"
     >
       <div className="space-y-3 mb-12 px-4">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">

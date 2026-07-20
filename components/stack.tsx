@@ -21,6 +21,7 @@ import {
   SiElectron,
   SiZod,
 } from "react-icons/si";
+import { NeonIcon } from "./icons/icons";
 
 export const Stack = () => {
   const stacks = [
@@ -56,7 +57,7 @@ export const Stack = () => {
         { name: "PostgreSQL", icon: SiPostgresql },
         { name: "MySQL", icon: SiMysql },
         { name: "Supabase", icon: SiSupabase },
-        { name: "Neon", icon: LuDatabase },
+        { name: "Neon", icon: NeonIcon },
       ],
     },
     {
@@ -73,7 +74,7 @@ export const Stack = () => {
     },
   ];
   return (
-    <section className="mx-auto max-w-6xl">
+    <section className="mx-auto max-w-6xl border-x border-border-color">
       <div className="space-y-1 md:space-y-3 mb-6 md:mb-12 px-4">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
           Lo que más uso
@@ -89,7 +90,7 @@ export const Stack = () => {
             key={`${section.title}-${index}`}
             className="grid grid-cols-1 md:grid-cols-[180px_1fr] border-b border-border-color last:border-b-0"
           >
-            <div className="md:border-r border-border-color px-6 pt-3 md:pt-0 md:py-5 text-sm text-neutral-500">
+            <div className="flex flex-wrap content-center md:border-r border-border-color px-6 pt-3 md:pt-0 text-sm text-muted-foreground">
               <span className="mr-2 font-mono text-muted-foreground">
                 {String(index + 1).padStart(2, "0")}
               </span>

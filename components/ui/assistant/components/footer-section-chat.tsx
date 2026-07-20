@@ -1,5 +1,6 @@
 "use client";
 
+import { DISALLOWED_WORDS } from "@/app/constants";
 import { type Dispatch, type RefObject, type SetStateAction } from "react";
 
 interface FooterSectionChatProps {
@@ -38,6 +39,11 @@ export const FooterSectionChat = ({
   textareaRef,
   maxChar,
 }: FooterSectionChatProps) => {
+  const getProcessedText = () => {
+    const words = query.split(" ");
+    const filteredWords = words.filter((word) => !DISALLOWED_WORDS.includes(word));
+    return filteredWords.join(" ");
+  }
   return (
     <div className="border-t border-border-color p-3 bg-background">
       {/* <label className="text-[11px]">
@@ -59,7 +65,7 @@ export const FooterSectionChat = ({
           rows={1}
           ref={textareaRef}
           maxLength={maxChar}
-          value={query}
+          value={getProcessedText()}
           onChange={(e) => {
             setQuery(e.target.value);
             setCharCount(e.target.value.length);

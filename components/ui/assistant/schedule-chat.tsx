@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/common";
-import { Square, X } from "lucide-react";
+import { CopyIcon, Square, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Chat, Message } from "./chat";
 import { useLocation } from "@/context/location-context";
@@ -149,7 +149,12 @@ export const ScheduleChat = () => {
                 className="absolute right-8.5 top-1.5 z-10 rounded-full p-2 hover:bg-secondary transition-colors hidden md:block"
                 onClick={fullWindow}
               >
-                <Square size={14} className="translate-y-px" />
+                {!maximize && (
+                  <Square size={14} className="translate-y-px" />
+                )}
+                {maximize && (
+                  <CopyIcon size={14} className="rotate-x-180 translate-y-px" />
+                )}
               </button>
             )}
             <button
