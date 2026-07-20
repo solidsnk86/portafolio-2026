@@ -40,10 +40,10 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es-ES",
     siteName: "Portafolio",
-    url: "/open-graph-solidsnk.png",
+    url: "https://gabrielcalcagni.vercel.app/",
     images: [
       {
-        url: "favicon.png",
+        url: "open-graph.png",
         width: 1200,
         height: 630,
         alt: "Portafolio",
