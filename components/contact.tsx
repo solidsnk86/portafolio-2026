@@ -1,8 +1,9 @@
 "use client";
 
 import { useDiffLabel } from "@/app/hooks/use-diff-label";
-import { Clock, LinkIcon, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import { FaShareFromSquare } from "react-icons/fa6";
 import {
   LuClock1,
   LuClock10,
@@ -49,7 +50,7 @@ export function Contact() {
       hour12: false,
       timeZone: "America/Buenos_Aires",
     });
-    
+
     return Number(hourString) % 24;
   };
 
@@ -74,7 +75,7 @@ export function Contact() {
       icon: Phone,
     },
     {
-      content: "Concarán - San Luis, Argentina",
+      content: "Concarán · San Luis, Argentina",
       icon: MapPin,
     },
     {
@@ -83,9 +84,15 @@ export function Contact() {
       icon: Mail,
     },
     {
-      content: "gabrielcalcagni.vercel.app",
-      src: "https://gabrielcalcagni.vercel.app",
-      icon: LinkIcon,
+      content: "Compartir portafolio",
+      icon: FaShareFromSquare,
+      fx: async () => {
+        await navigator.share({
+          title: document.title,
+          text: "Desarrollador full‑stack con 4 años de experiencia. Me enfoco en resolver problemas reales aplicando buenas prácticas y entregando soluciones de impacto: no sólo conocimientos, sino resultados que transmiten valor.",
+          url: window.location.href,
+        });
+      },
     },
   ];
   return (
@@ -114,7 +121,7 @@ export function Contact() {
 
         <section className="md:mt-6">
           <div className="flex flex-col gap-3">
-            {contacts.map(({ content, src, icon: Icon }) => {
+            {contacts.map(({ content, src, icon: Icon, fx }, i) => {
               return src ? (
                 <Link
                   href={src as string}
@@ -132,7 +139,9 @@ export function Contact() {
               ) : (
                 <div
                   key={content}
-                  className="flex gap-4 cursor-default items-center"
+                  suppressHydrationWarning
+                  onClick={i === 5 ? fx : undefined}
+                  className={`flex gap-4 cursor-default items-center ${i === 5 ? "cursor-pointer" : ""}`}
                 >
                   <div className="p-1 border border-border-color rounded-md bg-secondary outline-1 outline-border-color outline-offset-1 cursor-default">
                     <Icon
