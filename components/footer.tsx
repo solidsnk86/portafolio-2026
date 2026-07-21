@@ -43,10 +43,9 @@ export function Footer() {
   };
 
   const socialLinks = [
-    { label: "LinkedIn", href: "https://linkedin.com/in/gabriel" },
+    { label: "LinkedIn", href: "https://linkedin.com/in/gabriel-calcagni" },
     { label: "GitHub", href: "https://github.com/solidsnk86" },
     { label: "Twitter", href: "https://x.com/CalcagniGabriel" },
-    { label: "Instagram", href: "https://www.instagram.com/calcagnigabriel" },
   ];
 
   const projectLinks = projects
