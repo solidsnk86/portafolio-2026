@@ -115,7 +115,7 @@ export function Contact() {
       fx: async () => {
         await navigator.share({
           title: document.title,
-          text: "Desarrollador full‑stack con 4 años de experiencia. Me enfoco en resolver problemas reales aplicando buenas prácticas y entregando soluciones de impacto: no sólo conocimientos, sino resultados que transmiten valor.",
+          text: "Si tienes una idea o necesitás mejorar un producto existente, podemos construir una solucion clara y escalable. ¿Tu proyecto creció demasiado rápido con IA? Te ayudo a convertirlo en un producto mantenible.",
           url: window.location.href,
         });
       },
