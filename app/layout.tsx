@@ -30,8 +30,10 @@ export const metadata: Metadata = {
     "desarrollador web",
     "Next.js",
     "React",
+    "JavaScript",
     "TypeScript",
     "Node.js",
+    "Electron"
   ],
   openGraph: {
     title: "Portafolio — Desarrollador Full-Stack",
