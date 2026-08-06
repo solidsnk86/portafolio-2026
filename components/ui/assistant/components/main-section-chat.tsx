@@ -1,4 +1,6 @@
-import { Ref } from "react";
+"use client";
+
+import { Ref, useEffect, useState } from "react";
 import type { Message } from "../chat";
 import MarkdownRenderer from "@/components/markdown-renderer";
 import { Check, Loader } from "lucide-react";
@@ -12,6 +14,30 @@ interface MainSectionChatProps {
   error: TypeError | Error | undefined;
 }
 
+const loadingStateWords = [
+  "procesando",
+  "analizando",
+  "evaluando",
+  "desarrollando",
+  "prototipando",
+  "preparando",
+  "pensando",
+  "compilando",
+  "iterando",
+  "renderizando",
+  "optimizando",
+  "sincronizando",
+  "generando",
+  "consultando",
+  "armando",
+  "puliendo",
+  "chequeando",
+  "ensamblando",
+];
+
+const pickRandom = () =>
+  loadingStateWords[Math.floor(Math.random() * loadingStateWords.length)];
+
 export const MainSectionChat = ({
   messagesRef,
   chatResponses,
@@ -19,6 +45,16 @@ export const MainSectionChat = ({
   isLoading,
   error,
 }: MainSectionChatProps) => {
+  const [randomWord, setRandomWord] = useState(pickRandom);
+  const [prevIsLoading, setPrevIsLoading] = useState(isLoading);
+
+  if (isLoading !== prevIsLoading) {
+    setPrevIsLoading(isLoading);
+    if (isLoading) {
+      setRandomWord(pickRandom());
+    }
+  }
+
   return (
     <div
       ref={messagesRef}
@@ -43,10 +79,16 @@ export const MainSectionChat = ({
               <MarkdownRenderer content={chat.content} isChat={true} />
               {chat.role === "assistant" && chat.searchResult?.length !== 0 && (
                 <div className="flex gap-2 justify-between items-center my-2 text-xs text-muted-foreground italic">
+                  <small>Búsqueda realizada en {chat.responseTime}s</small>
                   <small>
-                    Búsqueda realizada en {chat.responseTime}s
+                    Powered by{" "}
+                    <Link
+                      href={"https://www.tavily.com/"}
+                      className="text-emerald-500 hover:underline"
+                    >
+                      Tavily
+                    </Link>
                   </small>
-                  <small>Powered by <Link href={"https://www.tavily.com/"} className="text-emerald-500 hover:underline">Tavily</Link></small>
                 </div>
               )}
               <div className="flex justify-between gap-1.5 items-center">
@@ -95,9 +137,9 @@ export const MainSectionChat = ({
 
       {isLoading && (
         <div className="text-sm text-muted-foreground animate-pulse">
-          <small className="flex gap-1 items-center">
+          <small className="flex gap-1 items-center capitalize">
             <Loader size={14} className="animate-spin -translate-y-px" />{" "}
-            Procesando...
+            {randomWord}...
           </small>
         </div>
       )}

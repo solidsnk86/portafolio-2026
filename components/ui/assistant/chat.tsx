@@ -105,7 +105,7 @@ export const Chat = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          query,
+          query: getProcessedText(),
           historyChat: messageToSend,
           city,
           country,
