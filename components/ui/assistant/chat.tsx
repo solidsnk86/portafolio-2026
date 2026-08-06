@@ -7,6 +7,7 @@ import { FooterSectionChat } from "./components/footer-section-chat";
 import { HeaderSectionChat } from "./components/header-section-chat";
 import { MainSectionChat } from "./components/main-section-chat";
 import { showDialog } from "@/components/common/dialog";
+import { DISALLOWED_WORDS } from "@/utils/constants";
 
 export interface Message {
   role: "user" | "assistant";
@@ -63,6 +64,12 @@ export const Chat = () => {
     }
   };
 
+  const getProcessedText = () => {
+    const words = query.split(" ");
+    const filteredWords = words.filter((word) => !DISALLOWED_WORDS.includes(word));
+    return filteredWords.join(" ");
+  }
+
   const onSubmit = async () => {
     if (!query.trim()) {
       setError(new Error("Escriba un mensaje."));
@@ -73,7 +80,7 @@ export const Chat = () => {
       ...prev,
       {
         role: "user",
-        content: query,
+        content: getProcessedText(),
         createdAt: new Date().toLocaleTimeString(),
         readed: true,
       },
@@ -177,6 +184,7 @@ export const Chat = () => {
 
       <FooterSectionChat
         query={query}
+        getProcessedText={getProcessedText}
         setQuery={setQuery}
         charCount={charCount}
         setCharCount={setCharCount}

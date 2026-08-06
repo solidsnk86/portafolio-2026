@@ -1,6 +1,5 @@
 "use client";
 
-import { DISALLOWED_WORDS } from "@/utils/constants";
 import { type Dispatch, type RefObject, type SetStateAction } from "react";
 
 interface FooterSectionChatProps {
@@ -13,6 +12,7 @@ interface FooterSectionChatProps {
   playBubbleSound: () => void;
   textareaRef: RefObject<HTMLTextAreaElement | null>;
   maxChar: number;
+  getProcessedText: () => string;
 }
 
 export type Model =
@@ -38,12 +38,9 @@ export const FooterSectionChat = ({
   playBubbleSound,
   textareaRef,
   maxChar,
+  getProcessedText
 }: FooterSectionChatProps) => {
-  const getProcessedText = () => {
-    const words = query.split(" ");
-    const filteredWords = words.filter((word) => !DISALLOWED_WORDS.includes(word));
-    return filteredWords.join(" ");
-  }
+  
   return (
     <div className="border-t border-border-color p-3 bg-background">
       {/* <label className="text-[11px]">
