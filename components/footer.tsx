@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 import { useCallback, useEffect, useState } from "react";
 import { featuredProjects, formatText } from "./projects";
+import Image from "next/image";
 
 interface Phrases {
   id: number | string;
@@ -14,7 +15,13 @@ interface Phrases {
 
 export function Footer() {
   const { blogs, projects } = useContentData();
-  const [phrases, setPrhases] = useState<Phrases[]>([{ id: crypto.randomUUID() ,texto: "El ir más rápido, ¿produce más?", autor: "Gabriel Calcagni" }]);
+  const [phrases, setPrhases] = useState<Phrases[]>([
+    {
+      id: crypto.randomUUID(),
+      texto: "El ir más rápido, ¿produce más?",
+      autor: "Gabriel Calcagni",
+    },
+  ]);
   const [randomIndex] = useState<number>(() => Math.random());
 
   const getPhrases = useCallback(async () => {
@@ -62,7 +69,13 @@ export function Footer() {
     <>
       <footer className="border-t border-x border-border-color z-40 bg-background">
         <div className="grid grid-cols-1 md:grid-cols-4">
-          <div className="flex flex-col justify-start gap-2 py-4 px-4">
+          <div className="flex flex-col justify-start gap-2 py-4 px-4 relative group">
+            <Image
+              className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10"
+              src="/assets/particle.png"
+              fill
+              alt="particles image"
+            />
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               Citas
             </span>
@@ -78,7 +91,13 @@ export function Footer() {
               </blockquote>
             ))}
           </div>
-          <div className="flex flex-col justify-start gap-2 xl:border-x border-border-color py-4 px-4">
+          <div className="flex flex-col justify-start gap-2 xl:border-x border-border-color py-4 px-4 relative group">
+            <Image
+              className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10"
+              src="/assets/particle.png"
+              fill
+              alt="particles image"
+            />
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               Redes
             </span>
@@ -94,7 +113,13 @@ export function Footer() {
               </Link>
             ))}
           </div>
-          <div className="flex flex-col justify-start gap-2 xl:border-r border-border-color py-4 px-4">
+          <div className="flex flex-col justify-start gap-2 xl:border-r border-border-color py-4 px-4 relative group">
+            <Image
+              className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10"
+              src="/assets/particle.png"
+              fill
+              alt="particles image"
+            />
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               Otros Proyectos
             </span>
@@ -118,7 +143,13 @@ export function Footer() {
                   </Link>
                 ))}
           </div>
-          <div className="flex flex-col justify-start gap-2 py-4 px-4">
+          <div className="flex flex-col justify-start gap-2 py-4 px-4 relative group">
+             <Image
+              className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10 animate-pulse"
+              src="/assets/particle.png"
+              fill
+              alt="particles image"
+            />
             <span
               className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground"
               aria-description="Artículos del blog"
@@ -142,7 +173,12 @@ export function Footer() {
           <p className="font-sans text-muted-foreground text-sm inline-flex">
             &copy; {new Date().getFullYear()} ·
             <span className="hidden md:block ml-1">Hecho con 💜 por</span>{" "}
-            <Link href={"https://github.com/solidsnk86"} className="hover:text-accent ml-1 hover:underline">SolidSnk86</Link>
+            <Link
+              href={"https://github.com/solidsnk86"}
+              className="hover:text-accent ml-1 hover:underline"
+            >
+              SolidSnk86
+            </Link>
           </p>
         </div>
         <div className="translate-y-0.5">
