@@ -145,7 +145,7 @@ export function Footer() {
           </div>
           <div className="flex flex-col justify-start gap-2 py-4 px-4 relative group">
              <Image
-              className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10 animate-pulse"
+              className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10"
               src="/assets/particle.png"
               fill
               alt="particles image"

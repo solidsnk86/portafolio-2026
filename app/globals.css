@@ -314,3 +314,50 @@ dialog::backdrop {
   border: 1px solid #d97b3f;
   border-radius: 8px;
 }
+
+#item-1 {
+  animation: fader 1.2s linear infinite;
+  animation-delay: 0s;
+}
+#item-2 {
+  animation: fader 1.2s linear infinite;
+  animation-delay: 0.15s;
+}
+#item-3 {
+  animation: fader 1.2s linear infinite;
+  animation-delay: 0.3s;
+}
+#item-4 {
+  animation: fader 1.2s linear infinite;
+  animation-delay: 0.45s;
+}
+#item-5 {
+  animation: fader 1.2s linear infinite;
+  animation-delay: 0.6s;
+}
+#item-6 {
+  animation: fader 1.2s linear infinite;
+  animation-delay: 0.75s;
+}
+#item-7 {
+  animation: fader 1.2s linear infinite;
+  animation-delay: 0.9s;
+}
+#item-8 {
+  animation: fader 1.2s linear infinite;
+  animation-delay: 1.05s;
+}
+#item-9 {
+  animation: fader 1.2s linear infinite;
+  animation-delay: 1.2s;
+}
+
+
+@keyframes fader {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

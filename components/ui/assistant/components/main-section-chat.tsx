@@ -5,6 +5,7 @@ import type { Message } from "../chat";
 import MarkdownRenderer from "@/components/markdown-renderer";
 import { Check, Loader } from "lucide-react";
 import Link from "next/link";
+import { LoaderBlocks } from "../../loader-blocks";
 
 interface MainSectionChatProps {
   messagesRef: Ref<HTMLDivElement>;
@@ -135,10 +136,10 @@ export const MainSectionChat = ({
         );
       })}
 
-      {isLoading && (
+      {!isLoading && (
         <div className="text-sm text-muted-foreground animate-pulse">
           <small className="flex gap-1 items-center capitalize">
-            <Loader size={14} className="animate-spin -translate-y-px" />{" "}
+            <LoaderBlocks boardWidth="w-3" boardHeight="h-3" width="2px" height="2px" />{" "}
             {randomWord}...
           </small>
         </div>

@@ -15,8 +15,6 @@ import {
   SiSupabase,
   SiGit,
   SiGithub,
-  SiVercel,
-  SiPostman,
   SiPnpm,
   SiElectron,
   SiZod,
@@ -27,7 +25,6 @@ import {
 } from "react-icons/si";
 import { NeonIcon } from "./icons/icons";
 import { TbBrandVercelFilled } from "react-icons/tb";
-import { AiOutlineOpenAI } from "react-icons/ai";
 import { BsOpenai } from "react-icons/bs";
 import { FaTheaterMasks } from "react-icons/fa";
 
@@ -99,6 +96,9 @@ export const Stack = () => {
         <h2 className="text-3xl font-semibold text-foreground md:text-4xl">
           Stack
         </h2>
+         <p className="max-w-2xl text-base text-muted-foreground">
+          El stack tecnológico con el que trabajo cotidianamente.
+        </p>
       </div>
 
       <div className="overflow-hidden border-t border-b border-border-color">
