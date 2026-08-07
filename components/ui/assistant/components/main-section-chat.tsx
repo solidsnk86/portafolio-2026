@@ -128,7 +128,7 @@ export const MainSectionChat = ({
                     <small className="text-[10px] text-background">
                       {country.emojiFlag}
                     </small>
-                  </div>
+                  </div>*
                 </div>
               )}
             </div>
@@ -136,7 +136,7 @@ export const MainSectionChat = ({
         );
       })}
 
-      {!isLoading && (
+      {isLoading && (
         <div className="text-sm text-muted-foreground animate-pulse">
           <small className="flex gap-1 items-center capitalize">
             <LoaderBlocks boardWidth="w-3" boardHeight="h-3" width="2px" height="2px" />{" "}
