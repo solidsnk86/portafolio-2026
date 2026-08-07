@@ -79,6 +79,8 @@ export const ScheduleChat = () => {
     };
   }, [show]);
 
+  console.log(isOnFooter)
+
   return (
     <>
       {!show && (
