@@ -128,7 +128,7 @@ export const MainSectionChat = ({
                     <small className="text-[10px] text-background">
                       {country.emojiFlag}
                     </small>
-                  </div>*
+                  </div>
                 </div>
               )}
             </div>
