@@ -135,7 +135,7 @@ export const MainSectionChat = ({
         );
       })}
 
-      {!isLoading && (
+      {isLoading && (
         <div className="text-sm text-muted-foreground animate-pulse">
           <small className="flex gap-1 items-center capitalize">
             <Loader size={14} className="animate-spin -translate-y-px" />{" "}
