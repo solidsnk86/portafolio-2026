@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Chat, Message } from "./chat";
 import { useLocation } from "@/context/location-context";
 import { useContentData } from "@/context/content-context";
+import { useObserverFooter } from "../observer";
 
 export const ScheduleChat = () => {
   const [start, setStart] = useState(false);
@@ -15,6 +16,7 @@ export const ScheduleChat = () => {
     data: { ip, city, country },
   } = useLocation();
   const { refreshHistory } = useContentData();
+  const isOnFooter = useObserverFooter();
 
   const playCloseSound = () => {
     const audio = new Audio("/assets/sounds/notification.mp3");
@@ -101,7 +103,11 @@ export const ScheduleChat = () => {
                 />
               </picture>
             </div>
-            <h3 className="text-foreground overflow-hidden whitespace-nowrap max-w-0 pr-0 opacity-0 translate-x-0 transition-all duration-500 ease-out group-hover:max-w-24 group-hover:pr-1.5 group-hover:opacity-100 group-hover:translate-x-0">
+            <h3
+              className={`text-foreground overflow-hidden whitespace-nowrap max-w-0 pr-0 
+              opacity-0 translate-x-0 transition-all duration-500 ease-out 
+              ${isOnFooter ? "" : "group-hover:max-w-24 group-hover:pr-1.5 group-hover:opacity-100 group-hover:translate-x-0"}`}
+            >
               Asistencia?
             </h3>
           </button>
@@ -149,9 +155,7 @@ export const ScheduleChat = () => {
                 className="absolute right-8.5 top-1.5 z-10 rounded-full p-2 hover:bg-secondary transition-colors hidden md:block"
                 onClick={fullWindow}
               >
-                {!maximize && (
-                  <Square size={14} className="translate-y-px" />
-                )}
+                {!maximize && <Square size={14} className="translate-y-px" />}
                 {maximize && (
                   <CopyIcon size={14} className="rotate-x-180 translate-y-px" />
                 )}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Ref, useEffect, useState } from "react";
+import { Ref, useState } from "react";
 import type { Message } from "../chat";
 import MarkdownRenderer from "@/components/markdown-renderer";
 import { Check, Loader } from "lucide-react";
@@ -135,7 +135,7 @@ export const MainSectionChat = ({
         );
       })}
 
-      {isLoading && (
+      {!isLoading && (
         <div className="text-sm text-muted-foreground animate-pulse">
           <small className="flex gap-1 items-center capitalize">
             <Loader size={14} className="animate-spin -translate-y-px" />{" "}
