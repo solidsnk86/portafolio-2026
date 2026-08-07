@@ -66,16 +66,15 @@ Asegúrate de tener instalado [Node.js](https://nodejs.org/) y [pnpm](https://pn
    GITHUB_OWNER=solidsnk86
 
    # Supabase para métricas y base de datos
-   NEXT_PUBLIC_SUPABASE_URL=tu_url_de_supabase
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_clave_anon_de_supabase
+   SUPABASE_URL=tu_url_de_supabase
+   SUPABASE_ANON_KEY=tu_clave_anon_de_supabase
 
    # Notificaciones por Email (Gmail)
    GMAIL_USER=tu_correo@gmail.com
    GMAIL_USER_PASSWORD=tu_password_de_aplicacion
 
    # Otros servicios
-   NEXT_PUBLIC_WEATHER_KEY=tu_api_key_de_clima
-   COHERE_TRIAL_APIKEY=tu_api_key_de_cohere
+   API_KEY_GROK=tu_api_key_de_grok
    NEXT_PUBLIC_SITE_URL=http://localhost:3000
    ```
 
@@ -97,5 +96,4 @@ Si estás interesado en mi trabajo o tienes alguna propuesta, no dudes en contac
 - **LinkedIn:** [Gabriel](https://linkedin.com/in/gabriel)
 - **GitHub:** [solidsnk86](https://github.com/solidsnk86)
 - **Twitter/X:** [@CalcagniGabriel](https://x.com/CalcagniGabriel)
-- **Web de Referencia:** [pascalecloset.com](http://pascalecloset.com/)
 
