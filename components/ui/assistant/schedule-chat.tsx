@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Chat, Message } from "./chat";
 import { useLocation } from "@/context/location-context";
 import { useContentData } from "@/context/content-context";
-import { useObserverFooter } from "../observer";
+import { useObserver } from "@/app/hooks/use-observer";
 
 export const ScheduleChat = () => {
   const [start, setStart] = useState(false);
@@ -16,7 +16,7 @@ export const ScheduleChat = () => {
     data: { ip, city, country },
   } = useLocation();
   const { refreshHistory } = useContentData();
-  const isOnFooter = useObserverFooter();
+  const isOnFooter = useObserver();
 
   const playCloseSound = () => {
     const audio = new Audio("/assets/sounds/notification.mp3");

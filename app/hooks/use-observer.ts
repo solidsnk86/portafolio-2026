@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export const useObserverFooter = () => {
+export const useObserver = () => {
   const [isOnSection, setIsOnSection] = useState<boolean>(false);
 
   useEffect(() => {
