@@ -134,7 +134,7 @@ export function Hero() {
             ))}
           </div> */}
           <Image
-            src={"/neon-transparent.png"}
+            src={"/texture-colors.png"}
             fill
             alt="Gabriel - Desarrollador Full Stack"
             className={`object-cover md:mask-l-from-1% -z-10`}
