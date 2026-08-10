@@ -18,6 +18,7 @@ export default {
       fontFamily: {
         sans: ['var(--font-poppins)'],
         serif: ['var(--font-playfair)'],
+        mono: ['var(--font-mono-sapce)']
       },
     },
   },

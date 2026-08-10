@@ -42,6 +42,7 @@
   --color-card: var(--color-card);
   --font-sans: var(--font-poppins);
   --font-mono: var(--font-poppins);
+  --font-mono-space: var(--font-mono-space);
 }
 
 @media (prefers-color-scheme: dark) {

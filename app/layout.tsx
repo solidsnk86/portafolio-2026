@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Poppins } from "next/font/google";
+import { Playfair_Display, Poppins, Space_Mono } from "next/font/google";
 import { ContentProvider } from "@/context/content-context";
 import "./globals.css";
 import ThemeProviderClient from "@/components/theme-provider-client";
@@ -18,6 +18,12 @@ const playfairDisplay = Playfair_Display({
   weight: ["500", "600", "700"],
 });
 
+const mono_next = Space_Mono({
+  variable: "--font-mono-space",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
 export const metadata: Metadata = {
   title: {
     default: "Gabriel Calcagni — Desarrollador Full-Stack",
@@ -33,7 +39,7 @@ export const metadata: Metadata = {
     "JavaScript",
     "TypeScript",
     "Node.js",
-    "Electron"
+    "Electron",
   ],
   openGraph: {
     title: "Portafolio — Desarrollador Full-Stack",
@@ -71,7 +77,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${poppins.variable} ${playfairDisplay.variable} h-full antialiased`}
+      className={`${poppins.variable} ${playfairDisplay.variable} ${mono_next.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <LocationProvider>

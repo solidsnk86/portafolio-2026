@@ -4,11 +4,34 @@ import { useLocation } from "@/context/location-context";
 import { FileChartLine } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
-const spanishLangs = ["AR", "CO", "ES", "VE", "PE", "CU", "CR", "CL", "PA", "NI", "UY", "PR", "EC", "DO", "SV", "GT"];
+const spanishLangs = [
+  "AR",
+  "CO",
+  "ES",
+  "VE",
+  "PE",
+  "CU",
+  "CR",
+  "CL",
+  "PA",
+  "NI",
+  "UY",
+  "PR",
+  "EC",
+  "DO",
+  "SV",
+  "GT",
+];
 
 export function Hero() {
   const { data: location, isLoading } = useLocation();
+  const asideRef = useRef<HTMLDivElement>(null);
+  // const [size, setSize] = useState<{
+  //   width: number;
+  //   height: number;
+  // }>({ width: 0, height: 0 });
 
   const dataCollect = async () => {
     if (!isLoading) {
@@ -23,13 +46,31 @@ export function Hero() {
   };
 
   const detectCountry = () => {
-    const englishFile = "https://docs.google.com/document/d/1kocRsRUNb7osGJco5NZXoIGt3lRcqt6TiBLJ1TGxVRA/edit?usp=sharing";
-    const spanishFile = "https://docs.google.com/document/d/1npjJQOyls-A1fhNPE6j58W1xNdDH8BvzG3sX8OkjZbw/edit?usp=sharing";
+    const englishFile =
+      "https://docs.google.com/document/d/1kocRsRUNb7osGJco5NZXoIGt3lRcqt6TiBLJ1TGxVRA/edit?usp=sharing";
+    const spanishFile =
+      "https://docs.google.com/document/d/1npjJQOyls-A1fhNPE6j58W1xNdDH8BvzG3sX8OkjZbw/edit?usp=sharing";
     if (!spanishLangs.includes(location.country.alpha)) {
       return englishFile;
     }
     return spanishFile;
   };
+
+  // useEffect(() => {
+  //   const el = asideRef.current;
+  //   if (!el) return;
+  //   const update = () => {
+  //     setSize({ width: el.clientWidth, height: el.clientHeight });
+  //   };
+  //   update();
+  //   const observer = new ResizeObserver(update);
+  //   observer.observe(el);
+  //   return () => observer.disconnect();
+  // }, []);
+
+  // const cols = size.width ? Math.max(1, Math.floor(size.width / 72)) : 0;
+  // const rows = size.height ? Math.max(1, Math.floor(size.height / 72)) : 0;
+  // const count = cols * rows;
 
   return (
     <section className="mx-auto max-w-6xl md:min-h-[90dvh] h-svh border-b border-border-color border-x">
@@ -47,7 +88,7 @@ export function Hero() {
             </h1>
             <p className="max-w-xl text-base text-muted-foreground md:text-lg my-4">
               Desarrollador Full Stack especializado en aplicaciones web, APIs y
-              herramientas de automatización. 
+              herramientas de automatización.
             </p>
             <section className="flex items-center gap-2">
               <div className="flex gap-1.5 items-center border border-border-color rounded-2xl px-2 py-1 w-fit bg-secondary">
@@ -69,9 +110,31 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative h-full min-h-80 w-full md:min-h-[90dvh]">
+        <div
+          ref={asideRef}
+          className="relative h-full min-h-80 w-full md:min-h-[90dvh]"
+        >
+          {/* <div
+            className="grid gap-px overflow-hidden"
+            style={{
+              width: size.width ? `${size.width}px` : undefined,
+              height: size.height ? `${size.height}px` : undefined,
+              gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+              gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
+            }}
+          >
+            {Array.from({ length: count }).map((_, i) => (
+              <span
+                key={i + 1}
+                className={`w-full h-full -z-10 blur-sm mask-l-from-45% grayscale-50 border border-border-color`}
+                style={{
+                  background: `hsl(${280 + (i / 18) * 120}, 100%, 55%)`,
+                }}
+              ></span>
+            ))}
+          </div> */}
           <Image
-            src={"/texture-colors.png"}
+            src={"/neon-transparent.png"}
             fill
             alt="Gabriel - Desarrollador Full Stack"
             className={`object-cover md:mask-l-from-1% -z-10`}

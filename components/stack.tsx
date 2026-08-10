@@ -1,6 +1,5 @@
 import { BiLogoVisualStudio } from "react-icons/bi";
 import { FaCss } from "react-icons/fa6";
-import { LuDatabase } from "react-icons/lu";
 import {
   SiJavascript,
   SiTypescript,
@@ -107,8 +106,8 @@ export const Stack = () => {
             key={`${section.title}-${index}`}
             className="grid grid-cols-1 md:grid-cols-[180px_1fr] border-b border-border-color last:border-b-0"
           >
-            <div className="flex flex-wrap content-center md:border-r border-border-color px-6 pt-3 md:pt-0 text-sm text-muted-foreground">
-              <span className="mr-2 font-mono text-muted-foreground">
+            <div className="flex flex-wrap items-center content-center md:border-r border-border-color px-6 pt-3 md:pt-0 text-sm text-muted-foreground">
+              <span className="mr-2 font-mono-space text-background bg-foreground px-1 py-0.5 rounded-full">
                 {String(index + 1).padStart(2, "0")}
               </span>
               {section.title}
@@ -129,7 +128,7 @@ export const Stack = () => {
                     transition-colors
             "
                 >
-                  <Icon className="size-4 text-muted-foreground" />
+                  <Icon className="md:size-5 size-4 text-muted-foreground" />
                   <span>{name}</span>
                 </div>
               ))}

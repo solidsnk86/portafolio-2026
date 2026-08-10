@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { Metrics } from "./metrics";
 import { timeAgo } from "@/utils/formatRelativeTime";
+import { GiWorld } from "react-icons/gi";
+import { FaAndroid, FaWindows } from "react-icons/fa6";
+import { AiOutlineApi } from "react-icons/ai";
 
 const formatDate = (dateTime: string) =>
   new Intl.DateTimeFormat("es-ES", {
@@ -21,7 +24,7 @@ export const featuredProjects = [
     description:
       "Localización Inteligente de Antenas WiFi (gratuitas) para Android.",
     created_at: "2026-02-19T03:53:10Z",
-    platform: "android",
+    platform: { name: "android", icon: FaAndroid },
   },
   {
     name: "E-Commerce",
@@ -29,21 +32,21 @@ export const featuredProjects = [
     description:
       "Tienda E-Commerce full-stack (PERN) con pagos integrados y admin.",
     created_at: "2025-11-12T15:38:54Z",
-    platform: "web",
+     platform: { name: "web", icon: GiWorld },
   },
   {
     name: "Neo-WiFi Web",
     repo: "neo-wifi",
     description: "Localización inteligente de antenas WiFi para cobertura.",
     created_at: "2025-01-28T03:18:53Z",
-    platform: "web",
+     platform: { name: "web", icon: GiWorld },
   },
   {
     name: "Geolocation API",
     repo: "geo_api",
     description: "API de geolocalización por IP o coordenadas en tiempo real.",
     created_at: "2024-02-07T15:38:54Z",
-    platform: "web/api",
+     platform: { name: "android", icon: AiOutlineApi },
   },
   {
     name: "LinkData",
@@ -51,7 +54,7 @@ export const featuredProjects = [
     description:
       "Transmite tu cámara o pantalla en vivo, también puedes compartir un archivo con un link.",
     created_at: "2026-06-19T18:38:04Z",
-    platform: "web",
+     platform: { name: "web", icon: GiWorld },
   },
   {
     name: "Neo Wifi - v1.3.6",
@@ -59,7 +62,7 @@ export const featuredProjects = [
     description:
       "Aplicación para configurar automáticamente dispositivos TP-LINK.",
     created_at: "2025-07-08T15:38:54Z",
-    platform: "windows",
+     platform: { name: "windows", icon: FaWindows },
   },
 ];
 
@@ -95,8 +98,9 @@ export function Projects() {
                 {formatText(project.name)}
               </h3>
               <div className="absolute top-4 right-4">
-                <small className="px-2 bg-foreground text-background rounded-2xl text-xs">
-                  {project.platform}
+                <small className="flex gap-1 items-center px-2 bg-foreground text-background rounded-2xl text-xs">
+                  <project.platform.icon />
+                  {project.platform.name}
                 </small>
               </div>
               <p className="mt-2 text-sm text-muted-foreground">
