@@ -46,7 +46,7 @@ export const featuredProjects = [
     repo: "geo_api",
     description: "API de geolocalización por IP o coordenadas en tiempo real.",
     created_at: "2024-02-07T15:38:54Z",
-     platform: { name: "android", icon: AiOutlineApi },
+     platform: { name: "api", icon: AiOutlineApi },
   },
   {
     name: "LinkData",
