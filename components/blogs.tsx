@@ -66,7 +66,7 @@ export function Blogs() {
             .map((blog) => (
               <article
                 key={blog.name}
-                className="border-b border-border-color p-4 hover:brightness-105 odd:bg-card first:border-t last:border-0"
+                className="border-b border-border-color p-4 hover:brightness-105 odd:bg-background/50 backdrop-blur-xs first:border-t last:border-0"
               >
                 <Link href={`/blog/${blog.name}`}>
                   <div className="mb-2 flex items-center justify-between">
