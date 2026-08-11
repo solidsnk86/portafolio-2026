@@ -107,7 +107,7 @@ export const Stack = () => {
             className="grid grid-cols-1 md:grid-cols-[180px_1fr] border-b border-border-color last:border-b-0"
           >
             <div className="flex flex-wrap items-center content-center md:border-r border-border-color px-6 pt-3 md:pt-0 text-sm text-muted-foreground">
-              <span className="mr-2 font-mono-space text-background bg-foreground px-1 py-0.5 rounded-full">
+              <span className="mr-2 font-mono-space text-background bg-foreground px-1 py-0.5 rounded-full opacity-80">
                 {String(index + 1).padStart(2, "0")}
               </span>
               {section.title}

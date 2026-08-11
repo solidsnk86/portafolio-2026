@@ -27,7 +27,7 @@ const spanishLangs = [
 
 export function Hero() {
   const { data: location, isLoading } = useLocation();
-  const asideRef = useRef<HTMLDivElement>(null);
+  // const asideRef = useRef<HTMLDivElement>(null);
   // const [size, setSize] = useState<{
   //   width: number;
   //   height: number;
@@ -73,7 +73,7 @@ export function Hero() {
   // const count = cols * rows;
 
   return (
-    <section className="mx-auto max-w-6xl md:min-h-[90dvh] h-svh border-b border-border-color border-x">
+    <section className="mx-auto max-w-6xl md:min-h-[90dvh] h-svh border-b border-border-color border-x relative">
       <div className="grid h-full items-stretch md:grid-cols-2">
         <div className="p-6 md:flex md:items-center md:h-full md:p-10 lg:p-12">
           <div className="mt-22 xl:mt-0">
@@ -111,8 +111,7 @@ export function Hero() {
         </div>
 
         <div
-          ref={asideRef}
-          className="relative h-full min-h-80 w-full md:min-h-[90dvh]"
+          className="absolute inset-0 h-full min-h-80 w-full md:min-h-[90dvh] -z-10"
         >
           {/* <div
             className="grid gap-px overflow-hidden"
@@ -134,10 +133,10 @@ export function Hero() {
             ))}
           </div> */}
           <Image
-            src={"/texture-colors.png"}
+            src={"/nordic_33.png"}
             fill
             alt="Gabriel - Desarrollador Full Stack"
-            className={`object-cover md:mask-l-from-1% -z-10`}
+            className={`object-cover md:mask-l-from-1% -z-10 opacity-85 mask-t-from-1% md:mask-t-from-0`}
             sizes="(max-width: 768px) 100vw, 50vw"
             priority
           />

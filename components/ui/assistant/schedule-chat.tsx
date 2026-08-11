@@ -7,6 +7,7 @@ import { Chat, Message } from "./chat";
 import { useLocation } from "@/context/location-context";
 import { useContentData } from "@/context/content-context";
 import { useObserver } from "@/app/hooks/use-observer";
+import Image from "next/image";
 
 export const ScheduleChat = () => {
   const [start, setStart] = useState(false);
@@ -180,6 +181,17 @@ export const ScheduleChat = () => {
                   correo.
                 </p>
               </header>
+            )}
+
+            {!start && (
+              <Image
+                src={"/nordic_32.png"}
+                fill
+                alt="Gabriel - Desarrollador Full Stack"
+                className={`object-cover md:mask-l-from-1% -z-10 opacity-85 mask-t-from-1% md:mask-t-from-0`}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
             )}
 
             <main
