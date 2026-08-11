@@ -3,6 +3,7 @@
 import { useContentData } from "@/context/content-context";
 import Link from "next/link";
 import { timeAgo } from "@/utils/formatRelativeTime";
+import Image from "next/image";
 
 export function Blogs() {
   const { blogs, isLoadingBlogs } = useContentData();
@@ -10,19 +11,27 @@ export function Blogs() {
   return (
     <section
       id="blogs"
-      className="mx-auto max-w-6xl border-b border-border-color pt-8 border-x"
+      className="mx-auto max-w-6xl border-b border-border-color pt-8 border-x relative"
     >
+      <Image
+        src={"/nordic_33.png"}
+        fill
+        alt="Gabriel - Desarrollador Full Stack"
+        className={`object-cover md:mask-l-from-1% -z-10 opacity-85 mask-t-from-1% md:mask-t-from-0`}
+        sizes="(max-width: 768px) 100vw, 50vw"
+        priority
+      />
       <div className="space-y-3 mb-12 px-4">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
           Contenido
         </p>
         <h2 className="text-3xl font-semibold text-foreground md:text-4xl">
           Notas y aprendizajes
-          {blogs && (
+          {/* {blogs && (
             <div className="inline-flex text-lg -translate-y-3 ml-1">
               <span>({blogs.length})</span>
             </div>
-          )}
+          )} */}
         </h2>
         <p className="max-w-2xl text-base text-muted-foreground">
           Ideas, procesos y experiencias reales construyendo productos.
@@ -57,7 +66,7 @@ export function Blogs() {
             .map((blog) => (
               <article
                 key={blog.name}
-                className="border-b border-border-color p-4 hover:bg-secondary odd:bg-card first:border-t last:border-0"
+                className="border-b border-border-color p-4 hover:brightness-105 odd:bg-card first:border-t last:border-0"
               >
                 <Link href={`/blog/${blog.name}`}>
                   <div className="mb-2 flex items-center justify-between">
@@ -77,7 +86,7 @@ export function Blogs() {
                         {blog.author}
                       </p>
                     </div>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs">
                       {timeAgo(new Date(blog.date))}
                     </p>
                   </div>

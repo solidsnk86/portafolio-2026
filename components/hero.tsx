@@ -133,7 +133,7 @@ export function Hero() {
             ))}
           </div> */}
           <Image
-            src={"/nordic_33.png"}
+            src={"/nordic_30.png"}
             fill
             alt="Gabriel - Desarrollador Full Stack"
             className={`object-cover md:mask-l-from-1% -z-10 opacity-85 mask-t-from-1% md:mask-t-from-0`}

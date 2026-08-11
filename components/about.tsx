@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocation } from "@/context/location-context";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -34,8 +35,16 @@ export function About({ source }: { source?: string }) {
   return (
     <section
       id="about"
-      className="mx-auto max-w-6xl border-b border-border-color px-4 py-16 border-x"
+      className="mx-auto max-w-6xl border-b border-border-color px-4 py-16 border-x relative"
     >
+      <Image
+        src={"/nordic_31.png"}
+        fill
+        alt="Gabriel - Desarrollador Full Stack"
+        className={`object-cover md:mask-l-from-1% -z-10 opacity-85 mask-t-from-1% md:mask-t-from-0`}
+        sizes="(max-width: 768px) 100vw, 50vw"
+        priority
+      />
       <div className=" grid md:grid-cols-2 justify-center space-y-5 text-left">
         <div className="md:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-3">
@@ -47,16 +56,16 @@ export function About({ source }: { source?: string }) {
         </div>
         <article className="space-y-4 md:p-8">
           <p className="text-base leading-relaxed text-muted-foreground">
-            Soy desarrollador con 4 años de experiencia, egresado de la
-            UTN-FRSR. Trabajo con una mirada práctica, priorizo simplicidad,
-            rendimiento y una buena experiencia de usuario en cada entrega.
+            Desarrollador con 4 años de experiencia, egresado de la UTN-FRSR.
+            Trabajo con una mirada práctica, priorizo simplicidad, rendimiento y
+            una buena experiencia de usuario en cada entrega.
           </p>
 
           <p className="text-base leading-relaxed text-muted-foreground">
             Hoy potencio mi flujo con agentes de IA para investigar, prototipar
             y documentar más rápido, sin perder criterio técnico. La IA me ayuda
-            a acelerar, pero las decisiones de arquitectura
-            y calidad siempre las guío en el contexto del proyecto.
+            a acelerar, pero las decisiones de arquitectura y calidad siempre
+            las guío en el contexto del proyecto.
           </p>
 
           <p className="text-base leading-relaxed text-muted-foreground">
