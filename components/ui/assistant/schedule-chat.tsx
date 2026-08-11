@@ -188,7 +188,7 @@ export const ScheduleChat = () => {
                 src={"/nordic_32.png"}
                 fill
                 alt="Gabriel - Desarrollador Full Stack"
-                className={`object-cover md:mask-l-from-1% -z-10 opacity-85 mask-t-from-1% md:mask-t-from-0`}
+                className={`object-cover md:mask-l-from-1% -z-10 opacity-50 md:opacity-80 mask-t-from-1% md:mask-t-from-0`}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
               />
