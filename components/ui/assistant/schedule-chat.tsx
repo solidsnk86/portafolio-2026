@@ -19,6 +19,23 @@ export const ScheduleChat = () => {
   const { refreshHistory } = useContentData();
   const isOnFooter = useObserver();
 
+  useEffect(() => {
+    const worker = new Worker(new URL("../../../worker/time-worker.ts", import.meta.url));
+
+    worker.postMessage(1000);
+    worker.onmessage = (e) => {
+      const timer = e.data;
+      if (timer === 5) {
+        setShow(true);
+        worker.terminate();
+      }
+    }
+
+    return () => {
+      worker.terminate();
+    }
+  }, [])
+
   const playCloseSound = () => {
     const audio = new Audio("/assets/sounds/notification.mp3");
     if (audio) {
@@ -130,7 +147,7 @@ export const ScheduleChat = () => {
           fixed inset-0 h-dvh w-full
           md:inset-auto md:top-auto md:left-auto md:bottom-6 md:right-6
           md:h-auto md:w-97.5 md:max-w-[calc(100vw-2rem)]
-          transition-all duration-300
+          transition-all md:transition-none duration-300
         "
           style={
             maximize
