@@ -25,7 +25,7 @@ export const ScheduleChat = () => {
     worker.postMessage(1000);
     worker.onmessage = (e) => {
       const timer = e.data;
-      if (timer === 5) {
+      if (timer === 3) {
         setShow(true);
         worker.terminate();
       }
@@ -143,12 +143,12 @@ export const ScheduleChat = () => {
         <div className="absolute inset-0 bg-black/40" />
         <div
           onClick={(e) => e.stopPropagation()}
-          className="
-          fixed inset-0 h-dvh w-full
+          className={`
+          fixed ${!start ? "bottom-0 left-0 right-0 h-[40dvh]" : "inset-0 h-dvh"} w-full
           md:inset-auto md:top-auto md:left-auto md:bottom-6 md:right-6
           md:h-auto md:w-97.5 md:max-w-[calc(100vw-2rem)]
           transition-all md:transition-none duration-300
-        "
+            `}
           style={
             maximize
               ? {
