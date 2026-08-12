@@ -3,7 +3,6 @@
 import { useContentData } from "@/context/content-context";
 import Link from "next/link";
 import { timeAgo } from "@/utils/formatRelativeTime";
-import Image from "next/image";
 
 export function Blogs() {
   const { blogs, isLoadingBlogs } = useContentData();
@@ -13,14 +12,6 @@ export function Blogs() {
       id="blogs"
       className="mx-auto max-w-6xl border-b border-border-color pt-8 border-x relative"
     >
-      <Image
-        src={"/nordic_33.png"}
-        fill
-        alt="Gabriel - Desarrollador Full Stack"
-        className={`object-cover md:mask-l-from-1% -z-10 opacity-85 mask-t-from-1% md:mask-t-from-0`}
-        sizes="(max-width: 768px) 100vw, 50vw"
-        priority
-      />
       <div className="space-y-3 mb-12 px-4">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
           Contenido

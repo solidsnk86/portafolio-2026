@@ -37,14 +37,6 @@ export function About({ source }: { source?: string }) {
       id="about"
       className="mx-auto max-w-6xl border-b border-border-color px-4 py-16 border-x relative"
     >
-      <Image
-        src={"/nordic_31.png"}
-        fill
-        alt="Gabriel - Desarrollador Full Stack"
-        className={`object-cover md:mask-l-from-1% -z-10 opacity-85 mask-t-from-1% md:mask-t-from-0`}
-        sizes="(max-width: 768px) 100vw, 50vw"
-        priority
-      />
       <div className=" grid md:grid-cols-2 justify-center space-y-5 text-left">
         <div className="md:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-3">
