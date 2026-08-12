@@ -65,7 +65,7 @@ export function About({ source }: { source?: string }) {
             <Link
               href="http://pascalecloset.com/"
               target="_blank"
-              className="mx-1 font-semibold hover:underline text-indigo-500"
+              className="mx-1 font-semibold hover:underline text-zinc-600"
             >
               @pascale-closet.
             </Link>

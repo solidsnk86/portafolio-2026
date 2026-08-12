@@ -6,6 +6,7 @@ import { ThemeToggle } from "./theme-toggle";
 import { useCallback, useEffect, useState } from "react";
 import { featuredProjects, formatText } from "./projects";
 import Image from "next/image";
+import { useTheme } from "@/context/theme-context";
 
 interface Phrases {
   id: number | string;
@@ -23,6 +24,8 @@ export function Footer() {
     },
   ]);
   const [randomIndex] = useState<number>(() => Math.random());
+  const { theme } = useTheme();
+  const darkMode = theme === "dark";
 
   const getPhrases = useCallback(async () => {
     try {
@@ -172,7 +175,7 @@ export function Footer() {
         <div className="ml-10 md:ml-0">
           <p className="font-sans text-muted-foreground text-sm inline-flex">
             &copy; {new Date().getFullYear()} ·
-            <span className="hidden md:block ml-1">Hecho con 💜 por</span>{" "}
+            <span className="hidden md:block ml-1">Hecho con {darkMode ? "🤍" : "🖤"} por</span>{" "}
             <Link
               href={"https://github.com/solidsnk86"}
               className="hover:text-accent ml-1 hover:underline"
