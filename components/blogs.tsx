@@ -57,19 +57,19 @@ export function Blogs() {
             .map((blog) => (
               <article
                 key={blog.name}
-                className="border-b border-border-color p-4 hover:brightness-105 odd:bg-background/50 backdrop-blur-xs first:border-t last:border-0"
+                className="border-b border-border-color p-4 group odd:bg-background/50 backdrop-blur-xs first:border-t last:border-0"
               >
                 <Link href={`/blog/${blog.name}`}>
                   <div className="mb-2 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="relative h-8 w-8 overflow-hidden rounded">
+                      <div className="relative h-8 w-8 overflow-hidden rounded-lg outline-1 outline-offset-2 outline-border-color">
                         <picture>
                           <img
                             src="/mgc.jfif"
                             alt="Gabriel avatar"
                             width="100%"
                             height="100%"
-                            className="object-cover"
+                            className="object-cover grayscale-100 group-hover:grayscale-0"
                           />
                         </picture>
                       </div>
@@ -77,11 +77,11 @@ export function Blogs() {
                         {blog.author}
                       </p>
                     </div>
-                    <p className="text-xs">
+                    <p className="text-xs text-muted-foreground">
                       {timeAgo(new Date(blog.date))}
                     </p>
                   </div>
-                  <h4 className="mb-3 font-semibold text-foreground text-xl md:text-2xl">
+                  <h4 className="mb-3 font-semibold text-foreground text-xl md:text-2xl group-hover:underline">
                     {blog.title}
                   </h4>
                 </Link>
