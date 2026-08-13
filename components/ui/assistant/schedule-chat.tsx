@@ -233,12 +233,14 @@ export const ScheduleChat = () => {
             )}
             <div className="absolute right-1.5 top-1.5 z-10">
               <div className="flex   items-center">
-                <button
-                  className="rounded-full p-2 hover:bg-secondary transition-colors"
-                  onClick={setSettings}
-                >
-                  <Settings size={16} />
-                </button>
+                {!start && (
+                  <button
+                    className="rounded-full p-2 hover:bg-secondary transition-colors"
+                    onClick={setSettings}
+                  >
+                    <Settings size={16} />
+                  </button>
+                )}
                 <button
                   className="rounded-full p-2 hover:bg-secondary transition-colors"
                   onClick={close}

@@ -362,3 +362,9 @@ dialog::backdrop {
     opacity: 1;
   }
 }
+
+@media (width < 378px) {
+  .gree-dot, .gray-dot {
+    scale: 0;
+  }
+}

@@ -26,9 +26,9 @@ export const HeaderSectionChat = ({
         {timeAgo(new Date(historyChat?.created_at as string))?.includes(
           "segundo",
         ) || status === "active" ? (
-          <div className="absolute bottom-2 outline-2 outline-background left-6.5 w-1.5 h-1.5 rounded-full bg-green-500" />
+          <div className="absolute bottom-2 outline-2 outline-background left-6.5 w-1.5 h-1.5 rounded-full bg-green-500 green-dot" />
         ) : (
-          <div className="absolute bottom-2 outline-2 outline-background left-6.5 w-1.5 h-1.5 rounded-full bg-zinc-500" />
+          <div className="absolute bottom-2 outline-2 outline-background left-6.5 w-1.5 h-1.5 rounded-full bg-zinc-500 gray-dot" />
         )}
 
         <picture>
@@ -56,7 +56,7 @@ export const HeaderSectionChat = ({
             ) || status === "active" ? (
               <small className="text-xs">conectado ahora</small>
             ) : (
-              <small className="text-xs">
+              <small className="text-xs truncate">
                 última actividad{" "}
                 {timeAgo(new Date(historyChat?.created_at as string))}
               </small>
@@ -74,11 +74,11 @@ export const HeaderSectionChat = ({
           className="flex items-center gap-1 py-0.5 px-1 disabled:text-muted-foreground disabled:hover:opacity-100 transition-colors hover:opacity-80 group"
         >
           <PenBoxIcon size={12} className="text-accent group-disabled:text-accent/50" />
-          <p className="text-[11px]">Nuevo chat</p>
+          <p className="text-[11px] truncate">Nuevo chat</p>
         </button>
         <div className="flex items-center gap-1">
           <Navigation size={11} className="text-accent" />
-          <p className="text-[11px]">
+          <p className="text-[11px] truncate">
             Ubicación: {city.name}, {country.alpha}
           </p>
         </div>

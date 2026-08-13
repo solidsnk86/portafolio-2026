@@ -7,6 +7,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "320px"
+      },
       colors: {
         'foreground': 'var(--foreground)',
         'muted-foreground': 'var(--muted-foreground)',
