@@ -380,6 +380,17 @@ export const ScheduleChat = () => {
                 </small>
               </aside>
             )}
+            {start && (
+              <aside className="grid justify-center p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shrink-0">
+                <small
+                  className="block text-left text-[11px] text-muted-foreground"
+                  style={{ marginTop: !start ? "12px" : "" }}
+                >
+                  Esta conversación puede ser registrada para mejorar la calidad
+                  del servicio.
+                </small>
+              </aside>
+            )}
           </article>
         </div>
       </section>
