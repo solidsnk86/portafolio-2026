@@ -8,7 +8,7 @@ interface DialogProps {
   className?: string;
 }
 
-export const showDialog = ({ content, width = "50%", height = "auto", className }: DialogProps) => {
+export const showDialog = ({ content, width = "", height = "214px", className }: DialogProps) => {
   const dialog = document.createElement("dialog");
   const root = createRoot(dialog);
   const controller = new AbortController();
@@ -18,18 +18,15 @@ export const showDialog = ({ content, width = "50%", height = "auto", className 
   dialog.style.width = width;
   dialog.style.height = height;
   dialog.className = className ?? "";
-  root.render(
-    <article className="p-3 relative">
-      {content}
-    </article>,
-  );
+  root.render(content);
 
   document.addEventListener(
     "click",
     (e) => {
       const child = dialog.firstElementChild;
       if (dialog && dialog.open && !child?.contains(e.target as Node)) {
-        closeDialog();
+        dialog.close();
+        dialog.remove();
         root.unmount();
         controller.abort();
       }

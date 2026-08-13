@@ -1,18 +1,21 @@
 "use client";
 
 import { Button } from "@/components/common";
-import { CopyIcon, Square, X } from "lucide-react";
+import { CogIcon, CopyIcon, Settings, Square, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Chat, Message } from "./chat";
 import { useLocation } from "@/context/location-context";
 import { useContentData } from "@/context/content-context";
 import { useObserver } from "@/app/hooks/use-observer";
 import Image from "next/image";
+import { closeDialog, showDialog } from "@/components/common/dialog";
+import { SettingsCard } from "../settings/Settings";
 
 export const ScheduleChat = () => {
   const [start, setStart] = useState(false);
   const [show, setShow] = useState(false);
   const [maximize, setMaximize] = useState(false);
+  const [config, setConfig] = useState(false);
   const {
     data: { ip, city, country },
   } = useLocation();
@@ -20,7 +23,9 @@ export const ScheduleChat = () => {
   const isOnFooter = useObserver();
 
   useEffect(() => {
-    const worker = new Worker(new URL("../../../worker/time-worker.ts", import.meta.url));
+    const worker = new Worker(
+      new URL("../../../worker/time-worker.ts", import.meta.url),
+    );
 
     worker.postMessage(1000);
     worker.onmessage = (e) => {
@@ -29,12 +34,12 @@ export const ScheduleChat = () => {
         setShow(true);
         worker.terminate();
       }
-    }
+    };
 
     return () => {
       worker.terminate();
-    }
-  }, [])
+    };
+  }, []);
 
   const playCloseSound = () => {
     const audio = new Audio("/assets/sounds/notification.mp3");
@@ -96,6 +101,14 @@ export const ScheduleChat = () => {
       document.documentElement.style.overflow = "auto";
     };
   }, [show]);
+
+  const setSettings = () => {
+    setConfig(!config);
+  };
+
+  if (config) {
+    return <SettingsCard close={() => setConfig(false)} />;
+  }
 
   return (
     <>
@@ -179,12 +192,22 @@ export const ScheduleChat = () => {
                 )}
               </button>
             )}
-            <button
-              className="absolute right-1.5 top-1.5 z-10 rounded-full p-2 hover:bg-secondary transition-colors"
-              onClick={close}
-            >
-              <X size={16} />
-            </button>
+            <div className="absolute right-1.5 top-1.5 z-10">
+              <div className="flex   items-center">
+                <button
+                  className="rounded-full p-2 hover:bg-secondary transition-colors"
+                  onClick={setSettings}
+                >
+                  <Settings size={16} />
+                </button>
+                <button
+                  className="rounded-full p-2 hover:bg-secondary transition-colors"
+                  onClick={close}
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            </div>
 
             {!start && (
               <header className="border-b border-border-color px-4 py-4 shrink-0">
