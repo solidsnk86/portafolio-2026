@@ -1,28 +1,41 @@
 "use client";
 
 import { Button } from "@/components/common";
-import { CogIcon, CopyIcon, Settings, Square, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { CopyIcon, Settings, Square, X } from "lucide-react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Chat, Message } from "./chat";
 import { useLocation } from "@/context/location-context";
 import { useContentData } from "@/context/content-context";
 import { useObserver } from "@/app/hooks/use-observer";
 import Image from "next/image";
-import { closeDialog, showDialog } from "@/components/common/dialog";
-import { SettingsCard } from "../settings/Settings";
+
+type TargetName = "init-message" | "history_chat" | "use-location";
 
 export const ScheduleChat = () => {
   const [start, setStart] = useState(false);
   const [show, setShow] = useState(false);
   const [maximize, setMaximize] = useState(false);
-  const [config, setConfig] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const {
     data: { ip, city, country },
   } = useLocation();
   const { refreshHistory } = useContentData();
   const isOnFooter = useObserver();
+  const [checked, setChecked] = useState<
+    { name: TargetName; checked: boolean | undefined }[]
+  >([]);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setChecked((prev) => [
+      { name: e.target.name as TargetName, checked: e.target.checked },
+      ...prev,
+    ]);
+  };
 
   useEffect(() => {
+    const settings = sessionStorage.getItem("settings");
+    const parsedSettings = JSON.parse(settings || "[]");
+    if (parsedSettings[0].name === "init-message" && parsedSettings[0].checked) return;
     const worker = new Worker(
       new URL("../../../worker/time-worker.ts", import.meta.url),
     );
@@ -76,6 +89,7 @@ export const ScheduleChat = () => {
     setShow(false);
     sendHistory();
     refreshHistory();
+    setSettings();
   };
 
   const fullWindow = () => {
@@ -103,11 +117,18 @@ export const ScheduleChat = () => {
   }, [show]);
 
   const setSettings = () => {
-    setConfig(!config);
+    setSettingsOpen(!settingsOpen);
   };
 
-  if (config) {
-    return <SettingsCard close={() => setConfig(false)} />;
+  const saveSettings = () => {
+    if (checked.length === 0) return;
+    checked.forEach((item) => {
+      if (item.name === "init-message" && item.checked) {
+        sessionStorage.setItem("settings", JSON.stringify(checked));
+      }
+    })
+
+    setSettings();
   }
 
   return (
@@ -209,7 +230,7 @@ export const ScheduleChat = () => {
               </div>
             </div>
 
-            {!start && (
+            {!start && !settingsOpen && (
               <header className="border-b border-border-color px-4 py-4 shrink-0">
                 <div className="flex gap-2 items-center">
                   <h3 className="text-xl font-semibold">¿Te puedo asistir?</h3>
@@ -223,12 +244,71 @@ export const ScheduleChat = () => {
               </header>
             )}
 
+            {settingsOpen && !start && (
+              <section className="p-4 shrink-0">
+                <div className="flex flex-col z-30">
+                  <h3 className="text-xl font-semibold text-foreground">
+                    Configuración
+                  </h3>
+                  <article className="space-y-0.5 pt-4">
+                    <label className="flex gap-8 text-sm justify-between items-center text-muted-foreground leading-relaxed">
+                      No volver a ver éste mensaje al inicio.
+                      <input
+                        type="checkbox"
+                        name="init-message"
+                        id=""
+                        onChange={handleChange}
+                        className="size-4 accent-foreground cursor-pointer"
+                      />
+                    </label>
+                    <label className="flex gap-8 text-sm justify-between items-center text-muted-foreground leading-relaxed">
+                      No guardar historial del chat.
+                      <input
+                        type="checkbox"
+                        name="history-chat"
+                        id=""
+                        onChange={handleChange}
+                        className="size-4 accent-foreground cursor-pointer"
+                      />
+                    </label>
+                    <label className="flex gap-8 text-sm justify-between items-center text-muted-foreground leading-relaxed">
+                      No usar mi ubicación para el asistente.
+                      <input
+                        type="checkbox"
+                        name="use-location"
+                        id=""
+                        onChange={handleChange}
+                        className="size-4 accent-foreground cursor-pointer"
+                      />
+                    </label>
+                  </article>
+                  <div className="flex justify-end gap-2 items-center mt-3">
+                    <Button
+                      style={{
+                        background: "transparent",
+                        outline: "1px solid var(--foreground)",
+                        outlineOffset: "-2px",
+                        color: "var(--foreground)",
+                        backdropFilter: "blur(2px)",
+                        cursor: "pointer",
+                        padding: "6px 12px",
+                      }}
+                      onClick={setSettings}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button style={{ padding: "6px 12px" }} onClick={saveSettings}>Guardar</Button>
+                  </div>
+                </div>
+              </section>
+            )}
+
             {!start && (
               <Image
                 src={"/nordic_32.png"}
                 fill
                 alt="Gabriel - Desarrollador Full Stack"
-                className={`object-cover md:mask-l-from-1% -z-10 opacity-50 md:opacity-80 mask-t-from-1% md:mask-t-from-0`}
+                className={`object-cover md:mask-l-from-1% -z-10 opacity-50 mask-t-from-1% md:mask-t-from-0`}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
               />
@@ -243,8 +323,8 @@ export const ScheduleChat = () => {
               <Chat />
             </main>
 
-            <aside className="grid justify-center p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shrink-0">
-              {!start && (
+            {!start && !settingsOpen && (
+              <aside className="grid justify-center p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shrink-0">
                 <Button
                   className="w-full"
                   onClick={() => {
@@ -254,16 +334,15 @@ export const ScheduleChat = () => {
                 >
                   Iniciar conversación
                 </Button>
-              )}
-
-              <small
-                className="block text-left text-[11px] text-muted-foreground"
-                style={{ marginTop: !start ? "12px" : "" }}
-              >
-                Esta conversación puede ser registrada para mejorar la calidad
-                del servicio.
-              </small>
-            </aside>
+                <small
+                  className="block text-left text-[11px] text-muted-foreground"
+                  style={{ marginTop: !start ? "12px" : "" }}
+                >
+                  Esta conversación puede ser registrada para mejorar la calidad
+                  del servicio.
+                </small>
+              </aside>
+            )}
           </article>
         </div>
       </section>

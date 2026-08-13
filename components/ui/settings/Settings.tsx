@@ -5,27 +5,36 @@ import { Settings, X } from "lucide-react";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 
+type TargetName = "init-message" | "history_chat" | "use-location";
+
 export const SettingsCard = ({ close }: { close: () => void }) => {
   const [checked, setChecked] = useState<
-    { name: string; checked: boolean | undefined }[]
+    { name: TargetName; checked: boolean | undefined }[]
   >([]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setChecked((prev) => [
-      { name: e.target.name, checked: e.target.checked },
+      { name: e.target.name as TargetName, checked: e.target.checked },
       ...prev,
     ]);
+  };
+
+
+  const saveSettings = () => {
+    if (checked.length === 0) return;
+
+    close();
   };
 
   return (
     <section className="fixed inset-0 backdrop-blur-md">
       <div className="absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] w-[96%] border border-border-color md:w-1/2 h-fit flex flex-col bg-background/50 z-999 rounded-xl">
-        <div className="absolute inset-0 w-full h-full backdrop-blur-[3px] rounded-xl" />
+        <div className="absolute inset-0 w-full h-full backdrop-blur-3xl rounded-xl" />
         <Image
           src={"/nordic_31.png"}
           fill
           alt="Gabriel - Desarrollador Full Stack"
-          className={`object-cover md:mask-l-from-1% -z-20 opacity-50 md:opacity-80 mask-t-from-1% md:mask-t-from-0 rounded-xl`}
+          className={`object-cover md:mask-l-from-1% -z-20 opacity-50 mask-t-from-1% md:mask-t-from-0 rounded-xl`}
           sizes="(max-width: 768px) 100vw, 50vw"
           priority
         />
@@ -89,13 +98,18 @@ export const SettingsCard = ({ close }: { close: () => void }) => {
                 color: "var(--foreground)",
                 backdropFilter: "blur(2px)",
                 cursor: "pointer",
-                padding: "6px 12px"
+                padding: "6px 12px",
               }}
               onClick={close}
             >
               Cancelar
             </Button>
-            <Button style={{ width: "fit", padding: "6px 12px" }}>Aceptar</Button>
+            <Button
+              style={{ width: "fit", padding: "6px 12px" }}
+              onClick={saveSettings}
+            >
+              Guardar
+            </Button>
           </div>
         </aside>
       </div>
