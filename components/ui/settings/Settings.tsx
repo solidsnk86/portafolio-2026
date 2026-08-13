@@ -13,10 +13,16 @@ export const SettingsCard = ({ close }: { close: () => void }) => {
   >([]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setChecked((prev) => [
-      { name: e.target.name as TargetName, checked: e.target.checked },
-      ...prev,
-    ]);
+    const name = e.target.name as TargetName;
+    setChecked((prev) => {
+      const exists = prev.some((item) => item.name === name);
+      if (exists) {
+        return prev.map((item) =>
+          item.name === name ? { ...item, checked: e.target.checked } : item
+        );
+      }
+      return [{ name, checked: e.target.checked }, ...prev];
+    });
   };
 
 

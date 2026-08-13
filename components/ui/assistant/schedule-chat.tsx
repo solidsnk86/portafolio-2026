@@ -9,7 +9,7 @@ import { useContentData } from "@/context/content-context";
 import { useObserver } from "@/app/hooks/use-observer";
 import Image from "next/image";
 
-type TargetName = "init-message" | "history_chat" | "use-location";
+type TargetName = "init-message" | "history-chat" | "use-location";
 
 export const ScheduleChat = () => {
   const [start, setStart] = useState(false);
@@ -22,20 +22,24 @@ export const ScheduleChat = () => {
   const { refreshHistory } = useContentData();
   const isOnFooter = useObserver();
   const [checked, setChecked] = useState<
-    { name: TargetName; checked: boolean | undefined }[]
-  >([]);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setChecked((prev) => [
-      { name: e.target.name as TargetName, checked: e.target.checked },
-      ...prev,
-    ]);
-  };
+    { name: TargetName; checked: boolean }[]
+  >(() => {
+    if (typeof window === "undefined") return [];
+    const settings = sessionStorage.getItem("settings");
+    const parsed = JSON.parse(settings || "[]");
+    return parsed.length !== 0 ? parsed : [];
+  });
 
   useEffect(() => {
     const settings = sessionStorage.getItem("settings");
     const parsedSettings = JSON.parse(settings || "[]");
-    if (parsedSettings[0].name === "init-message" && parsedSettings[0].checked) return;
+
+    if (
+      parsedSettings[0]?.name === "init-message" &&
+      parsedSettings[0]?.checked
+    ) {
+      return;
+    }
     const worker = new Worker(
       new URL("../../../worker/time-worker.ts", import.meta.url),
     );
@@ -43,7 +47,7 @@ export const ScheduleChat = () => {
     worker.postMessage(1000);
     worker.onmessage = (e) => {
       const timer = e.data;
-      if (timer === 3) {
+      if (timer === 2) {
         setShow(true);
         worker.terminate();
       }
@@ -53,6 +57,19 @@ export const ScheduleChat = () => {
       worker.terminate();
     };
   }, []);
+  console.log(checked);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.name as TargetName;
+    setChecked((prev) => {
+      const exists = prev.some((item) => item.name === name);
+      if (exists) {
+        return prev.map((item) =>
+          item.name === name ? { ...item, checked: e.target.checked } : item,
+        );
+      }
+      return [{ name, checked: e.target.checked }, ...prev];
+    });
+  };
 
   const playCloseSound = () => {
     const audio = new Audio("/assets/sounds/notification.mp3");
@@ -123,13 +140,13 @@ export const ScheduleChat = () => {
   const saveSettings = () => {
     if (checked.length === 0) return;
     checked.forEach((item) => {
-      if (item.name === "init-message" && item.checked) {
+      if (item.checked) {
         sessionStorage.setItem("settings", JSON.stringify(checked));
       }
-    })
+    });
 
     setSettings();
-  }
+  };
 
   return (
     <>
@@ -257,6 +274,10 @@ export const ScheduleChat = () => {
                         type="checkbox"
                         name="init-message"
                         id=""
+                        checked={
+                          checked.find((item) => item.name === "init-message")
+                            ?.checked || false
+                        }
                         onChange={handleChange}
                         className="size-4 accent-foreground cursor-pointer"
                       />
@@ -267,16 +288,24 @@ export const ScheduleChat = () => {
                         type="checkbox"
                         name="history-chat"
                         id=""
+                        checked={
+                          checked.find((item) => item.name === "history-chat")
+                            ?.checked || false
+                        }
                         onChange={handleChange}
                         className="size-4 accent-foreground cursor-pointer"
                       />
                     </label>
                     <label className="flex gap-8 text-sm justify-between items-center text-muted-foreground leading-relaxed">
-                      No usar mi ubicación para el asistente.
+                      No usar las cookies del navegador.
                       <input
                         type="checkbox"
                         name="use-location"
                         id=""
+                        checked={
+                          checked.find((item) => item.name === "use-location")
+                            ?.checked || false
+                        }
                         onChange={handleChange}
                         className="size-4 accent-foreground cursor-pointer"
                       />
@@ -297,7 +326,12 @@ export const ScheduleChat = () => {
                     >
                       Cancelar
                     </Button>
-                    <Button style={{ padding: "6px 12px" }} onClick={saveSettings}>Guardar</Button>
+                    <Button
+                      style={{ padding: "6px 12px" }}
+                      onClick={saveSettings}
+                    >
+                      Guardar
+                    </Button>
                   </div>
                 </div>
               </section>
