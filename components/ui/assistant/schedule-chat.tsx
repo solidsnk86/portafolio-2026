@@ -107,7 +107,7 @@ export const ScheduleChat = () => {
     setShow(false);
     sendHistory();
     refreshHistory();
-    setSettings();
+    setSettingsOpen(false);
   };
 
   const fullWindow = () => {
@@ -134,10 +134,6 @@ export const ScheduleChat = () => {
     };
   }, [show]);
 
-  const setSettings = () => {
-    setSettingsOpen(!settingsOpen);
-  };
-
   const saveSettings = () => {
     if (checked.length === 0) return;
     checked.forEach((item) => {
@@ -146,7 +142,7 @@ export const ScheduleChat = () => {
       }
     });
 
-    setSettings();
+    setSettingsOpen(false);
   };
 
   return (
@@ -236,7 +232,7 @@ export const ScheduleChat = () => {
                 {!start && (
                   <button
                     className="rounded-full p-2 hover:bg-secondary transition-colors"
-                    onClick={setSettings}
+                    onClick={() => setSettingsOpen(true)}
                   >
                     <Settings size={16} />
                   </button>
@@ -325,7 +321,7 @@ export const ScheduleChat = () => {
                         cursor: "pointer",
                         padding: "6px 12px",
                       }}
-                      onClick={setSettings}
+                      onClick={() => setSettingsOpen(false)}
                     >
                       Cancelar
                     </Button>

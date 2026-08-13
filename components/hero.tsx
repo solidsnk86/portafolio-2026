@@ -135,7 +135,7 @@ export function Hero() {
             src={"/nordic_30.png"}
             fill
             alt="Gabriel - Desarrollador Full Stack"
-            className={`object-cover md:mask-l-from-1% -z-10 opacity-85 mask-t-from-1% md:mask-t-from-0`}
+            className={`object-cover md:mask-l-from-1% -z-10 opacity-85 mask-t-from-1% md:mask-t-from-0 mask-b-from-1%`}
             sizes="(max-width: 768px) 100vw, 50vw"
             priority
           />
