@@ -34,12 +34,13 @@ export const ScheduleChat = () => {
     const settings = sessionStorage.getItem("settings");
     const parsedSettings = JSON.parse(settings || "[]");
 
-    if (
-      parsedSettings[0]?.name === "init-message" &&
-      parsedSettings[0]?.checked
-    ) {
-      return;
+    if (Array.isArray(parsedSettings) && parsedSettings.length > 0) {
+      const initMessage = parsedSettings.find(
+        (item) => item.name === "init-message",
+      );
+      if (initMessage.checked) return;
     }
+
     const worker = new Worker(
       new URL("../../../worker/time-worker.ts", import.meta.url),
     );
@@ -57,7 +58,7 @@ export const ScheduleChat = () => {
       worker.terminate();
     };
   }, []);
-  console.log(checked);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name as TargetName;
     setChecked((prev) => {
