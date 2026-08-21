@@ -88,11 +88,11 @@ export function Blogs() {
               </article>
             ))
         )}
-        <div className="flex justify-center my-3">
+        {/* <div className="flex justify-center my-3">
           <button className="flex gap-1.5 items-center border border-border-color rounded px-2 py-1 w-fit bg-secondary">
             Todos los posts
           </button>
-        </div>
+        </div> */}
       </div>
     </section>
   );
