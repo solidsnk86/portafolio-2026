@@ -78,16 +78,15 @@ export const MainSectionChat = ({
                 }`}
             >
               <MarkdownRenderer content={chat.content} isChat={true} />
-              {chat.role === "assistant" && chat.searchResult?.length !== 0 && (
-                <div className="flex gap-2 justify-between items-center my-2 text-xs text-muted-foreground italic">
-                  <small>Búsqueda realizada en {chat.responseTime}s</small>
+              {chat.role === "assistant" && chat.usedSearch && (
+                <div className="flex gap-2 justify-end items-center my-2 text-xs text-muted-foreground italic">
                   <small>
                     Powered by{" "}
                     <Link
-                      href={"https://www.tavily.com/"}
-                      className="text-emerald-500 hover:underline"
+                      href={"https://groq.com/"}
+                      className="text-orange-500 hover:underline"
                     >
-                      Tavily
+                      Groq
                     </Link>
                   </small>
                 </div>
