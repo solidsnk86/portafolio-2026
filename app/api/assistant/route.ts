@@ -129,7 +129,7 @@ export async function POST(request: Request) {
 
   try {
     const response = await client.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
+      model: "openai/gpt-oss-120b",
       messages,
     });
 
@@ -146,7 +146,7 @@ export async function POST(request: Request) {
     if ((error as TypeError).message.includes("429")) {
       try {
         const response = await client.chat.completions.create({
-          model: "llama-3.1-8b-instant",
+          model: "openai/gpt-oss-20b",
           messages,
         });
 
