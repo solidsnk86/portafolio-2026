@@ -37,35 +37,48 @@ export function About({ source }: { source?: string }) {
       id="about"
       className="mx-auto max-w-6xl border-b border-border-color px-4 py-16 border-x relative"
     >
-      <div className=" grid md:grid-cols-2 justify-center space-y-5 text-left">
+      <div className="grid md:grid-cols-2 justify-center space-y-5 text-left">
         <div className="md:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-3">
-            Sobre mi
+            Sobre mí
           </p>
           <h2 className="text-3xl font-semibold text-foreground md:text-4xl">
-            Desarrollo web práctico, moderno y eficiente
+            Desarrollo web y automatización de procesos
           </h2>
         </div>
+
         <article className="space-y-4 md:p-8">
           <p className="text-base leading-relaxed text-muted-foreground">
             Desarrollador con 4 años de experiencia, egresado de la UTN-FRSR.
-            Trabajo con una mirada práctica, priorizo simplicidad, rendimiento y
-            una buena experiencia de usuario en cada entrega.
+            Desarrollo aplicaciones web modernas y soluciones orientadas a
+            resolver problemas concretos, priorizando simplicidad, rendimiento y
+            una buena experiencia de usuario.
           </p>
 
           <p className="text-base leading-relaxed text-muted-foreground">
-            Hoy potencio mi flujo con agentes de IA para investigar, prototipar
-            y documentar más rápido, sin perder criterio técnico. La IA me ayuda
-            a acelerar, pero las decisiones de arquitectura y calidad siempre
-            las guío en el contexto del proyecto.
+            También me especializo en{" "}
+            <strong className="text-foreground">
+              automatizar tareas y flujos de trabajo diarios
+            </strong>
+            , conectando servicios, APIs y herramientas para reducir procesos
+            manuales y hacer más eficientes las operaciones.
           </p>
 
           <p className="text-base leading-relaxed text-muted-foreground">
-            Hace poco colaboré con un cliente en Chile con una tienda online
+            Hoy potencio mi flujo de desarrollo con agentes de IA para
+            investigar, prototipar, analizar y documentar más rápido, sin
+            delegar el criterio técnico. La IA es una herramienta para acelerar
+            el proceso; las decisiones de arquitectura, implementación y calidad
+            siguen estando guiadas por las necesidades de cada proyecto.
+          </p>
+
+          <p className="text-base leading-relaxed text-muted-foreground">
+            He trabajado en proyectos para clientes de Argentina y Chile,
+            incluyendo el desarrollo de una tienda online
             <Link
               href="http://pascalecloset.com/"
               target="_blank"
-              className="mx-1 font-semibold hover:underline text-zinc-600"
+              className="mx-1 font-semibold text-zinc-600 hover:underline"
             >
               @pascale-closet.
             </Link>

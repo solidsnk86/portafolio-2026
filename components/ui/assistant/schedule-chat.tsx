@@ -16,9 +16,7 @@ export const ScheduleChat = () => {
   const [show, setShow] = useState(false);
   const [maximize, setMaximize] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const {
-    data: { ip, city, country },
-  } = useLocation();
+  const { data: { ip, city, country } } = useLocation();
   const { refreshHistory } = useContentData();
   const isOnFooter = useObserver();
   const [checked, setChecked] = useState<
@@ -29,6 +27,16 @@ export const ScheduleChat = () => {
     const parsed = JSON.parse(settings || "[]");
     return parsed.length !== 0 ? parsed : [];
   });
+  const [audioInit] = useState(() => {
+    if (typeof window !== "undefined") {
+      return new Audio("/assets/sounds/ui-sound.mp3")
+    }
+  });
+  const [audioClose] = useState(() => {
+    if (typeof window !== "undefined") {
+      return new Audio("/assets/sounds/notification.mp3")
+    }
+  })
 
   useEffect(() => {
     const settings = sessionStorage.getItem("settings");
@@ -72,14 +80,6 @@ export const ScheduleChat = () => {
     });
   };
 
-  const playCloseSound = () => {
-    const audio = new Audio("/assets/sounds/notification.mp3");
-    if (audio) {
-      audio.volume = 0.5;
-      audio.play();
-    }
-  };
-
   const sendHistory = async () => {
     try {
       const sessionHistory = sessionStorage.getItem("history-chat");
@@ -102,6 +102,20 @@ export const ScheduleChat = () => {
     }
   };
 
+  const playInitSound = () => {
+    const audio = audioInit;
+    if (audio) {
+      audio.play();
+    }
+  };
+
+  const playCloseSound = () => {
+    const audio = audioClose;
+    if (audio) {
+      audio.play();
+    }
+  };
+
   const close = async () => {
     playCloseSound();
     setShow(false);
@@ -112,14 +126,6 @@ export const ScheduleChat = () => {
 
   const fullWindow = () => {
     setMaximize(!maximize);
-  };
-
-  const playInitSound = () => {
-    const audio = new Audio("/assets/sounds/ui-sound.mp3");
-    if (audio) {
-      audio.volume = 0.5;
-      audio.play();
-    }
   };
 
   useEffect(() => {
@@ -158,10 +164,10 @@ export const ScheduleChat = () => {
           <button className="flex items-center gap-0.5 py-1 pl-1 pr-0.5 rounded-full bg-stripes bg-secondary group relative">
             <div className="absolute top-0 right-0 w-2 h-2 bg-red-400 rounded-full animate-ping z-40" />
             <div className="absolute top-0 right-0 w-2 h-2 bg-red-400 rounded-full z-50" />
-            <div className="relative h-8 w-8 overflow-hidden rounded-full">
+            <div className="relative h-10 w-10 overflow-hidden rounded-full">
               <picture>
                 <img
-                  src="/mgc.jfif"
+                  src="/bot-svg.svg"
                   alt="Gabriel avatar"
                   width="100%"
                   height="100%"
@@ -340,7 +346,7 @@ export const ScheduleChat = () => {
               <Image
                 src={"/nordic_32.png"}
                 fill
-                alt="Gabriel - Desarrollador Full Stack"
+                alt="Paisaje nórdico"
                 className={`object-cover md:mask-l-from-1% -z-10 opacity-50 mask-t-from-1% md:mask-t-from-0`}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority

@@ -59,7 +59,7 @@ export const MainSectionChat = ({
   return (
     <div
       ref={messagesRef}
-      className="flex-1 overflow-y-auto px-4 pt-4 pb-10 space-y-3 mask-b-from-90% overflow-x-hidden"
+      className="flex-1 overflow-y-auto px-5 pt-4 pb-11 space-y-3 mask-b-from-90% overflow-x-hidden"
     >
       {chatResponses.map((chat, idx) => {
         return (
@@ -74,36 +74,27 @@ export const MainSectionChat = ({
                 ${
                   chat.role === "user"
                     ? "bg-indigo-600 text-white rounded-2xl rounded-br-md overflow-x-hidden"
-                    : "bg-foreground text-background rounded-2xl rounded-bl-md overflow-x-hidden"
+                    : "bg-secondary text-foreground rounded-2xl rounded-bl-md overflow-x-hidden"
                 }`}
             >
               <MarkdownRenderer content={chat.content} isChat={true} />
-              {chat.role === "assistant" && chat.usedSearch && (
-                <div className="flex gap-2 justify-end items-center my-2 text-xs text-muted-foreground italic">
-                  <small>
-                    Powered by{" "}
-                    <Link
-                      href={"https://groq.com/"}
-                      className="text-orange-500 hover:underline"
-                    >
-                      Groq
-                    </Link>
-                  </small>
-                </div>
-              )}
-              <div className="flex justify-between gap-1.5 items-center">
-                <time className="text-[10.5px] text-zinc-400 uppercase">
-                  {chat.createdAt as string}
-                </time>
 
-                {chat.readed ? (
-                  <div className="relative flex -space-x-2">
-                    <Check size={13} className="text-blue-500" />
-                    <Check size={13} className="text-blue-500" />
+              <div className="flex justify-between gap-1.5 items-center">
+                <div className="flex items-center gap-1">
+                  <time className="text-[10.5px] uppercase opacity-70">
+                    {chat.createdAt as string}
+                  </time>
+                  <span className="text-muted-foreground">&middot;</span>
+                  <div className="relative flex">
+                    <time className="text-[10.5px] opacity-70">
+                      {new Date().toLocaleDateString("es-AR", {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                      , {new Date().getFullYear()}
+                    </time>
                   </div>
-                ) : (
-                  <Check size={13} />
-                )}
+                </div>
               </div>
               {chat.role === "assistant" && (
                 <div className="absolute -bottom-4.5 -left-4">
@@ -138,7 +129,12 @@ export const MainSectionChat = ({
       {isLoading && (
         <div className="text-sm text-muted-foreground animate-pulse">
           <small className="flex gap-1 items-center capitalize">
-            <LoaderBlocks boardWidth="w-3" boardHeight="h-3" width="2px" height="2px" />{" "}
+            <LoaderBlocks
+              boardWidth="w-3"
+              boardHeight="h-3"
+              width="2px"
+              height="2px"
+            />{" "}
             {randomWord}...
           </small>
         </div>

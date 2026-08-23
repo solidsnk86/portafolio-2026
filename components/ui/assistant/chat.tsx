@@ -12,8 +12,8 @@ export interface Message {
   role: "user" | "assistant";
   content: string;
   createdAt?: Date | string;
-  readed?: boolean;
   usedSearch?: boolean;
+  created?: number;
 }
 
 export const Chat = () => {
@@ -80,7 +80,6 @@ export const Chat = () => {
         role: "user",
         content: getProcessedText(),
         createdAt: new Date().toLocaleTimeString(),
-        readed: true,
       },
     ]);
 
@@ -93,7 +92,7 @@ export const Chat = () => {
 
     const messageToSend = chatResponses.map(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      ({ createdAt, readed, usedSearch, ...message }) => message,
+      ({ createdAt, usedSearch, created, ...message }) => message,
     );
 
     try {
@@ -117,6 +116,7 @@ export const Chat = () => {
             second: "numeric",
           }),
           createdAt: new Date().toLocaleTimeString(),
+          created: new Date().getTime()
         }),
       });
 
@@ -131,9 +131,8 @@ export const Chat = () => {
         {
           role: "assistant",
           content: jsonData.context ?? jsonData.message,
-          createdAt: jsonData.createdAt,
-          readed: true,
-          usedSearch: jsonData.usedSearch
+          createdAt: new Date().toLocaleTimeString(),
+          usedSearch: jsonData.usedSearch,
         },
       ]);
     } catch (error) {

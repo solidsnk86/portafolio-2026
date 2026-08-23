@@ -69,7 +69,7 @@ export const FooterSectionChat = ({
           }}
           placeholder="Escriba su consulta /email"
           style={{ color: query.match("/buscar") ? "var(--color-accent)" : "" }}
-          className="flex-1 resize-none overflow-y-hidden rounded-lg border border-border-color bg-transparent px-3 py-2 text-sm outline-none focus:ring-3 focus:ring-indigo-500/30"
+          className="flex-1 resize-none overflow-y-hidden rounded-lg border border-border-color bg-transparent px-3 py-2 text-sm outline-none focus:ring-3 focus:ring-indigo-500/30 focus:ring-offset-2"
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();

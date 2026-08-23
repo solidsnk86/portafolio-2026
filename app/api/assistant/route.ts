@@ -102,7 +102,7 @@ export async function POST(request: Request) {
 
     const fnCalls = (message.tool_calls ?? []).filter(
       (c): c is OpenAI.ChatCompletionMessageFunctionToolCall =>
-        c.type === "function"
+        c.type === "function",
     );
 
     if (fnCalls.length > 0) {
@@ -156,9 +156,8 @@ export async function POST(request: Request) {
 
     return {
       context: stripCitations(message.content),
-      usedSearch: !!(
-        message as unknown as { executed_tools?: unknown[] }
-      ).executed_tools?.length,
+      usedSearch: !!(message as unknown as { executed_tools?: unknown[] })
+        .executed_tools?.length,
       model: response.model,
     };
   }

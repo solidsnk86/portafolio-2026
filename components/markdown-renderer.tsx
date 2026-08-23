@@ -63,6 +63,44 @@ export default function MarkdownRenderer({ content, isChat }: { content: string,
           </a>
         ),
         hr: () => <hr className="my-4 border-2 border-muted-foreground" />,
+        // TABLE
+        table: ({ children }) => (
+          <div className="my-4 w-full overflow-x-auto rounded-lg border border-border-color">
+            <table className="w-full min-w-[600px] border-collapse text-xs md:text-sm">
+              {children}
+            </table>
+          </div>
+        ),
+
+        thead: ({ children }) => (
+          <thead className="bg-muted/50">
+            {children}
+          </thead>
+        ),
+
+        tbody: ({ children }) => (
+          <tbody>
+            {children}
+          </tbody>
+        ),
+
+        tr: ({ children }) => (
+          <tr className="border-b border-border-color last:border-b-0 hover:bg-muted/30 transition-colors">
+            {children}
+          </tr>
+        ),
+
+        th: ({ children }) => (
+          <th className="px-3 py-2.5 text-left font-semibold bg-secondary whitespace-nowrap border-border-color border-b">
+            {children}
+          </th>
+        ),
+
+        td: ({ children }) => (
+          <td className="px-3 py-2.5 align-top">
+            {children}
+          </td>
+        ),
       }}
     >
       {content}
