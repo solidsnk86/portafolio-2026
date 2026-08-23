@@ -92,7 +92,13 @@ export const Chat = () => {
 
     const messageToSend = chatResponses.map(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      ({ createdAt, usedSearch, created, ...message }) => message,
+      ({ createdAt, usedSearch, created, ...message }) => ({
+        ...message,
+        content:
+          message.content.length > 2000
+            ? `${message.content.slice(0, 2000)}... [texto truncado]`
+            : message.content,
+      }),
     );
 
     try {
@@ -103,7 +109,7 @@ export const Chat = () => {
         },
         body: JSON.stringify({
           query: getProcessedText(),
-          historyChat: messageToSend,
+          historyChat: messageToSend.length > 3000 ? messageToSend.slice(-10) : messageToSend,
           city,
           country,
           lang: country.alpha,
