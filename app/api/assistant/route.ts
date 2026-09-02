@@ -98,6 +98,7 @@ export async function POST(request: Request) {
       messages,
       tools,
     });
+    let usage = response.usage;
     let message = response.choices[0].message;
 
     const fnCalls = (message.tool_calls ?? []).filter(
@@ -152,6 +153,7 @@ export async function POST(request: Request) {
         tools,
       });
       message = response.choices[0].message;
+      usage = response.usage;
     }
 
     return {
@@ -159,6 +161,7 @@ export async function POST(request: Request) {
       usedSearch: !!(message as unknown as { executed_tools?: unknown[] })
         .executed_tools?.length,
       model: response.model,
+      usage
     };
   }
 
@@ -171,6 +174,7 @@ export async function POST(request: Request) {
       createdAt,
       usedSearch: result.usedSearch,
       model: result.model,
+      usage: result.usage
     });
   } catch (error) {
     if ((error as TypeError).message.includes("429")) {
