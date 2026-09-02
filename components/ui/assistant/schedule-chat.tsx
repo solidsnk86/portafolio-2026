@@ -23,7 +23,7 @@ export const ScheduleChat = () => {
     { name: TargetName; checked: boolean }[]
   >(() => {
     if (typeof window === "undefined") return [];
-    const settings = sessionStorage.getItem("settings");
+    const settings = localStorage.getItem("settings");
     const parsed = JSON.parse(settings || "[]");
     return parsed.length !== 0 ? parsed : [];
   });
@@ -39,7 +39,7 @@ export const ScheduleChat = () => {
   })
 
   useEffect(() => {
-    const settings = sessionStorage.getItem("settings");
+    const settings = localStorage.getItem("settings");
     const parsedSettings = JSON.parse(settings || "[]");
 
     if (Array.isArray(parsedSettings) && parsedSettings.length > 0) {
