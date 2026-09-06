@@ -46,7 +46,7 @@ export const ScheduleChat = () => {
       const initMessage = parsedSettings.find(
         (item) => item.name === "init-message",
       );
-      if (initMessage.checked) return;
+      if (initMessage?.checked) return;
     }
 
     const worker = new Worker(
@@ -142,12 +142,7 @@ export const ScheduleChat = () => {
 
   const saveSettings = () => {
     if (checked.length === 0) return;
-    checked.forEach((item) => {
-      if (item.checked) {
-        sessionStorage.setItem("settings", JSON.stringify(checked));
-      }
-    });
-
+    localStorage.setItem("settings", JSON.stringify(checked));
     setSettingsOpen(false);
   };
 
