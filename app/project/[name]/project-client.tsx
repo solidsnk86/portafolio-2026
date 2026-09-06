@@ -138,7 +138,66 @@ export function ProjectClient({ name }: { name: string }) {
       }
     };
 
-    if (name === "neo-wifi-desktop") {
+    interface LocalProjectMeta {
+      name: string;
+      description: string;
+      created_at: string;
+    }
+
+    const localProjects: Record<string, LocalProjectMeta> = {
+      "better-call-dante": {
+        name: "Better Call Dante",
+        description:
+          "Ecosistema digital para un estudio de abogados que integra correo, calendario, planillas y documentos en un solo panel, con asistente IA.",
+        created_at: "2026-09-04T00:00:00Z",
+      },
+      "inmobiliaria-daeva": {
+        name: "Inmobiliaria Daeva",
+        description:
+          "SPA inmobiliaria: propiedades en venta/alquiler, reservas con seña vía MercadoPago, panel de agente y panel de administración.",
+        created_at: "2026-09-06T00:00:00Z",
+      },
+    };
+
+    const loadLocalProject = async (meta: LocalProjectMeta) => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          `/api/read-project?name=${encodeURIComponent(name)}`,
+        );
+        const data = (await response.json()) as {
+          decoded?: string;
+          message?: string;
+        };
+        if (!response.ok) {
+          throw new Error(data.message ?? "No se pudo cargar el proyecto");
+        }
+        if (active) {
+          setProject({
+            data: {
+              name: meta.name,
+              description: meta.description,
+              created_at: meta.created_at,
+            },
+            decoded: data.decoded ?? "",
+          });
+        }
+      } catch (err) {
+        if (active) {
+          setError(err instanceof Error ? err.message : "Error desconocido");
+        }
+      } finally {
+        if (active) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    const localProject = localProjects[name];
+
+    if (localProject) {
+      loadLocalProject(localProject);
+    } else if (name === "neo-wifi-desktop") {
       getProjectRelease();
     } else {
       loadProject();

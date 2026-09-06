@@ -19,12 +19,20 @@ export const formatText = (text: string) =>
 
 export const featuredProjects = [
   {
-    name: "Neo-WiFi Apk",
-    repo: "neo-wifi-apk",
+    name: "Better Call Dante",
+    repo: "better-call-dante",
     description:
-      "Localización Inteligente de Antenas WiFi (gratuitas) para Android.",
-    created_at: "2026-02-19T03:53:10Z",
-    platform: { name: "android", icon: FaAndroid },
+      "Ecosistema digital para un estudio de abogados que integra correo, calendario, planillas y documentos en un solo panel, con asistente IA.",
+    created_at: "2026-09-04T00:00:00Z",
+    platform: { name: "web", icon: GiWorld },
+  },
+  {
+    name: "Inmobiliaria Daeva",
+    repo: "inmobiliaria-daeva",
+    description:
+      "SPA inmobiliaria: propiedades en venta/alquiler, reservas con seña vía MercadoPago, panel de agente y admin.",
+    created_at: "2026-09-06T00:00:00Z",
+    platform: { name: "web", icon: GiWorld },
   },
   {
     name: "E-Commerce",
@@ -47,14 +55,6 @@ export const featuredProjects = [
     description: "API de geolocalización por IP o coordenadas en tiempo real.",
     created_at: "2024-02-07T15:38:54Z",
      platform: { name: "api", icon: AiOutlineApi },
-  },
-  {
-    name: "LinkData",
-    repo: "link-data",
-    description:
-      "Transmite tu cámara o pantalla en vivo, también puedes compartir un archivo con un link.",
-    created_at: "2026-06-19T18:38:04Z",
-     platform: { name: "web", icon: GiWorld },
   },
   {
     name: "Neo Wifi - v1.3.6",

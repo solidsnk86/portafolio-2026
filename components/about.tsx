@@ -49,32 +49,14 @@ export function About({ source }: { source?: string }) {
 
         <article className="space-y-4 md:p-8">
           <p className="text-base leading-relaxed text-muted-foreground">
-            Desarrollador con 4 años de experiencia, egresado de la UTN-FRSR.
-            Desarrollo aplicaciones web modernas y soluciones orientadas a
-            resolver problemas concretos, priorizando simplicidad, rendimiento y
-            una buena experiencia de usuario.
+            Desarrollador Full Stack, egresado de la UTN-FRSR. Experiencia +4
+            años, construyo aplicaciones web y automatizo procesos, conectando
+            APIs y servicios para reducir tareas manuales. Uso IA para acelerar
+            el flujo de desarrollo sin delegar las decisiones técnicas.
           </p>
 
           <p className="text-base leading-relaxed text-muted-foreground">
-            También me especializo en{" "}
-            <strong className="text-foreground">
-              automatizar tareas y flujos de trabajo diarios
-            </strong>
-            , conectando servicios, APIs y herramientas para reducir procesos
-            manuales y hacer más eficientes las operaciones.
-          </p>
-
-          <p className="text-base leading-relaxed text-muted-foreground">
-            Hoy potencio mi flujo de desarrollo con agentes de IA para
-            investigar, prototipar, analizar y documentar más rápido, sin
-            delegar el criterio técnico. La IA es una herramienta para acelerar
-            el proceso; las decisiones de arquitectura, implementación y calidad
-            siguen estando guiadas por las necesidades de cada proyecto.
-          </p>
-
-          <p className="text-base leading-relaxed text-muted-foreground">
-            He trabajado en proyectos para clientes de Argentina y Chile,
-            incluyendo el desarrollo de una tienda online
+            He trabajado para clientes de Argentina y Chile: una tienda online
             <Link
               href="http://pascalecloset.com/"
               target="_blank"
@@ -82,6 +64,17 @@ export function About({ source }: { source?: string }) {
             >
               @pascale-closet.
             </Link>
+            y un ecosistema digital para un estudio de abogados que integra
+            correo, calendario, planillas y documentos en un solo panel, con
+            asistente IA
+            <Link
+              href="http://better-call-dante-2.vercel.app/"
+              target="_blank"
+              className="mx-1 font-semibold text-zinc-600 hover:underline"
+            >
+              @better-call-dante
+            </Link>
+            .
           </p>
         </article>
       </div>
