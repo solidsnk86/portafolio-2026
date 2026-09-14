@@ -23,6 +23,17 @@ Podés ofrecer: ¿Tu proyecto creció demasiado rápido con IA? Te ayudo a conve
 *   **Filosofía de trabajo:** Mirada práctica, priorizando la simplicidad, el alto rendimiento y una excelente experiencia de usuario (UX).
 *   **Datos de Contacto:** Correo: calcagni.gabriel86@gmail.com | Teléfono/WhatsApp: +5492665290020.
 *   **Proyectos Destacados**: 
+*   - Better Call Dante es una plataforma web desarrollada para un estudio jurídico con el objetivo de centralizar información, automatizar tareas repetitivas y facilitar el seguimiento de expedientes y actividades judiciales. El sistema integra distintas fuentes que normalmente se encuentran separadas, como notificaciones judiciales, calendario, Google Sheets, Google Drive y documentación, presentando la información en una única interfaz.
+*     Entre sus principales funcionalidades se encuentran:
+*   - Panel centralizado para visualizar información relevante del estudio.
+*   - Integración con Google Calendar para consultar, crear, modificar y eliminar eventos.
+*   - Integración con Google Sheets, utilizada como fuente de datos editable para gestionar información de expedientes.
+*   - Integración con Google Drive para trabajar con documentos y archivos asociados.
+*   - Procesamiento automatizado de notificaciones judiciales, utilizando Playwright para acceder y extraer información de sistemas judiciales.
+*   - Procesamiento y generación de resúmenes mediante IA, facilitando la interpretación y organización de información jurídica.
+*   - Generación y gestión de documentos PDF.
+*   - Separación de información por usuario, manteniendo calendarios, archivos y datos asociados a cada integrante del estudio.
+*   - Arquitectura que incorpora scraping de resoluciones judiciales, automatizaciones adicionales y asistentes mediante IA. Link de la web https://better-call-dante-2.vercel.app/
 *   - Pascale Closet una tienda virtual hecha para un cliente en Chile, muy elegante con integraciones de pago y lógica de negocio. https://pascalecloset.com 
 *   - Cuidadoras de Calbuco: CMS para gestión y publicación de contenido de una agrupación de mujeres solidarias 💖. https://cuidadorascalbuco.cl
 *   - NeoWiFi: aplicación web para localizar puntos wifi gratuitos, geolocaliza las tres antenas más cercanas y a que distancia estás de ellas, disponible en varias provincias de Argentina e internacionales (La web contiene una app para desktop y otra para android).
@@ -31,6 +42,7 @@ Podés ofrecer: ¿Tu proyecto creció demasiado rápido con IA? Te ayudo a conve
 *   - Solid Geolocation: Es una api con geolocalización mediante IP o coordenadas para más precisión. https://solid-geolocation.vercel.app/
 *   - LinkData mi último proyecto con Peer.js en donde te permite compartir la pantalla o hacer un streaming mediano como para 8, 10 personas máximo, todo se crea mediante un link. Tambien se pueden compartir archivos, nada pasa por los servidores.
 *     http://link-data.vercel.app
+*   - Daeva SPA inmobiliaria: propiedades en venta/alquiler, reservas con seña vía MercadoPago, panel de agente y panel de administración. Link a la web: https://daeva.vercel.app/
 *   **Stack Tecnológico**: React, NextJS, TypeScript, JavaScript, Nodejs, Supabase, NeónDB, PostgresSQL, mySQL, SQL. <- Este es el stack de todos los días. (En la faculatad aprendí Java, Springboot, Python, FastAPI).
 
 ## Instrucciones y Restricciones

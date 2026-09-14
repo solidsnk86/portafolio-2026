@@ -1,11 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Metrics } from "./metrics";
 import { timeAgo } from "@/utils/formatRelativeTime";
 import { GiWorld } from "react-icons/gi";
-import { FaAndroid, FaWindows } from "react-icons/fa6";
+import { FaWindows, FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { AiOutlineApi } from "react-icons/ai";
+import type { IconType } from "react-icons";
 
 const formatDate = (dateTime: string) =>
   new Intl.DateTimeFormat("es-ES", {
@@ -17,7 +19,18 @@ const formatDate = (dateTime: string) =>
 export const formatText = (text: string) =>
   text ? text.replace(/[-_]/g, " ") : "";
 
-export const featuredProjects = [
+interface FeaturedProject {
+  name: string;
+  repo: string;
+  description: string;
+  created_at: string;
+  platform: { name: string; icon: IconType };
+  url: string;
+  fit: "cover" | "contain";
+  images: string[];
+}
+
+export const featuredProjects: FeaturedProject[] = [
   {
     name: "Better Call Dante",
     repo: "better-call-dante",
@@ -25,6 +38,16 @@ export const featuredProjects = [
       "Ecosistema digital para un estudio de abogados que integra correo, calendario, planillas y documentos en un solo panel, con asistente IA.",
     created_at: "2026-09-04T00:00:00Z",
     platform: { name: "web", icon: GiWorld },
+    url: "https://better-call-dante.vercel.app",
+    fit: "cover",
+    images: [
+      "/assets/better-call-dante/better-call-dante-hero-cap.png",
+      "/assets/better-call-dante/better-call-dante-login-cap.png",
+      "/assets/better-call-dante/better-call-dante-main-dash-cap.png",
+      "/assets/better-call-dante/better-call-dante-agent-cap-1.png",
+      "/assets/better-call-dante/better-call-dante-agent-cap-2.png",
+      "/assets/better-call-dante/better-call-dante-pallete-cap-1.png",
+    ],
   },
   {
     name: "Inmobiliaria Daeva",
@@ -33,28 +56,63 @@ export const featuredProjects = [
       "SPA inmobiliaria: propiedades en venta/alquiler, reservas con seña vía MercadoPago, panel de agente y admin.",
     created_at: "2026-09-06T00:00:00Z",
     platform: { name: "web", icon: GiWorld },
+    url: "https://inmobiliaria-daeva.vercel.app",
+    fit: "cover",
+    images: [
+      "/assets/daeva-inmobiliaria/daeva-hero-cap.png",
+      "/assets/daeva-inmobiliaria/daeva-main-section-cap.png",
+      "/assets/daeva-inmobiliaria/daeva-prop-details-cap.png",
+      "/assets/daeva-inmobiliaria/daeva-admin-dash-cap.png",
+      "/assets/daeva-inmobiliaria/daeva-reservations-dash-cap.png",
+      "/assets/daeva-inmobiliaria/daeva-profile-cap-1.png",
+    ],
   },
   {
-    name: "E-Commerce",
+    name: "Pascale - Tienda Virtual",
     repo: "frontend-e-retro-leyends",
     description:
-      "Tienda E-Commerce full-stack (PERN) con pagos integrados y admin.",
+      "Pascale Closet es una Tienda E-Commerce full-stack (PERN) con pagos integrados con Mercado Pago y panel de administración y comprador.",
     created_at: "2025-11-12T15:38:54Z",
-     platform: { name: "web", icon: GiWorld },
+    platform: { name: "web", icon: GiWorld },
+    url: "https://pascalecloset.com",
+    fit: "contain",
+    images: [
+      "/assets/e-commerce-gallery/screencapture-pascalecloset-seller-dashboard-2026-05-21-16_17_45.png",
+      "/assets/e-commerce-gallery/screencapture-pascalecloset-seller-orders-2026-05-21-16_23_20.png",
+      "/assets/e-commerce-gallery/screencapture-pascalecloset-seller-products-2026-05-21-16_25_15.png",
+      "/assets/e-commerce-gallery/screencapture-pascalecloset-user-profile-2026-05-21-16_18_18.webp",
+      "/assets/e-commerce-gallery/screencapture-pascalecloset-user-profile-2026-05-21-16_19_44.png",
+      "/assets/e-commerce-gallery/screencapture-pascalecloset-user-profile-2026-05-21-16_20_50.png",
+    ],
   },
   {
     name: "Neo-WiFi Web",
     repo: "neo-wifi",
     description: "Localización inteligente de antenas WiFi para cobertura.",
     created_at: "2025-01-28T03:18:53Z",
-     platform: { name: "web", icon: GiWorld },
+    platform: { name: "web", icon: GiWorld },
+    url: "https://neo-wifi.com",
+    fit: "cover",
+    images: [
+      "/assets/neo-wifi-web/neo-wifi-hero-web-cap.png",
+      "/assets/neo-wifi-web/neo-wifi-hero-web-cap-1-sat.png",
+      "/assets/neo-wifi-web/neo-wifi-hero-web-cap-3-app.png",
+      "/assets/neo-wifi-web/neo-wifi-hero-web-cap-4-features.png",
+      "/assets/neo-wifi-web/neo-wifi-hero-web-cap-5-desktop-info.png",
+    ],
   },
   {
     name: "Geolocation API",
     repo: "geo_api",
     description: "API de geolocalización por IP o coordenadas en tiempo real.",
     created_at: "2024-02-07T15:38:54Z",
-     platform: { name: "api", icon: AiOutlineApi },
+    platform: { name: "api", icon: AiOutlineApi },
+    url: "https://geo-api.solidsnk86.dev",
+    fit: "cover",
+    images: [
+      "/assets/geo-api/solid-geo-api-cap.png",
+      "/assets/geo-api/solid-geo-api-cap-2.png",
+    ],
   },
   {
     name: "Neo Wifi - v1.3.6",
@@ -62,9 +120,61 @@ export const featuredProjects = [
     description:
       "Aplicación para configurar automáticamente dispositivos TP-LINK.",
     created_at: "2025-07-08T15:38:54Z",
-     platform: { name: "windows", icon: FaWindows },
+    platform: { name: "windows", icon: FaWindows },
+    url: "https://neo-wifi.vercel.app",
+    fit: "cover",
+    images: [
+      "/assets/neo-wifi-desktop-app/Portada-NeoWiFi-Electron-App.png",
+    ],
   },
 ];
+
+const ProjectCover = ({
+  images,
+  name,
+  url,
+  fit = "cover",
+}: {
+  images: string[];
+  name: string;
+  url: string;
+  fit?: "cover" | "contain";
+}) => {
+  const count = images.length;
+  const hostname = url ? new URL(url).hostname.replace("www.", "") : "";
+  return (
+    <div className="relative flex h-full w-full flex-col overflow-hidden bg-secondary/60">
+      <div className="flex h-7 shrink-0 items-center gap-1.5 border-b border-border-color bg-secondary px-3">
+        <span className="size-2.5 rounded-full bg-[#ff5f57]" />
+        <span className="size-2.5 rounded-full bg-[#febc2e]" />
+        <span className="size-2.5 rounded-full bg-[#28c840]" />
+        <div className="ml-2 flex min-w-0 flex-1 items-center truncate rounded-md border border-border-color bg-background px-2 py-0.5 text-[10px] text-muted-foreground">
+          {hostname}
+        </div>
+      </div>
+      <div
+        className={
+          fit === "contain"
+            ? "relative min-h-0 flex-1 bg-secondary/60"
+            : "relative min-h-0 flex-1"
+        }
+      >
+        <Image
+          src={images[0]}
+          alt={`${name} - captura`}
+          fill
+          sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 33vw"
+          className={fit === "contain" ? "object-contain" : "object-cover"}
+        />
+        {count > 1 && (
+          <small className="absolute bottom-2 right-2 flex items-center gap-1 rounded-2xl bg-foreground/80 px-2 py-0.5 text-[10px] font-medium text-background backdrop-blur">
+            {count} fotos
+          </small>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export function Projects() {
   return (
@@ -94,6 +204,14 @@ export function Projects() {
               key={project.repo}
               className="border-t border-r border-border-color odd:bg-stripes p-4 nth-last-[-n+3]:border-b xl:nth-[3]:border-r-0 last:border-r-0 last:border-t-0 xl:last:border-t xl:nth-[4]:border-r nth-[4]:border-r-0 hover:bg-secondary relative transition-colors"
             >
+              <div className="-m-4 mb-4 aspect-video overflow-hidden border-b border-border-color">
+                <ProjectCover
+                  images={project.images}
+                  name={project.name}
+                  url={project.url}
+                  fit={project.fit}
+                />
+              </div>
               <h3 className="text-lg font-semibold text-foreground capitalize">
                 {formatText(project.name)}
               </h3>
@@ -106,14 +224,44 @@ export function Projects() {
               <p className="mt-2 text-sm text-muted-foreground">
                 {project.description ?? "Sin descripción disponible."}
               </p>
-              <div className="flex items-center justify-between gap-2">
-                <p className="mt-3 text-sm font-medium text-foreground">
+              <div className="mt-3 flex items-center justify-between gap-2">
+                <p className="text-sm font-medium text-foreground whitespace-nowrap">
                   {formatDate(String(project.created_at))}
                 </p>
-                <p className="mt-3 text-xs px-2 rounded-2xl text-green-600">
+                <p className="text-xs px-2 rounded-2xl text-green-600">
                   {timeAgo(new Date(project.created_at))?.includes("días") && "Nuevo!"}
                 </p>
               </div>
+              {project.url && (
+                <div className="mt-2 border-t border-border-color pt-2.5">
+                  <span
+                    role="link"
+                    tabIndex={0}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      window.open(project.url, "_blank", "noopener,noreferrer");
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        window.open(
+                          project.url,
+                          "_blank",
+                          "noopener,noreferrer",
+                        );
+                      }
+                    }}
+                    className="inline-flex max-w-full cursor-pointer items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-accent"
+                    aria-label={`Visitar ${project.name}`}
+                  >
+                    <FaArrowUpRightFromSquare size={11} className="shrink-0" />
+                    <span className="truncate">
+                      {new URL(project.url).hostname.replace("www.", "")}
+                    </span>
+                  </span>
+                </div>
+              )}
             </Link>
           ))}
       </div>

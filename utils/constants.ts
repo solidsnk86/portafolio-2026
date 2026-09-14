@@ -37,6 +37,56 @@ export const eCommerceGallery = [
   },
 ];
 
+export const bcallDanteGallery = [
+  {
+    id: 1,
+    url: "/assets/better-call-dante/better-call-dante-main-dash-cap-2.png",
+  },
+  {
+    id: 2,
+    url: "/assets/better-call-dante/better-call-dante-main-dash-cap-3.png",
+  },
+  {
+    id: 3,
+    url: "/assets/better-call-dante/better-call-dante-main-dash-cap-4.png",
+  },
+  {
+    id: 4,
+    url: "/assets/better-call-dante/better-call-dante-main-dash-cap-5.png",
+  },
+  {
+    id: 5,
+    url: "/assets/better-call-dante/better-call-dante-agent-cap-3.png",
+  },
+  {
+    id: 6,
+    url: "/assets/better-call-dante/better-call-dante-pallete-cap-2.png",
+  },
+];
+
+export const daevaGallery = [
+  {
+    id: 1,
+    url: "/assets/daeva-inmobiliaria/daeva-create-prop-cap-1.png",
+  },
+  {
+    id: 2,
+    url: "/assets/daeva-inmobiliaria/daeva-create-prop-cap-2.png",
+  },
+  {
+    id: 3,
+    url: "/assets/daeva-inmobiliaria/daeva-create-prop-cap-3.png",
+  },
+  {
+    id: 4,
+    url: "/assets/daeva-inmobiliaria/daeva-filter-options-cap.png",
+  },
+  {
+    id: 5,
+    url: "/assets/daeva-inmobiliaria/daeva-profile-cap-2.png",
+  },
+];
+
 export const DISALLOWED_WORDS = [
   "puto",
   "puta",

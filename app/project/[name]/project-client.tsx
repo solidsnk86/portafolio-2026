@@ -12,7 +12,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/zoom";
-import { eCommerceGallery } from "@/utils/constants";
+import {
+  eCommerceGallery,
+  daevaGallery,
+  bcallDanteGallery,
+} from "@/utils/constants";
 import { LoaderBar } from "@/components/common/loader-bar";
 
 interface ProjectResponse {
@@ -33,7 +37,13 @@ const formatDate = (dateTime: string) =>
     year: "numeric",
   }).format(new Date(dateTime));
 
-const DialogGallery = ({ initialIndex }: { initialIndex: number }) => (
+const DialogGallery = ({
+  initialIndex,
+  gallery,
+}: {
+  initialIndex: number;
+  gallery: { id: number; url: string }[];
+}) => (
   <div className="fixed inset-0 z-50 bg-black">
     <div className="fixed top-0 right-0 z-999 p-2">
       <X className="text-accent" onClick={closeDialog} />
@@ -47,7 +57,7 @@ const DialogGallery = ({ initialIndex }: { initialIndex: number }) => (
       modules={[Navigation, Zoom]}
       className="h-full w-full"
     >
-      {eCommerceGallery.map(({ id, url }) => (
+      {gallery.map(({ id, url }) => (
         <SwiperSlide
           key={id}
           className="flex items-center justify-center bg-black"
@@ -67,16 +77,63 @@ const DialogGallery = ({ initialIndex }: { initialIndex: number }) => (
   </div>
 );
 
+const AppGallery = ({
+  openGalleryDialog,
+  gallery,
+}: {
+  openGalleryDialog: (
+    initialIndex: number,
+    gallery: { id: number; url: string }[],
+  ) => void;
+  gallery: { id: number; url: string }[];
+}) => (
+  <div className="relative">
+    <h2 className="text-2xl mb-4 border-b py-3 border-border-color font-semibold">
+      Algunas capturas de la aplicación:
+    </h2>
+    <Swiper
+      slidesPerView={1}
+      spaceBetween={1}
+      breakpoints={{
+        640: { slidesPerView: 1 },
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      }}
+      className="w-full overflow-visible!"
+    >
+      {gallery.map((pic, index) => (
+        <SwiperSlide key={pic.id} className="relative">
+          <div
+            onClick={() => openGalleryDialog(index, gallery)}
+            className="relative aspect-square w-full group overflow-hidden hover:cursor-zoom-in"
+          >
+            <Image
+              src={pic.url}
+              alt={`Foto-${pic.id}`}
+              fill
+              sizes="(max-width: 768px) 90vw, 33vw"
+              className="object-cover group-hover:scale-110 hover:opacity-90 transition-transform duration-300"
+            />
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  </div>
+);
+
 export function ProjectClient({ name }: { name: string }) {
   const [project, setProject] = useState<ProjectResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const openGalleryDialog = (initialIndex: number) => {
+  const openGalleryDialog = (
+    initialIndex: number,
+    gallery: { id: number; url: string }[],
+  ) => {
     showDialog({
       width: "100%",
       className: "bg-transparent p-0 m-0 max-w-none rounded-none shadow-none",
-      content: <DialogGallery initialIndex={initialIndex} />,
+      content: <DialogGallery initialIndex={initialIndex} gallery={gallery} />,
     });
   };
 
@@ -256,38 +313,24 @@ export function ProjectClient({ name }: { name: string }) {
             <MarkdownRenderer content={project?.decoded ?? ""} />
 
             {name === "frontend-e-retro-leyends" && (
-              <div className="relative">
-                <h2 className="text-2xl mb-4 border-b py-3 border-border-color font-semibold">
-                  Algunas capturas de la aplicación:
-                </h2>
-                <Swiper
-                  slidesPerView={1}
-                  spaceBetween={1}
-                  breakpoints={{
-                    640: { slidesPerView: 1 },
-                    768: { slidesPerView: 2 },
-                    1024: { slidesPerView: 3 },
-                  }}
-                  className="w-full overflow-visible!"
-                >
-                  {eCommerceGallery.map((pic, index) => (
-                    <SwiperSlide key={pic.id} className="relative">
-                      <div
-                        onClick={() => openGalleryDialog(index)}
-                        className="relative aspect-square w-full group overflow-hidden hover:cursor-zoom-in"
-                      >
-                        <Image
-                          src={pic.url}
-                          alt={`Foto-${pic.id}`}
-                          fill
-                          sizes="(max-width: 768px) 90vw, 33vw"
-                          className="object-cover group-hover:scale-110 hover:opacity-90 transition-transform duration-300"
-                        />
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
+              <AppGallery
+                openGalleryDialog={openGalleryDialog}
+                gallery={eCommerceGallery}
+              />
+            )}
+
+            {name === "inmobiliaria-daeva" && (
+              <AppGallery
+                openGalleryDialog={openGalleryDialog}
+                gallery={daevaGallery}
+              />
+            )}
+
+            {name === "better-call-dante" && (
+              <AppGallery
+                openGalleryDialog={openGalleryDialog}
+                gallery={bcallDanteGallery}
+              />
             )}
           </article>
         )}
