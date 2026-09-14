@@ -26,7 +26,6 @@ interface FeaturedProject {
   created_at: string;
   platform: { name: string; icon: IconType };
   url: string;
-  fit: "cover" | "contain";
   images: string[];
 }
 
@@ -39,9 +38,8 @@ export const featuredProjects: FeaturedProject[] = [
     created_at: "2026-09-04T00:00:00Z",
     platform: { name: "web", icon: GiWorld },
     url: "https://better-call-dante.vercel.app",
-    fit: "cover",
     images: [
-      "/assets/better-call-dante/better-call-dante-hero-cap.png",
+      "/assets/better-call-dante/better-call-dante-mock.png",
       "/assets/better-call-dante/better-call-dante-login-cap.png",
       "/assets/better-call-dante/better-call-dante-main-dash-cap.png",
       "/assets/better-call-dante/better-call-dante-agent-cap-1.png",
@@ -57,9 +55,8 @@ export const featuredProjects: FeaturedProject[] = [
     created_at: "2026-09-06T00:00:00Z",
     platform: { name: "web", icon: GiWorld },
     url: "https://inmobiliaria-daeva.vercel.app",
-    fit: "cover",
     images: [
-      "/assets/daeva-inmobiliaria/daeva-hero-cap.png",
+      "/assets/daeva-inmobiliaria/daeva-mock.png",
       "/assets/daeva-inmobiliaria/daeva-main-section-cap.png",
       "/assets/daeva-inmobiliaria/daeva-prop-details-cap.png",
       "/assets/daeva-inmobiliaria/daeva-admin-dash-cap.png",
@@ -75,9 +72,8 @@ export const featuredProjects: FeaturedProject[] = [
     created_at: "2025-11-12T15:38:54Z",
     platform: { name: "web", icon: GiWorld },
     url: "https://pascalecloset.com",
-    fit: "contain",
     images: [
-      "/assets/e-commerce-gallery/screencapture-pascalecloset-seller-dashboard-2026-05-21-16_17_45.png",
+      "/assets/e-commerce-gallery/pascale-mock.png",
       "/assets/e-commerce-gallery/screencapture-pascalecloset-seller-orders-2026-05-21-16_23_20.png",
       "/assets/e-commerce-gallery/screencapture-pascalecloset-seller-products-2026-05-21-16_25_15.png",
       "/assets/e-commerce-gallery/screencapture-pascalecloset-user-profile-2026-05-21-16_18_18.webp",
@@ -92,9 +88,8 @@ export const featuredProjects: FeaturedProject[] = [
     created_at: "2025-01-28T03:18:53Z",
     platform: { name: "web", icon: GiWorld },
     url: "https://neo-wifi.com",
-    fit: "cover",
     images: [
-      "/assets/neo-wifi-web/neo-wifi-hero-web-cap.png",
+      "/assets/neo-wifi-web/neo-wifi-web-mock.png",
       "/assets/neo-wifi-web/neo-wifi-hero-web-cap-1-sat.png",
       "/assets/neo-wifi-web/neo-wifi-hero-web-cap-3-app.png",
       "/assets/neo-wifi-web/neo-wifi-hero-web-cap-4-features.png",
@@ -108,9 +103,8 @@ export const featuredProjects: FeaturedProject[] = [
     created_at: "2024-02-07T15:38:54Z",
     platform: { name: "api", icon: AiOutlineApi },
     url: "https://geo-api.solidsnk86.dev",
-    fit: "cover",
     images: [
-      "/assets/geo-api/solid-geo-api-cap.png",
+      "/assets/geo-api/solid-geo-api-mock.png",
       "/assets/geo-api/solid-geo-api-cap-2.png",
     ],
   },
@@ -122,9 +116,8 @@ export const featuredProjects: FeaturedProject[] = [
     created_at: "2025-07-08T15:38:54Z",
     platform: { name: "windows", icon: FaWindows },
     url: "https://neo-wifi.vercel.app",
-    fit: "cover",
     images: [
-      "/assets/neo-wifi-desktop-app/Portada-NeoWiFi-Electron-App.png",
+      "/assets/neo-wifi-desktop-app/neo-wifi-desktop-mock.png",
     ],
   },
 ];
@@ -132,46 +125,25 @@ export const featuredProjects: FeaturedProject[] = [
 const ProjectCover = ({
   images,
   name,
-  url,
-  fit = "cover",
 }: {
   images: string[];
   name: string;
-  url: string;
-  fit?: "cover" | "contain";
 }) => {
   const count = images.length;
-  const hostname = url ? new URL(url).hostname.replace("www.", "") : "";
   return (
-    <div className="relative flex h-full w-full flex-col overflow-hidden bg-secondary/60">
-      <div className="flex h-7 shrink-0 items-center gap-1.5 border-b border-border-color bg-secondary px-3">
-        <span className="size-2.5 rounded-full bg-[#ff5f57]" />
-        <span className="size-2.5 rounded-full bg-[#febc2e]" />
-        <span className="size-2.5 rounded-full bg-[#28c840]" />
-        <div className="ml-2 flex min-w-0 flex-1 items-center truncate rounded-md border border-border-color bg-background px-2 py-0.5 text-[10px] text-muted-foreground">
-          {hostname}
-        </div>
-      </div>
-      <div
-        className={
-          fit === "contain"
-            ? "relative min-h-0 flex-1 bg-secondary/60"
-            : "relative min-h-0 flex-1"
-        }
-      >
-        <Image
-          src={images[0]}
-          alt={`${name} - captura`}
-          fill
-          sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 33vw"
-          className={fit === "contain" ? "object-contain" : "object-cover"}
-        />
-        {count > 1 && (
-          <small className="absolute bottom-2 right-2 flex items-center gap-1 rounded-2xl bg-foreground/80 px-2 py-0.5 text-[10px] font-medium text-background backdrop-blur">
-            {count} fotos
-          </small>
-        )}
-      </div>
+    <div className="relative h-full w-full">
+      <Image
+        src={images[0]}
+        alt={`${name} - captura`}
+        fill
+        sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 33vw"
+        className="object-cover"
+      />
+      {count > 1 && (
+        <small className="absolute bottom-2 right-2 flex items-center gap-1 rounded-2xl bg-foreground/80 px-2 py-0.5 text-[10px] font-medium text-background backdrop-blur">
+          {count} fotos
+        </small>
+      )}
     </div>
   );
 };
@@ -204,12 +176,10 @@ export function Projects() {
               key={project.repo}
               className="border-t border-r border-border-color odd:bg-stripes p-4 nth-last-[-n+3]:border-b xl:nth-[3]:border-r-0 last:border-r-0 last:border-t-0 xl:last:border-t xl:nth-[4]:border-r nth-[4]:border-r-0 hover:bg-secondary relative transition-colors"
             >
-              <div className="-m-4 mb-4 aspect-video overflow-hidden border-b border-border-color">
+              <div className="-m-4 mb-4 aspect-[3/2] overflow-hidden border-b border-border-color">
                 <ProjectCover
                   images={project.images}
                   name={project.name}
-                  url={project.url}
-                  fit={project.fit}
                 />
               </div>
               <h3 className="text-lg font-semibold text-foreground capitalize">
