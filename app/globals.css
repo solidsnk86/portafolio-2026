@@ -131,25 +131,61 @@ dialog::backdrop {
   mix-blend-mode: normal;
 }
 
-.swiper-button-next,
-.swiper-button-prev {
-  color: var(--accent) !important;
+.swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--border-color);
+  opacity: 1;
+  transition: all 0.35s ease;
+  cursor: pointer;
 }
 
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  color: var(--accent) !important;
+.swiper-pagination-bullet-active {
+  width: 28px;
+  background: var(--accent);
+}
+
+.project-gallery {
+  --swiper-pagination-bullet-inactive-opacity: 1;
+}
+
+.project-gallery .swiper-pagination {
+  position: static;
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.project-gallery .swiper-pagination-bullet {
+  background: var(--border-color);
+}
+
+.project-gallery .swiper-pagination-bullet:hover {
+  background: color-mix(in oklch, var(--accent) 45%, var(--border-color));
+}
+
+.project-gallery .swiper-pagination-bullet-active {
+  background: var(--accent);
+}
+
+.dialog-gallery .swiper-pagination {
+  bottom: 28px !important;
+}
+
+.dialog-gallery .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.dialog-gallery .swiper-pagination-bullet-active {
+  background: var(--accent);
 }
 
 @media (width <=762px) {
   dialog {
     width: 90%;
-  }
-  .swiper-button-next {
-    right: -5px !important;
-  }
-  .swiper-button-prev {
-    left: -5px !important;
   }
 }
 

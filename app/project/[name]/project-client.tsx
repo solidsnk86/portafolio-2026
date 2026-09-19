@@ -7,10 +7,10 @@ import { ArrowLeft, Loader2, Maximize2, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Navigation, Zoom } from "swiper/modules";
+import { Pagination, Zoom } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/navigation";
+import "swiper/css/pagination";
 import "swiper/css/zoom";
 import {
   eCommerceGallery,
@@ -52,10 +52,10 @@ const DialogGallery = ({
       initialSlide={initialIndex}
       slidesPerView={1}
       spaceBetween={0}
-      navigation
       zoom={{ maxRatio: 3 }}
-      modules={[Navigation, Zoom]}
-      className="h-full w-full"
+      pagination={{ clickable: true }}
+      modules={[Pagination, Zoom]}
+      className="h-full w-full dialog-gallery"
     >
       {gallery.map(({ id, url }) => (
         <SwiperSlide
@@ -87,32 +87,34 @@ const AppGallery = ({
   ) => void;
   gallery: { id: number; url: string }[];
 }) => (
-  <div className="relative">
-    <h2 className="text-2xl mb-4 border-b py-3 border-border-color font-semibold">
+  <div className="relative mt-10 w-full">
+    <h2 className="mx-auto max-w-3xl text-2xl mb-6 border-b py-3 border-border-color font-semibold">
       Algunas capturas de la aplicación:
     </h2>
     <Swiper
-      slidesPerView={1}
+      pagination={{ clickable: true }}
+      modules={[Pagination]}
+      slidesPerView={3}
       spaceBetween={1}
       breakpoints={{
         640: { slidesPerView: 1 },
         768: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 },
+        1024: { slidesPerView: 2 },
       }}
-      className="w-full overflow-visible!"
+      className="!pb-4 !overflow-visible"
     >
       {gallery.map((pic, index) => (
         <SwiperSlide key={pic.id} className="relative">
           <div
             onClick={() => openGalleryDialog(index, gallery)}
-            className="relative aspect-square w-full group overflow-hidden hover:cursor-zoom-in"
+            className="relative h-[260px] w-full overflow-hidden group hover:cursor-zoom-in sm:h-[340px] lg:h-[420px]"
           >
             <Image
               src={pic.url}
               alt={`Foto-${pic.id}`}
               fill
-              sizes="(max-width: 768px) 90vw, 33vw"
-              className="object-cover group-hover:scale-110 hover:opacity-90 transition-transform duration-300"
+              sizes="100vw"
+              className="object-cover group-hover:scale-105 hover:opacity-90 transition-transform duration-300"
             />
           </div>
         </SwiperSlide>
@@ -305,36 +307,45 @@ export function ProjectClient({ name }: { name: string }) {
             </header>
 
             {name === "link-data" && (
-             <div className="flex justify-center">
-               <Image src={"/assets/link-data-hero.png"} width={800} height={800} alt={"Link data hero"} />
-             </div>
+              <div className="flex justify-center">
+                <Image
+                  src={"/assets/link-data-hero.png"}
+                  width={800}
+                  height={800}
+                  alt={"Link data hero"}
+                />
+              </div>
             )}
 
             <MarkdownRenderer content={project?.decoded ?? ""} />
-
-            {name === "frontend-e-retro-leyends" && (
-              <AppGallery
-                openGalleryDialog={openGalleryDialog}
-                gallery={eCommerceGallery}
-              />
-            )}
-
-            {name === "inmobiliaria-daeva" && (
-              <AppGallery
-                openGalleryDialog={openGalleryDialog}
-                gallery={daevaGallery}
-              />
-            )}
-
-            {name === "better-call-dante" && (
-              <AppGallery
-                openGalleryDialog={openGalleryDialog}
-                gallery={bcallDanteGallery}
-              />
-            )}
           </article>
         )}
       </div>
+
+      {!isLoading && !error && (
+        <>
+          {name === "frontend-e-retro-leyends" && (
+            <AppGallery
+              openGalleryDialog={openGalleryDialog}
+              gallery={eCommerceGallery}
+            />
+          )}
+
+          {name === "inmobiliaria-daeva" && (
+            <AppGallery
+              openGalleryDialog={openGalleryDialog}
+              gallery={daevaGallery}
+            />
+          )}
+
+          {name === "better-call-dante" && (
+            <AppGallery
+              openGalleryDialog={openGalleryDialog}
+              gallery={bcallDanteGallery}
+            />
+          )}
+        </>
+      )}
     </section>
   );
 }
