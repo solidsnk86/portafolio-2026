@@ -96,12 +96,21 @@ const featuredProjects = [
 const projects = featuredProjects.map((featured) => {
   const images = featured.images;
   const formattedUrlImg = images.map((img) => (githubRawUrl+img));
+  const formattedDate = () => {
+    const date = new Date(featured.created_at).toLocaleDateString("es-AR", { year: "numeric", month: "long", day: "2-digit" });
+    const splitedDate = date.split(" ");
+    const month = splitedDate[2];
+    const day = splitedDate[0];
+    const year = splitedDate[4];
+    return `${month.charAt(0).toUpperCase() + month.slice(1)} ${day}, ${year}`
+  }
+
   return {
     name: featured.name,
     title: featured.description,
-    createdAt: featured.created_at,
+    createdAt: formattedDate(),
     url: featured.url,
-    images: formattedUrlImg
+    images: formattedUrlImg,
   };
 });
 
