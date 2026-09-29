@@ -51,7 +51,7 @@ export const featuredProjects: FeaturedProject[] = [
     name: "Inmobiliaria Daeva",
     repo: "inmobiliaria-daeva",
     description:
-      "SPA inmobiliaria: propiedades en venta/alquiler, con comentarios y panel de agente/cliente. ",
+      "Aplicación web inmobiliaria: propiedades en venta/alquiler, con comentarios y panel para agente/cliente. ",
     created_at: "2026-09-06T00:00:00Z",
     platform: { name: "web", icon: GiWorld },
     url: "https://daeva.vercel.app",

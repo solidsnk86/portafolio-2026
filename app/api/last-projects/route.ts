@@ -108,7 +108,8 @@ const projects = featuredProjects.map((featured) => {
   return {
     name: featured.name,
     title: featured.description,
-    createdAt: formattedDate(),
+    createdAt: featured.created_at,
+    date: formattedDate(),
     url: featured.url,
     images: formattedUrlImg,
   };
