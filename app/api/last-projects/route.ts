@@ -10,7 +10,7 @@ const featuredProjects = [
       "Ecosistema digital para un estudio de abogados que integra correo, calendario, planillas y documentos en un solo panel, con asistente IA.",
     created_at: "2026-09-04T00:00:00Z",
     platform: { name: "web" },
-    url: "https://better-call-dante.vercel.app",
+    url: "http://better-call-dante-2.vercel.app/",
     images: [
       "/assets/better-call-dante/better-call-dante-mock.png",
       "/assets/better-call-dante/better-call-dante-login-cap.png",
