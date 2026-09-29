@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+const githubRawUrl =
+  "https://raw.githubusercontent.com/solidsnk86/portafolio-2026/refs/heads/master/public";
 const featuredProjects = [
   {
     name: "Better Call Dante",
@@ -91,18 +93,21 @@ const featuredProjects = [
   },
 ];
 
-const arr = featuredProjects.map((featured) => {
+const projects = featuredProjects.map((featured) => {
+  const images = featured.images;
+  const formattedUrlImg = images.map((img) => (githubRawUrl+img));
   return {
     name: featured.name,
     title: featured.description,
     createdAt: featured.created_at,
     url: featured.url,
+    images: formattedUrlImg
   };
 });
 
 export async function GET() {
   try {
-    return NextResponse.json({ projects: arr });
+    return NextResponse.json({ projects });
   } catch (error) {
     return NextResponse.json({
       message: `Error: ${(error as TypeError).message}`,
