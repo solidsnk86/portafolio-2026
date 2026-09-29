@@ -75,7 +75,7 @@ const featuredProjects = [
     description: "API de geolocalización por IP o coordenadas en tiempo real.",
     created_at: "2024-02-07T15:38:54Z",
     platform: { name: "api" },
-    url: "https://geo-api.solidsnk86.dev",
+    url: "https://solid-geolocation.vercel.app/",
     images: [
       "/assets/geo-api/solid-geo-api-mock.png",
       "/assets/geo-api/solid-geo-api-cap-2.png",
@@ -88,7 +88,7 @@ const featuredProjects = [
       "Aplicación para configurar automáticamente dispositivos TP-LINK.",
     created_at: "2025-07-08T15:38:54Z",
     platform: { name: "windows" },
-    url: "https://neo-wifi.vercel.app",
+    url: "https://neo-wifi.com/download",
     images: ["/assets/neo-wifi-desktop-app/neo-wifi-desktop-mock.png"],
   },
 ];

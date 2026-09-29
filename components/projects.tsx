@@ -37,7 +37,7 @@ export const featuredProjects: FeaturedProject[] = [
       "Ecosistema digital para un estudio de abogados que integra correo, calendario, planillas y documentos en un solo panel, con asistente IA.",
     created_at: "2026-09-04T00:00:00Z",
     platform: { name: "web", icon: GiWorld },
-    url: "https://better-call-dante.vercel.app",
+    url: "https://better-call-dante-2.vercel.app",
     images: [
       "/assets/better-call-dante/better-call-dante-mock.png",
       "/assets/better-call-dante/better-call-dante-login-cap.png",
@@ -115,7 +115,7 @@ export const featuredProjects: FeaturedProject[] = [
       "Aplicación para configurar automáticamente dispositivos TP-LINK.",
     created_at: "2025-07-08T15:38:54Z",
     platform: { name: "windows", icon: FaWindows },
-    url: "https://neo-wifi.vercel.app",
+    url: "https://neo-wifi.com/download",
     images: [
       "/assets/neo-wifi-desktop-app/neo-wifi-desktop-mock.png",
     ],
