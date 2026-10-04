@@ -94,7 +94,7 @@ const DialogGallery = ({
     >
       {gallery.map(({ id, url }) => (
         <SwiperSlide
-          key={id}
+          key={`dialog-slide-${id}`}
           className="flex items-center justify-center bg-black"
         >
           <div className="swiper-zoom-container relative h-full w-full">
@@ -145,7 +145,7 @@ const AppGallery = ({
         className="project-gallery !overflow-visible"
       >
         {gallery.map((pic, index) => (
-          <SwiperSlide key={pic.id} className="relative">
+          <SwiperSlide key={`app-slide-${pic.id}`} className="relative">
             <div
               onClick={() => openGalleryDialog(index, gallery)}
               className="group relative aspect-[1360/605] w-full overflow-hidden rounded-md border border-border-color bg-secondary hover:cursor-zoom-in"

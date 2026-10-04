@@ -84,7 +84,7 @@ export function Footer() {
             </span>
             {getRandomPhrase(phrases)?.map((quote) => (
               <blockquote
-                key={crypto.randomUUID()}
+                key={quote.id ?? quote.texto}
                 className="text-sm leading-relaxed text-foreground text-pretty"
               >
                 <span className="block">“{quote?.texto}”</span>
