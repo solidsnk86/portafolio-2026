@@ -37,56 +37,42 @@ export const eCommerceGallery = [
   },
 ];
 
+const bcd = (file: string) => `/assets/better-call-dante/${file}`;
+
 export const bcallDanteGallery = [
-  {
-    id: 1,
-    url: "/assets/better-call-dante/better-call-dante-hero-cap.png",
-  },
-  {
-    id: 2,
-    url: "/assets/better-call-dante/better-call-dante-main-dash-cap.png",
-  },
-  {
-    id: 3,
-    url: "/assets/better-call-dante/better-call-dante-main-dash-cap-2.png",
-  },
-  {
-    id: 4,
-    url: "/assets/better-call-dante/better-call-dante-main-dash-cap-3.png",
-  },
-  {
-    id: 5,
-    url: "/assets/better-call-dante/better-call-dante-main-dash-cap-4.png",
-  },
-  {
-    id: 6,
-    url: "/assets/better-call-dante/better-call-dante-main-dash-cap-5.png",
-  },
-  {
-    id: 7,
-    url: "/assets/better-call-dante/better-call-dante-agent-cap-1.png",
-  },
-  {
-    id: 8,
-    url: "/assets/better-call-dante/better-call-dante-agent-cap-2.png",
-  },
-  {
-    id: 9,
-    url: "/assets/better-call-dante/better-call-dante-agent-cap-3.png",
-  },
-  {
-    id: 10,
-    url: "/assets/better-call-dante/better-call-dante-pallete-cap-1.png",
-  },
-  {
-    id: 11,
-    url: "/assets/better-call-dante/better-call-dante-pallete-cap-2.png",
-  },
-  {
-    id: 12,
-    url: "/assets/better-call-dante/better-call-dante-login-cap.png",
-  },
-];
+  "main-dash-1.png",
+  "main-dash-2.png",
+  "main-dash-3.png",
+  "main-dash-4.png",
+  "main-dash-5.png",
+  "main-dash-6.png",
+  "main-dash-7.png",
+  "main-dash-8.png",
+  "main-dash-9.png",
+  "main-dash-10.png",
+  "main-dash-11.png",
+  "main-dash-12.png",
+  "agent-dash-1.png",
+  "agent-dash-2.png",
+  "agent-dash-3.png",
+  "agent-dash-4.png",
+  "agent-dash-5.png",
+  "agent-dash-6.png",
+  "agent-dash-7.png",
+  "agent-dash-8.png",
+  "agent-dash-9.png",
+  "agent-dash-10.png",
+  "agent-dash-11.png",
+  "agent-dash-12.png",
+  "agent-dash-13.png",
+  "agent-dash-14.png",
+  "agent-dash-15.png",
+  "agent-dash-16.png",
+  "agent-dash-17.png",
+  "profile-1.png",
+  "profile-2.png",
+  "profile-3.png",
+].map((file, index) => ({ id: index + 1, url: bcd(file) }));
 
 export const daevaGallery = [
   {

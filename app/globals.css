@@ -152,8 +152,9 @@ dialog::backdrop {
 
 .project-gallery .swiper-pagination {
   position: static;
-  margin-top: 1.25rem;
+  margin-top: 1.5rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 6px;
@@ -161,6 +162,7 @@ dialog::backdrop {
 
 .project-gallery .swiper-pagination-bullet {
   background: var(--border-color);
+  transition: width 0.35s ease, background 0.35s ease;
 }
 
 .project-gallery .swiper-pagination-bullet:hover {
@@ -171,8 +173,61 @@ dialog::backdrop {
   background: var(--accent);
 }
 
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  transform: translateY(-50%);
+  border: 1px solid var(--border-color);
+  border-radius: 9999px;
+  background: color-mix(in oklch, var(--background) 75%, transparent);
+  color: var(--foreground);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    opacity 0.25s ease,
+    scale 0.25s ease;
+}
+
+.gallery-arrow[data-direction="prev"] {
+  left: 10px;
+}
+
+.gallery-arrow[data-direction="next"] {
+  right: 10px;
+}
+
+.gallery-arrow:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.gallery-arrow:active {
+  scale: 0.96;
+}
+
+.gallery-arrow.swiper-button-disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gallery-slider .gallery-arrow {
+  top: calc(50% - 20px);
+}
+
 .dialog-gallery .swiper-pagination {
   bottom: 28px !important;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-inline: 72px;
 }
 
 .dialog-gallery .swiper-pagination-bullet {
@@ -181,6 +236,15 @@ dialog::backdrop {
 
 .dialog-gallery .swiper-pagination-bullet-active {
   background: var(--accent);
+}
+
+@media (width <=639px) {
+  .gallery-arrow {
+    display: none;
+  }
+  .dialog-gallery .swiper-pagination {
+    padding-inline: 16px;
+  }
 }
 
 @media (width <=762px) {

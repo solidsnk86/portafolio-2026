@@ -3,13 +3,20 @@
 import { closeDialog, showDialog } from "@/components/common/dialog";
 import MarkdownRenderer from "@/components/markdown-renderer";
 import { formatText } from "@/components/projects";
-import { ArrowLeft, Loader2, Maximize2, X } from "lucide-react";
+import {
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
+  Maximize2,
+  X,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Pagination, Zoom } from "swiper/modules";
+import { Navigation, Pagination, Zoom } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/zoom";
 import {
@@ -37,6 +44,28 @@ const formatDate = (dateTime: string) =>
     year: "numeric",
   }).format(new Date(dateTime));
 
+type GalleryArrowProps = {
+  id: string;
+  direction: "prev" | "next";
+  label: string;
+};
+
+const GalleryArrow = ({ id, direction, label }: GalleryArrowProps) => {
+  const Icon = direction === "prev" ? ChevronLeft : ChevronRight;
+
+  return (
+    <button
+      id={id}
+      type="button"
+      data-direction={direction}
+      aria-label={label}
+      className="gallery-arrow"
+    >
+      <Icon size={20} strokeWidth={2} />
+    </button>
+  );
+};
+
 const DialogGallery = ({
   initialIndex,
   gallery,
@@ -48,13 +77,19 @@ const DialogGallery = ({
     <div className="fixed top-0 right-0 z-999 p-2">
       <X className="text-accent" onClick={closeDialog} />
     </div>
+    <GalleryArrow id="dialog-gallery-prev" direction="prev" label="Anterior" />
+    <GalleryArrow id="dialog-gallery-next" direction="next" label="Siguiente" />
     <Swiper
       initialSlide={initialIndex}
       slidesPerView={1}
       spaceBetween={0}
       zoom={{ maxRatio: 3 }}
       pagination={{ clickable: true }}
-      modules={[Pagination, Zoom]}
+      navigation={{
+        prevEl: "#dialog-gallery-prev",
+        nextEl: "#dialog-gallery-next",
+      }}
+      modules={[Pagination, Zoom, Navigation]}
       className="h-full w-full dialog-gallery"
     >
       {gallery.map(({ id, url }) => (
@@ -91,35 +126,45 @@ const AppGallery = ({
     <h2 className="mx-auto max-w-3xl text-2xl mb-6 border-b py-3 border-border-color font-semibold">
       Algunas capturas de la aplicación:
     </h2>
-    <Swiper
-      pagination={{ clickable: true }}
-      modules={[Pagination]}
-      slidesPerView={3}
-      spaceBetween={1}
-      breakpoints={{
-        640: { slidesPerView: 1 },
-        768: { slidesPerView: 2 },
-        1024: { slidesPerView: 2 },
-      }}
-      className="!pb-4 !overflow-visible"
-    >
-      {gallery.map((pic, index) => (
-        <SwiperSlide key={pic.id} className="relative">
-          <div
-            onClick={() => openGalleryDialog(index, gallery)}
-            className="relative h-[260px] w-full overflow-hidden group hover:cursor-zoom-in sm:h-[340px] lg:h-[420px]"
-          >
-            <Image
-              src={pic.url}
-              alt={`Foto-${pic.id}`}
-              fill
-              sizes="100vw"
-              className="object-cover group-hover:scale-105 hover:opacity-90 transition-transform duration-300"
-            />
-          </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div className="gallery-slider relative">
+      <GalleryArrow id="gallery-prev" direction="prev" label="Anterior" />
+      <GalleryArrow id="gallery-next" direction="next" label="Siguiente" />
+      <Swiper
+        pagination={{ clickable: true }}
+        navigation={{
+          prevEl: "#gallery-prev",
+          nextEl: "#gallery-next",
+        }}
+        modules={[Pagination, Navigation]}
+        slidesPerView={1}
+        spaceBetween={12}
+        breakpoints={{
+          640: { slidesPerView: 2, spaceBetween: 12 },
+          1024: { slidesPerView: 2, spaceBetween: 16 },
+        }}
+        className="project-gallery !overflow-visible"
+      >
+        {gallery.map((pic, index) => (
+          <SwiperSlide key={pic.id} className="relative">
+            <div
+              onClick={() => openGalleryDialog(index, gallery)}
+              className="group relative aspect-[1360/605] w-full overflow-hidden rounded-md border border-border-color bg-secondary hover:cursor-zoom-in"
+            >
+              <Image
+                src={pic.url}
+                alt={`Foto-${pic.id}`}
+                fill
+                sizes="(max-width: 640px) 100vw, 50vw"
+                className="object-contain object-center transition-transform duration-500 group-hover:scale-[1.03]"
+              />
+              <span className="pointer-events-none absolute right-2 bottom-2 flex h-8 w-8 items-center justify-center rounded-full border border-border-color bg-background/80 text-muted-foreground opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+                <Maximize2 size={15} />
+              </span>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   </div>
 );
 
