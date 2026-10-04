@@ -217,7 +217,7 @@ export function ProjectClient({ name }: { name: string }) {
     const getProjectRelease = async () => {
       setIsLoading(true);
       try {
-        await fetch("https://neo-wifi.vercel.app/api/releases")
+        await fetch("https://neo-wifi.com/api/releases")
           .then((res) => res.json())
           .then((releases) => {
             if (!active) return;

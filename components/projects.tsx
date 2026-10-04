@@ -102,7 +102,7 @@ export const featuredProjects: FeaturedProject[] = [
     description: "API de geolocalización por IP o coordenadas en tiempo real.",
     created_at: "2024-02-07T15:38:54Z",
     platform: { name: "api", icon: AiOutlineApi },
-    url: "https://geo-api.solidsnk86.dev",
+    url: "https://solid-geolocation.vercel.app",
     images: [
       "/assets/geo-api/solid-geo-api-mock.png",
       "/assets/geo-api/solid-geo-api-cap-2.png",
